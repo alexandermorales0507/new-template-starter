@@ -272,24 +272,6 @@ export function FloatingMusicBubble({
 }: FloatingMusicBubbleProps) {
   const { playbackState, isPlaying, musicTitle, play, pause, stop } = useAudio();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isMusicSectionVisible, setIsMusicSectionVisible] = useState(false);
-
-  // Suppress floating bubble when the in-page #music_effects section is in view
-  useEffect(() => {
-    const musicSection = document.querySelector("#music_effects");
-    if (!musicSection) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        setIsMusicSectionVisible(entry.isIntersecting && entry.intersectionRatio >= 0.25);
-      },
-      { threshold: [0, 0.25, 0.5] }
-    );
-
-    observer.observe(musicSection);
-    return () => observer.disconnect();
-  }, []);
 
   // Show floating bubble only after music has been activated (playing or paused)
   if (playbackState === "idle" || playbackState === "stopped") {
@@ -303,12 +285,8 @@ export function FloatingMusicBubble({
     <div
       className={
         isInline
-          ? `relative z-10 flex shrink-0 flex-col items-end transition-opacity duration-300 ${
-              isMusicSectionVisible ? "opacity-0 pointer-events-none" : "opacity-100"
-            }`
-          : `fixed bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end transition-opacity duration-300 ${
-              isMusicSectionVisible ? "opacity-0 pointer-events-none" : "opacity-100"
-            }`
+          ? "relative z-10 flex shrink-0 flex-col items-end transition-opacity duration-300 opacity-100"
+          : "fixed bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end transition-opacity duration-300 opacity-100"
       }
     >
       {isExpanded && (
