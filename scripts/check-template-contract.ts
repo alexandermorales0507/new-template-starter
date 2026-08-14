@@ -10,6 +10,13 @@ import {
 import { templateSectionRegistry } from "../src/template/section-registry.js";
 import { demoWeddingData } from "../src/platform/demo-wedding.js";
 import { deriveCoupleIdentity } from "../src/template/utils/couple-identity.js";
+import {
+  formatEventDateLong,
+  formatEventTime,
+  formatTimeRange,
+  formatRsvpDeadline,
+} from "../src/template/utils/event-formatting.js";
+import { buildWeddingNavigation } from "../src/template/navigation/wedding-navigation.js";
 
 type CheckResult = {
   passed: boolean;
@@ -206,8 +213,8 @@ function scanDirForForbiddenCode(dir: string) {
 }
 scanDirForForbiddenCode(path.resolve(process.cwd(), "src/template"));
 
-// 6. DYNAMIC COUPLE IDENTITY GUARD
-console.log("\n[6] DYNAMIC COUPLE IDENTITY GUARD");
+// 6. DYNAMIC COUPLE IDENTITY & EVENT FORMATTING GUARD
+console.log("\n[6] DYNAMIC COUPLE IDENTITY & EVENT FORMATTING GUARD");
 const derivedTest = deriveCoupleIdentity("Alex Rivera", "Jamie Cruz");
 if (derivedTest.monogram === "A & J" && derivedTest.compactMonogram === "AJ") {
   console.log(
@@ -221,9 +228,49 @@ if (derivedTest.monogram === "A & J" && derivedTest.compactMonogram === "AJ") {
   console.log(`  ✗ IDENTITY DERIVATION TEST FAILED: ${JSON.stringify(derivedTest)}`);
 }
 
-// 7. PROHIBITED CLIENT RESIDUE & STALE ALIAS SCAN
-console.log("\n[7] PROHIBITED CLIENT RESIDUE & STALE ALIAS SCAN");
-const prohibitedTerms = ["Princess Anne", "Rafael", "Isabella", "Dianne", "Blue Hour"];
+const formattedDateTest = formatEventDateLong("2027-04-19");
+const formattedTimeTest = formatTimeRange("16:00", "17:30");
+const formattedDeadlineTest = formatRsvpDeadline("2027-03-07T23:59");
+
+if (
+  formattedDateTest === "Monday, April 19, 2027" &&
+  formattedTimeTest === "4:00 PM – 5:30 PM" &&
+  formattedDeadlineTest.includes("March 7, 2027")
+) {
+  console.log("  ✓ Event formatting helpers verified (date, time range, RSVP deadline)");
+} else {
+  result.passed = false;
+  result.failures.push("Event formatting validation failed.");
+  console.log("  ✗ FORMATTING VALIDATION FAILED");
+}
+
+// 7. CANONICAL NAVIGATION MODEL GUARD
+console.log("\n[7] CANONICAL NAVIGATION MODEL GUARD");
+const navTest = buildWeddingNavigation(demoWeddingData);
+if (
+  navTest.primaryNavItems.length > 0 &&
+  navTest.dockItems.length > 0 &&
+  navTest.moreGroups.length > 0
+) {
+  console.log(
+    `  ✓ Navigation model verified: ${navTest.primaryNavItems.length} primary links, ${navTest.dockItems.length} dock shortcuts, ${navTest.moreGroups.length} categories`
+  );
+} else {
+  result.passed = false;
+  result.failures.push("Canonical navigation model generator failed validation.");
+  console.log("  ✗ NAVIGATION MODEL VALIDATION FAILED");
+}
+
+// 8. PROHIBITED CLIENT RESIDUE & STALE ALIAS SCAN
+console.log("\n[8] PROHIBITED CLIENT RESIDUE & STALE ALIAS SCAN");
+const prohibitedTerms = [
+  "Princess Anne",
+  "Rafael",
+  "Isabella",
+  "Dianne",
+  "Blue Hour",
+  "Template Starter V2",
+];
 const forbiddenFieldPatterns = [
   { pattern: "groomParents", reason: "Parent fields are not in host_info" },
   { pattern: "brideParents", reason: "Parent fields are not in host_info" },
@@ -241,7 +288,9 @@ function scanForResidueAndAliases(dir: string) {
         filePath.includes("node_modules") ||
         filePath.includes(".next") ||
         filePath.includes("check-template-contract") ||
-        filePath.includes(".git")
+        filePath.includes(".git") ||
+        filePath.includes("README") ||
+        filePath.includes("TEMPLATE_GUIDE")
       )
         continue;
       const content = fs.readFileSync(filePath, "utf-8");
@@ -266,7 +315,7 @@ function scanForResidueAndAliases(dir: string) {
 }
 scanForResidueAndAliases(path.resolve(process.cwd(), "src"));
 
-// 8. SUMMARY
+// 9. SUMMARY
 console.log("\n──────────────────────────────────────────");
 if (result.warnings.length > 0) {
   console.log(`WARNINGS (${result.warnings.length}):`);

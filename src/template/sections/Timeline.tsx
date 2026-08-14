@@ -1,4 +1,5 @@
 import type { TimelineData } from "@/platform/wedding-template-data";
+import { formatEventTime } from "@/template/utils/event-formatting";
 
 // PLATFORM DATA — KEEP DYNAMIC.
 // Program & Timeline schedule.
@@ -17,24 +18,31 @@ export function TimelineSection({ data }: { data: TimelineData }) {
           {data.sectionTitle || "Program & Timeline"}
         </h2>
         {data.sectionIntro && (
-          <p className="text-sm text-gray-600 max-w-md mx-auto mt-2">{data.sectionIntro}</p>
+          <p className="text-sm text-gray-600 max-w-md mx-auto mt-2 leading-relaxed">
+            {data.sectionIntro}
+          </p>
         )}
       </div>
+
       <div className="max-w-xl mx-auto space-y-6">
-        {data.items.map((item) => (
-          <div key={item.id} className="flex gap-4 items-start">
-            <div className="w-24 shrink-0 text-right font-semibold text-gray-800 text-sm py-1">
-              {item.time}
+        {data.items.map((item) => {
+          const displayTime = formatEventTime(item.time) || item.time;
+
+          return (
+            <div key={item.id} className="flex gap-4 items-start">
+              <div className="w-24 shrink-0 text-right font-semibold text-gray-800 text-sm py-1">
+                {displayTime}
+              </div>
+              <div className="relative pl-6 border-l-2 border-gray-300 pb-2 flex-1">
+                <span className="absolute -left-[7px] top-2 w-3 h-3 rounded-full bg-gray-900 border-2 border-white" />
+                <h3 className="font-semibold text-gray-900 text-base">{item.title}</h3>
+                {item.description && (
+                  <p className="text-sm text-gray-600 mt-1 leading-relaxed">{item.description}</p>
+                )}
+              </div>
             </div>
-            <div className="relative pl-6 border-l-2 border-gray-300 pb-2">
-              <span className="absolute -left-[7px] top-2 w-3 h-3 rounded-full bg-gray-400 border-2 border-white" />
-              <h3 className="font-medium text-gray-900 text-base">{item.title}</h3>
-              {item.description && (
-                <p className="text-sm text-gray-600 mt-1 leading-relaxed">{item.description}</p>
-              )}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

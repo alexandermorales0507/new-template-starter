@@ -29,7 +29,13 @@ export const templateSectionRegistry: Record<
   string,
   (props: SectionRendererProps) => React.ReactNode
 > = {
-  host_info: ({ data }) => <CoupleSection data={data.couple} />,
+  host_info: ({ data }) => (
+    <CoupleSection
+      data={data.couple}
+      eventDate={data.ceremony?.eventDate || data.eventDate}
+      storyEnabled={data.enabledSectionKeys?.includes("story_message")}
+    />
+  ),
   countdown: ({ data }) => (
     <CountdownSection
       data={data.countdown}
@@ -41,7 +47,12 @@ export const templateSectionRegistry: Record<
   gallery: ({ data }) => <GallerySection data={data.gallery} />,
   main_event: ({ data }) => <CeremonySection data={data.ceremony} />,
   venue: ({ data }) => <VenueSection data={data.venue} />,
-  secondary_event: ({ data }) => <ReceptionSection data={data.reception} />,
+  secondary_event: ({ data }) => (
+    <ReceptionSection
+      data={data.reception}
+      eventDate={data.ceremony?.eventDate || data.eventDate}
+    />
+  ),
   timeline_program: ({ data }) => <TimelineSection data={data.timeline} />,
   entourage: ({ data }) => <EntourageSection data={data.entourage} />,
   principal_sponsors: ({ data }) => <SponsorsSection data={data.sponsors} />,

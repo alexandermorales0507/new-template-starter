@@ -19,6 +19,7 @@ export default async function RsvpPage({ searchParams }: RsvpPageProps) {
           <RSVPSection
             data={result.data.rsvp}
             eventSlug={result.data.eventSlug}
+            deadlineLabel={result.data.rsvpDeadlineLabel || result.data.ceremony?.rsvpDeadline}
             apiBaseUrl={result.env.apiBaseUrl}
             accessToken={query.access ? String(query.access) : null}
             isDemoMode={result.env.designMode}

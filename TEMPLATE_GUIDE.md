@@ -36,6 +36,9 @@ The **Wedding Template Registry** (`src/template/section-registry.tsx`) register
 | **Guestbook Messages** | Platform API               | Approved messages included in `PublicEventDto`   |
 | **Gift Options**       | Platform API               | Maximum 2 options                                |
 
+> **Attire Guardrail Note**:
+> Attire swatches/illustrations are template-local (`template.config.ts` / CSS). Update them to match the client's approved motif before publishing. The connected `colorMotifNote` and `dressCodeNote` remain separate platform data and must remain visible.
+
 ---
 
 ## 3. Design Freely (`src/template/` & `public/template-assets/`)
@@ -43,61 +46,50 @@ The **Wedding Template Registry** (`src/template/section-registry.tsx`) register
 You are encouraged to completely reimagine and redesign everything inside:
 
 - `src/template/sections/` — Section UI components (17 Wedding sections)
-- `src/template/components/` — Headers, footers, navigation, identity marks
+- `src/template/components/` — Headers, footers, navigation, identity marks, quick dock, sitemap drawer
 - `src/template/styles/` — Colors, typography, motion, geometry tokens
 - `public/template-assets/` — Local artwork, photos, icons, backgrounds
 
 ---
 
-## 4. Authoring Guidelines
+## 4. Semantic Designer Contracts (17 Wedding Sections)
 
-### You May
+You may completely redesign any section visually, but preserve its connected semantic responsibilities:
 
-- Replace section layouts, cards, and page composition entirely
-- Change colors, typography, spacing, border radii, and shadows centrally
-- Add responsive animations and interaction effects
-- Install compatible npm libraries (e.g. Framer Motion, Lenis, Lucide icons)
-- Create specialized visual themes (e.g. Editorial, Journal, Collage, Cinematic)
-
-### You Must
-
-- Keep all platform data fields dynamic (`data.groomName`, `data.eventDate`, etc.)
-- Respect platform section ordering (`data.enabledSectionKeys`)
-- Render dynamic collections without assuming fixed counts (Timeline, Entourage, Sponsors, etc.)
-- Keep RSVP submissions connected via the shared platform adapter (`submitRsvp`)
-- Derive couple monograms/initials dynamically via `deriveCoupleIdentity()`
-- Maintain responsive layout support and keyboard accessibility (`template-focus-ring`)
-
-### Do Not
-
-- Hardcode client names, dates, or initials anywhere in TSX or CSS
-- Directly query Supabase or external backend databases from visual components
-- Remove or bypass platform RSVP submission logic
-- Fake unsupported platform features (e.g., custom RSVP questions or public guestbook POST)
-- Silently fallback to demo data when a live API request fails
-- Scatter hardcoded hex colors or static inline styles throughout TSX files
+1. **`host_info` (Couple)**: MUST preserve `groomName`, `brideName`, `displayAs`, `hostLine`, `shortHostMessage`. May customize hero background/layout. Dynamic monogram `J & A` is derived.
+2. **`countdown`**: MUST preserve `title`, `shortNote`. Target time is derived from ceremony date/time.
+3. **`music_effects`**: MUST remain a real in-page section in normal document flow. MUST preserve `musicTitle`, `shortNote`, `playButtonLabel`, `musicLink`. Controlled via shared `AudioProvider`.
+4. **`gallery`**: MUST preserve `sectionTitle`, `sectionIntro`. Photos come from local `templateAssets.photos.gallery`.
+5. **`main_event` (Ceremony)**: MUST preserve `eventLabel`, `eventDate`, `eventTime`, `endTime`, `scheduleNote`, and `rsvpDeadline`.
+6. **`venue`**: MUST preserve `venueName`, `address`, `arrivalNote`, `mapsLink`. Local photo in `templateAssets`.
+7. **`secondary_event` (Reception)**: MUST preserve `title`, `venueName`, `address`, `startTime`, `endTime`, `mapsLink`, `note`. Date display derived from `main_event`.
+8. **`timeline_program`**: MUST preserve `items` (`id`, `time`, `title`, `description`) in source order. Handles 0/1/few/many items.
+9. **`entourage`**: MUST preserve `introLine`, `groups` (`id`, `groupTitle`, `names`). Parses names line-by-line without splitting suffixes.
+10. **`principal_sponsors`**: MUST preserve `introLine`, `names` in canonical order without inventing pairs.
+11. **`attire_motif`**: MUST preserve `sectionIntro`, `dressCodeNote`, `colorMotifNote`. Swatches configured in `templateConfig.palette`.
+12. **`extra_info`**: MUST preserve `sectionTitle`, `sectionIntro`, and `items` (`id`, `title`, `details`).
+13. **`rsvp_form`**: MUST preserve all enabled fields (`companionLimit`, `companionNameEnabled`, food allergies, message). Submits through `submitRsvp()`.
+14. **`gift_details`**: MUST preserve `sectionIntro`, `giftNote`, and max 2 options (`id`, `title`, `image.url`). Never exposes internal file paths.
+15. **`guestbook`**: MUST display approved DTO messages and `emptyStateMessage`. No direct public posting.
+16. **`story_message`**: MUST preserve `storyTitle`, `sectionIntro`, `storyBody`. Local photos in `templateAssets`.
+17. **`contact_socials`**: MUST preserve all populated contact fields (`contactPerson`, `contactNumber`, `email`, Facebook, Instagram, TikTok).
 
 ---
 
-## 5. Styling & Design Tokens
+## 5. Canonical Wedding Navigation Model
 
-Theme styles are centralized in `src/template/styles/`:
+All navigation surfaces (Top Navbar, Floating Quick Dock, More Drawer) derive from a single navigation model generated by `buildWeddingNavigation(data)` in `src/template/navigation/wedding-navigation.ts`.
 
-- `tokens.css`: Primitive & semantic design tokens (60/30/10 surface & accent rules)
-- `typography.css`: Centralized font families and text role classes (`.text-role-heading`)
-- `motion.css`: Motion duration tokens and `prefers-reduced-motion` accessibility baseline
-- `template.css`: Reusable neutral container, card, and focus utility classes
+- **Disabled Section Rule**: Any section turned OFF in dashboard is automatically absent from Top Navbar, Quick Dock, and More Drawer.
+- **Completeness Rule**: Every enabled navigable section is discoverable through either Primary TopNav or the More Drawer.
 
 ---
 
-## 6. Dynamic Couple Identity
+## 6. Dynamic Couple Identity & Formatting
 
-Never hardcode client initials (e.g. "A & J"). Always use the template helper:
+### Monogram & Names
 
 ```tsx
-// DYNAMIC COUPLE IDENTITY.
-// Redesign freely, but derive initials/names from WeddingTemplateData.
-// Never hardcode client initials.
 import { deriveCoupleIdentity } from "@/template/utils/couple-identity";
 
 const identity = deriveCoupleIdentity(
@@ -105,44 +97,38 @@ const identity = deriveCoupleIdentity(
   data.couple?.brideName,
   data.coupleDisplayName
 );
-// identity.monogram -> "A & J"
-// identity.compactMonogram -> "AJ"
+// identity.monogram -> "J & A"
+// identity.compactMonogram -> "JA"
+// identity.displayName -> "John & Anne"
+```
+
+### Date & Time Formatting
+
+```tsx
+import {
+  formatEventDateLong,
+  formatEventDateShort,
+  formatEventTime,
+  formatTimeRange,
+  formatRsvpDeadline,
+  formatGuestbookDate,
+} from "@/template/utils/event-formatting";
+
+formatEventDateLong("2027-04-19"); // "Monday, April 19, 2027"
+formatTimeRange("16:00", "17:30"); // "4:00 PM – 5:30 PM"
+formatRsvpDeadline("2027-03-07T23:59"); // "March 7, 2027 at 11:59 PM"
 ```
 
 ---
 
-## 7. Local Asset Organization
+## 7. Development Workflow & Commands
 
-Store template-specific static assets in `public/template-assets/`:
-
-- `photos/`: Host/couple artwork and local photo placeholders
-- `decorations/`: Dividers, flourishes, frames, seals
-- `backgrounds/`: Textures, gradients, patterns
-- `illustrations/`: Custom vector artwork
-- `icons/`: Custom template icons
-
-Register asset references in `src/template/template-assets.ts`.
-
----
-
-## 8. Dependency Policy
-
-The starter codebase remains minimal. Cloned templates may install additional npm packages (e.g. Framer Motion, Lenis) if required by the design concept.
-
-**Rule**: Install only dependencies genuinely required by the design concept. Do not accumulate unused UI frameworks or competing animation engines.
-
----
-
-## 9. Development & Employee Workflow
-
-1. **Clone Starter**: `git clone <starter-repo>`
-2. **Install Dependencies**: `npm install`
-3. **Local Design**: `npm run dev` (edit `src/template/`, add assets to `public/template-assets/`)
-4. **Format Code**: `npm run format`
-5. **Contract Check**: `npm run check:template`
-6. **Full Prebuild Verification**: `npm run verify`
-7. **Production Build**: `npm run build`
-8. **Live Connection Verification**: `npm run verify:connection` (tests configured real event)
+1. **Local Design**: `npm run dev` (edit `src/template/`, add assets to `public/template-assets/`)
+2. **Format Code**: `npm run format`
+3. **Contract Check**: `npm run check:template`
+4. **Full Prebuild Verification**: `npm run verify`
+5. **Production Build**: `npm run build`
+6. **Live Connection Verification**: `npm run verify:connection` (read-only verification)
 
 ### Commands Summary
 
@@ -150,5 +136,3 @@ The starter codebase remains minimal. Cloned templates may install additional np
 - `npm run verify`: Runs contract check, typecheck, and formatting check.
 - `npm run build`: Runs `verify` (prebuild) then `next build`. Offline-safe, no live network required.
 - `npm run verify:connection`: Read-only health check for configured live WebSerbisyo API event.
-
-If `npm run check:template` fails, read the reported missing requirement and restore the platform connection instead of removing the guardrail.

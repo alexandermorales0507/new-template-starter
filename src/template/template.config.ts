@@ -18,7 +18,7 @@ export const templateConfig: TemplateConfig = {
   id: "custom-wedding-starter",
   name: "Custom Wedding Template Starter",
   version: 2,
-  description: "WebSerbisyo Custom Wedding Template Starter V2 with design system foundation.",
+  description: "WebSerbisyo Custom Wedding Template Starter with design system foundation.",
   palette: [
     { name: "Navy Slate", hex: "#334155" },
     { name: "Muted Blue", hex: "#64748b" },

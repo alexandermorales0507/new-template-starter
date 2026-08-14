@@ -8,8 +8,8 @@ import type { CountdownData } from "@/platform/wedding-template-data";
 
 export type CountdownSectionProps = {
   data: CountdownData;
-  eventDate?: string;
-  eventTime?: string;
+  eventDate?: string | null;
+  eventTime?: string | null;
 };
 
 export function CountdownSection({ data, eventDate, eventTime }: CountdownSectionProps) {
@@ -23,8 +23,22 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
   useEffect(() => {
     if (!eventDate) return;
 
-    const dateStr = eventTime ? `${eventDate} ${eventTime}` : eventDate;
-    const targetTime = new Date(dateStr).getTime();
+    const dateParts = eventDate.split("-").map(Number);
+    if (dateParts.length < 3 || dateParts.some(isNaN)) return;
+
+    let hours = 16;
+    let minutes = 0;
+
+    if (eventTime) {
+      const timeParts = eventTime.split(":").map(Number);
+      if (timeParts.length >= 2 && !isNaN(timeParts[0]) && !isNaN(timeParts[1])) {
+        hours = timeParts[0];
+        minutes = timeParts[1];
+      }
+    }
+
+    const targetDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], hours, minutes, 0);
+    const targetTime = targetDate.getTime();
     if (isNaN(targetTime)) return;
 
     const updateTimer = () => {
@@ -57,24 +71,38 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
         {data.title || "Counting Down To Our Big Day"}
       </h2>
       {data.shortNote && (
-        <p className="text-sm text-gray-500 mb-6 max-w-md mx-auto">{data.shortNote}</p>
+        <p className="text-sm text-gray-500 mb-6 max-w-md mx-auto leading-relaxed">
+          {data.shortNote}
+        </p>
       )}
-      <div className="grid grid-cols-4 gap-4 max-w-md mx-auto mt-4">
+      <div className="grid grid-cols-4 gap-3 sm:gap-4 max-w-md mx-auto mt-4">
         <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <span className="block text-3xl font-bold text-gray-900">{timeLeft.days}</span>
-          <span className="text-xs uppercase text-gray-500 font-medium">Days</span>
+          <span className="block text-2xl sm:text-3xl font-bold text-gray-900">
+            {timeLeft.days}
+          </span>
+          <span className="text-[10px] sm:text-xs uppercase text-gray-500 font-medium">Days</span>
         </div>
         <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <span className="block text-3xl font-bold text-gray-900">{timeLeft.hours}</span>
-          <span className="text-xs uppercase text-gray-500 font-medium">Hours</span>
+          <span className="block text-2xl sm:text-3xl font-bold text-gray-900">
+            {timeLeft.hours}
+          </span>
+          <span className="text-[10px] sm:text-xs uppercase text-gray-500 font-medium">Hours</span>
         </div>
         <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <span className="block text-3xl font-bold text-gray-900">{timeLeft.minutes}</span>
-          <span className="text-xs uppercase text-gray-500 font-medium">Minutes</span>
+          <span className="block text-2xl sm:text-3xl font-bold text-gray-900">
+            {timeLeft.minutes}
+          </span>
+          <span className="text-[10px] sm:text-xs uppercase text-gray-500 font-medium">
+            Minutes
+          </span>
         </div>
         <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <span className="block text-3xl font-bold text-gray-900">{timeLeft.seconds}</span>
-          <span className="text-xs uppercase text-gray-500 font-medium">Seconds</span>
+          <span className="block text-2xl sm:text-3xl font-bold text-gray-900">
+            {timeLeft.seconds}
+          </span>
+          <span className="text-[10px] sm:text-xs uppercase text-gray-500 font-medium">
+            Seconds
+          </span>
         </div>
       </div>
     </section>
