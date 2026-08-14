@@ -291,14 +291,14 @@ export function FloatingMusicBubble({
     >
       {isExpanded && (
         <div
-          className={`mb-3 w-72 max-w-[calc(100vw-2rem)] rounded-xl bg-white/95 backdrop-blur-md border border-gray-200 p-4 shadow-xl text-gray-900 select-none animate-in fade-in slide-in-from-bottom-2 duration-200 ${
+          className={`mb-3 w-72 max-w-[calc(100vw-2rem)] rounded-2xl bg-white/95 backdrop-blur-md border border-gray-200 p-4 shadow-2xl text-gray-900 select-none animate-in fade-in slide-in-from-bottom-2 duration-200 ${
             isInline ? "absolute bottom-full right-0" : ""
           }`}
         >
           <div className="flex justify-between items-start mb-3">
-            <div className="flex gap-2.5 items-center min-w-0">
+            <div className="flex gap-3 items-center min-w-0">
               <div
-                className={`w-8 h-8 rounded-full bg-gray-900 flex items-center justify-center text-white shrink-0 ${
+                className={`w-9 h-9 rounded-full bg-gray-900 flex items-center justify-center text-white shrink-0 ${
                   isPlaying ? "animate-spin" : ""
                 }`}
                 style={{ animationDuration: "6s" }}
@@ -316,7 +316,7 @@ export function FloatingMusicBubble({
             </div>
             <button
               onClick={() => setIsExpanded(false)}
-              className="text-gray-400 hover:text-gray-600 p-1 rounded-md template-focus-ring"
+              className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition template-focus-ring"
               aria-label="Minimize player"
             >
               <X className="w-4 h-4" />
@@ -362,16 +362,16 @@ export function FloatingMusicBubble({
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
-        className={`rounded-full bg-gray-900 text-white shadow-xl hover:bg-gray-800 flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none template-focus-ring shrink-0 ${
-          compact ? "w-9 h-9 sm:w-10 sm:h-10" : "w-10 h-10 sm:w-11 sm:h-11"
+        className={`rounded-full bg-gray-900 text-white shadow-2xl hover:bg-gray-800 flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none template-focus-ring shrink-0 ${
+          compact ? "w-12 h-12" : "w-14 h-14"
         }`}
         aria-label="Wedding song controls"
         title={isPlaying ? "Pause music" : "Play music"}
       >
         {isPlaying ? (
-          <Volume2 className={compact ? "w-4 h-4 animate-pulse" : "w-5 h-5 animate-pulse"} />
+          <Volume2 className={compact ? "w-5 h-5 animate-pulse" : "w-6 h-6 animate-pulse"} />
         ) : (
-          <VolumeX className={compact ? "w-4 h-4 opacity-75" : "w-5 h-5 opacity-75"} />
+          <VolumeX className={compact ? "w-5 h-5 opacity-75" : "w-6 h-6 opacity-75"} />
         )}
       </button>
     </div>

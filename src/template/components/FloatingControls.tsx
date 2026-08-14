@@ -77,7 +77,7 @@ export function FloatingControls({ items }: FloatingControlsProps) {
         }
       >
         <div className="flex min-w-0 flex-none justify-center">
-          <QuickDock items={items} compact={isCompact || isMusicActive} />
+          <QuickDock items={items} compact={isCompact} />
         </div>
 
         {isMusicActive && (

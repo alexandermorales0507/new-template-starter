@@ -44,7 +44,7 @@ export function QuickDock({ items, compact = false, className = "" }: QuickDockP
   return (
     <aside
       className={`wedding-guest-dock bg-white/95 backdrop-blur-md border border-gray-200 shadow-xl rounded-full flex items-center shrink-0 ${
-        compact ? "gap-1.5 px-2.5 py-1.5 sm:gap-2 sm:px-3 sm:py-2" : "gap-2 sm:gap-2.5 px-3 py-2"
+        compact ? "gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3 sm:py-2" : "gap-2.5 sm:gap-3 px-3.5 py-2"
       } ${className}`}
       role="toolbar"
       aria-label="Guest essentials navigation"
@@ -63,8 +63,8 @@ export function QuickDock({ items, compact = false, className = "" }: QuickDockP
               onMouseLeave={() => setActiveTooltip(null)}
               onFocus={() => setActiveTooltip(item.key)}
               onBlur={() => setActiveTooltip(null)}
-              className={`rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none template-focus-ring ${
-                compact ? "w-9 h-9 sm:w-10 sm:h-10" : "w-10 h-10 sm:w-11 sm:h-11"
+              className={`rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none template-focus-ring shrink-0 ${
+                compact ? "w-[38px] h-[38px]" : "w-11 h-11"
               } ${
                 isPrimary
                   ? "bg-gray-900 text-white shadow-md hover:bg-gray-800 hover:scale-105 active:scale-95"
@@ -72,9 +72,7 @@ export function QuickDock({ items, compact = false, className = "" }: QuickDockP
               }`}
               aria-label={item.label}
             >
-              <IconComponent
-                className={compact ? "w-4 h-4 sm:w-[18px] sm:h-[18px]" : "w-4 h-4 sm:w-5 sm:h-5"}
-              />
+              <IconComponent className={compact ? "w-[18px] h-[18px]" : "w-5 h-5"} />
             </Link>
 
             {/* Floating Tooltip */}
