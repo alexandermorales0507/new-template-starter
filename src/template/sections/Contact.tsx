@@ -4,14 +4,16 @@ import { Phone, Mail, Globe, User } from "lucide-react";
 // PLATFORM DATA — KEEP DYNAMIC.
 // Contact & Socials section.
 
-export function ContactSection({ data }: { data: ContactData }) {
+export function ContactSection({ data }: { data?: ContactData | null }) {
+  if (!data) return null;
+
   const hasContent = Boolean(
-    data.contactPerson ||
-    data.contactNumber ||
-    data.email ||
-    data.facebookUrl ||
-    data.instagramUrl ||
-    data.tikTokUrl
+    data.contactPerson?.trim() ||
+    data.contactNumber?.trim() ||
+    data.email?.trim() ||
+    data.facebookUrl?.trim() ||
+    data.instagramUrl?.trim() ||
+    data.tikTokUrl?.trim()
   );
 
   if (!hasContent) return null;

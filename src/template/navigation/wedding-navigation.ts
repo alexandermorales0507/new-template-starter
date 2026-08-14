@@ -244,10 +244,30 @@ export function resolveWeddingHref(anchor: string, currentPathname: string = "/"
 }
 
 /**
+ * Checks whether contact_socials contains any meaningful non-empty fields.
+ */
+export function hasMeaningfulContactContent(contact?: WeddingTemplateData["contact"]): boolean {
+  if (!contact) return false;
+  return Boolean(
+    contact.contactPerson?.trim() ||
+    contact.contactNumber?.trim() ||
+    contact.email?.trim() ||
+    contact.facebookUrl?.trim() ||
+    contact.instagramUrl?.trim() ||
+    contact.tikTokUrl?.trim()
+  );
+}
+
+/**
  * Builds the unified navigation model for a wedding template.
  */
 export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWeddingNavigation {
   const enabledSet = new Set((data.enabledSectionKeys || []) as WeddingApplicableSectionKey[]);
+
+  // If contact_socials is enabled but has zero actual content, exclude it from navigation to avoid dead links
+  if (enabledSet.has("contact_socials") && !hasMeaningfulContactContent(data.contact)) {
+    enabledSet.delete("contact_socials");
+  }
 
   // Filter all enabled items according to template data
   const allEnabledItems: WeddingNavItem[] = WEDDING_APPLICABLE_SECTION_KEYS.filter((key) =>

@@ -96,4 +96,10 @@
   --wedding-drawer-width: 26rem;
   --wedding-drawer-bg: var(--surface-page);
   --wedding-drawer-border: var(--border-default);
+
+  --wedding-footer-pt-full: 2.5rem;
+  --wedding-footer-pb-full: 7rem;
+  --wedding-footer-pt-compact: 1.5rem;
+  --wedding-footer-pb-compact: 5.5rem;
+  --wedding-footer-gap: 2rem;
 }

@@ -33,21 +33,23 @@ export function TemplateRenderer({
         <Navbar data={data} />
 
         <main className="flex-1 pt-16">
-          {data.orderedSectionKeys.map((key) => {
-            const renderSection = templateSectionRegistry[key];
-            if (!renderSection) return null;
+          {data.orderedSectionKeys
+            .filter((key) => key !== "contact_socials")
+            .map((key) => {
+              const renderSection = templateSectionRegistry[key];
+              if (!renderSection) return null;
 
-            return (
-              <div key={key}>
-                {renderSection({
-                  data,
-                  apiBaseUrl,
-                  accessToken,
-                  isDemoMode,
-                })}
-              </div>
-            );
-          })}
+              return (
+                <div key={key}>
+                  {renderSection({
+                    data,
+                    apiBaseUrl,
+                    accessToken,
+                    isDemoMode,
+                  })}
+                </div>
+              );
+            })}
         </main>
 
         <Footer data={data} />
