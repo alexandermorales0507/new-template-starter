@@ -68,36 +68,79 @@ export function normalizeEventData(
   const eventSlug = stringValue(raw.eventSlug ?? raw.slug) || options.eventSlug || "event";
 
   const content = record(raw.content);
-  const rawSections = arrayOfRecords(raw.sections);
+  const layout = record(content.layout);
+  const sectionsByKey = record(raw.sectionsByKey);
+  const contentSections = record(content.sections);
+  const enabledSectionsMap = record(layout.enabledSections ?? raw.enabledSections);
 
-  // Index sections by key
   const sectionContentMap = new Map<string, Record<string, unknown>>();
   const sectionMap = new Map<string, NormalizedSection>();
 
-  for (const s of rawSections) {
-    const key = stringValue(s.key);
-    if (key) {
-      const secContent = record(s.content);
+  // Parse sections list: handle array of string keys (PublicEventDto) or array of section objects (Demo)
+  if (Array.isArray(raw.sections) && raw.sections.every((item) => typeof item === "string")) {
+    const keys = raw.sections as string[];
+    for (const key of keys) {
+      if (eventWebsiteSectionKeySet.has(key)) {
+        const secObj = record(sectionsByKey[key]);
+        const secContent = record(
+          secObj.content ?? contentSections[key] ?? content[key] ?? raw[key]
+        );
+        sectionContentMap.set(key, secContent);
+        sectionMap.set(key, {
+          key,
+          title: stringValue(secObj.title ?? secObj.label),
+          enabled: boolValue(enabledSectionsMap[key]) ?? boolValue(secObj.enabled) ?? true,
+          content: secContent,
+        });
+      }
+    }
+  } else if (Array.isArray(raw.sections)) {
+    const rawSecObjs = arrayOfRecords(raw.sections);
+    for (const s of rawSecObjs) {
+      const key = stringValue(s.key);
+      if (key && eventWebsiteSectionKeySet.has(key)) {
+        const secContent = record(s.content ?? contentSections[key]);
+        sectionContentMap.set(key, secContent);
+        sectionMap.set(key, {
+          key,
+          title: stringValue(s.title),
+          enabled: boolValue(enabledSectionsMap[key]) ?? s.enabled !== false,
+          content: secContent,
+        });
+      }
+    }
+  }
+
+  // Also check sectionsByKey for any missing keys
+  for (const [key, val] of Object.entries(sectionsByKey)) {
+    if (
+      !sectionMap.has(key) &&
+      eventWebsiteSectionKeySet.has(key) &&
+      val &&
+      typeof val === "object"
+    ) {
+      const secObj = record(val);
+      const secContent = record(secObj.content ?? contentSections[key]);
       sectionContentMap.set(key, secContent);
       sectionMap.set(key, {
         key,
-        title: stringValue(s.title),
-        enabled: s.enabled !== false,
+        title: stringValue(secObj.title),
+        enabled: boolValue(enabledSectionsMap[key]) ?? secObj.enabled !== false,
         content: secContent,
       });
     }
   }
 
-  // Also check top-level content map
-  for (const [key, val] of Object.entries(content)) {
+  // Also check top-level content/contentSections map
+  for (const [key, val] of Object.entries({ ...content, ...contentSections })) {
     if (!sectionContentMap.has(key) && val && typeof val === "object") {
       const rec = record(val);
       sectionContentMap.set(key, rec);
-      if (!sectionMap.has(key)) {
+      if (!sectionMap.has(key) && eventWebsiteSectionKeySet.has(key)) {
         sectionMap.set(key, {
           key,
           title: stringValue(rec.title),
-          enabled: true,
+          enabled: boolValue(enabledSectionsMap[key]) ?? true,
           content: rec,
         });
       }
@@ -105,13 +148,21 @@ export function normalizeEventData(
   }
 
   function getSectionContent(key: string): Record<string, unknown> {
-    return sectionContentMap.get(key) || record(content[key]) || record(raw[key]);
+    return (
+      sectionContentMap.get(key) ||
+      record(record(sectionsByKey[key]).content) ||
+      record(contentSections[key]) ||
+      record(content[key]) ||
+      record(raw[key])
+    );
   }
 
-  // Parse sections list
+  // Parse sections ordering and enabled lists
   const normalizedSectionsList: NormalizedSection[] = Array.from(sectionMap.values());
-  const rawOrder = Array.isArray(raw.orderedSectionKeys ?? raw.sectionOrder)
-    ? (raw.orderedSectionKeys ?? raw.sectionOrder)
+  const rawOrder = Array.isArray(
+    raw.orderedSectionKeys ?? raw.sectionOrder ?? layout.sectionOrder ?? raw.sections
+  )
+    ? (raw.orderedSectionKeys ?? raw.sectionOrder ?? layout.sectionOrder ?? raw.sections)
     : [];
   const rawEnabled = Array.isArray(raw.enabledSectionKeys ?? raw.enabledSections)
     ? (raw.enabledSectionKeys ?? raw.enabledSections)
@@ -136,7 +187,13 @@ export function normalizeEventData(
   for (const key of candidateKeys) {
     if (!seen.has(key) && eventWebsiteSectionKeySet.has(key)) {
       seen.add(key);
-      const isEnabled = isSectionEnabled(key, normalizedSectionsList, stringEnabled);
+      const isEnabled = isSectionEnabled(
+        key,
+        normalizedSectionsList,
+        stringEnabled.length > 0
+          ? stringEnabled
+          : Object.keys(enabledSectionsMap).filter((k) => enabledSectionsMap[k] === true)
+      );
       if (isEnabled) {
         enabledSectionKeys.push(key);
         orderedSectionKeys.push(key);
