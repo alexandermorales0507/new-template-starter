@@ -20,6 +20,7 @@ import {
 import {
   buildWeddingNavigation,
   resolveWeddingHref,
+  hasMeaningfulContactContent,
 } from "../src/template/navigation/wedding-navigation.js";
 
 type CheckResult = {
@@ -867,7 +868,88 @@ assertField(
   "contact_socials.tikTokUrl"
 );
 
-// 10. SUMMARY
+// 10. CONTACT_SOCIALS FOOTER PLACEMENT & TOGGLE GUARD
+console.log("\n[10] CONTACT_SOCIALS FOOTER PLACEMENT & TOGGLE GUARD");
+
+// 10.1 Verify meaningful content detection helper
+const fullContactTest = hasMeaningfulContactContent({
+  contactPerson: "Alex & Jamie",
+  email: "alex@example.com",
+});
+const emptyContactTest = hasMeaningfulContactContent({
+  contactPerson: "   ",
+  email: "",
+  contactNumber: undefined,
+});
+const nullContactTest = hasMeaningfulContactContent(undefined);
+
+if (fullContactTest && !emptyContactTest && !nullContactTest) {
+  console.log("  ✓ Meaningful contact content detection helper verified");
+} else {
+  result.passed = false;
+  result.failures.push("hasMeaningfulContactContent failed validation.");
+  console.log("  ✗ CONTACT CONTENT DETECTION HELPER FAILED");
+}
+
+// 10.2 Verify navigation filtering with disabled contact_socials
+const disabledContactNavTest = buildWeddingNavigation({
+  ...demoWeddingData,
+  enabledSectionKeys: demoWeddingData.enabledSectionKeys.filter((k) => k !== "contact_socials"),
+});
+const hasContactWhenDisabled = disabledContactNavTest.allEnabledItems.some(
+  (item) => item.key === "contact_socials"
+);
+
+// 10.3 Verify navigation filtering with empty contact data
+const emptyContactNavTest = buildWeddingNavigation({
+  ...demoWeddingData,
+  enabledSectionKeys: [...demoWeddingData.enabledSectionKeys, "contact_socials"],
+  contact: {
+    contactPerson: "",
+    contactNumber: "",
+    email: "",
+    facebookUrl: "",
+    instagramUrl: "",
+    tikTokUrl: "",
+  },
+});
+const hasContactWhenEmpty = emptyContactNavTest.allEnabledItems.some(
+  (item) => item.key === "contact_socials"
+);
+
+if (!hasContactWhenDisabled && !hasContactWhenEmpty) {
+  console.log(
+    "  ✓ Contact navigation correctly suppressed when disabled or empty (zero dead links)"
+  );
+} else {
+  result.passed = false;
+  result.failures.push(
+    "Contact navigation item was incorrectly included when section was disabled or empty."
+  );
+  console.log("  ✗ CONTACT NAVIGATION FILTER GUARD FAILED");
+}
+
+// 10.4 Verify TemplateRenderer filters contact_socials from in-flow rendering to prevent duplicate cards
+const templateRendererSrc = fs.readFileSync(
+  path.resolve(process.cwd(), "src/template/TemplateRenderer.tsx"),
+  "utf-8"
+);
+if (
+  templateRendererSrc.includes('.filter((key) => key !== "contact_socials")') ||
+  templateRendererSrc.includes(".filter((key) => key !== 'contact_socials')")
+) {
+  console.log(
+    "  ✓ Single visual placement guard verified: contact_socials filtered from in-flow <main> rendering"
+  );
+} else {
+  result.passed = false;
+  result.failures.push(
+    "TemplateRenderer.tsx does not filter out contact_socials from in-flow rendering."
+  );
+  console.log("  ✗ IN-FLOW DUPLICATION GUARD FAILED");
+}
+
+// 11. SUMMARY
 console.log("\n──────────────────────────────────────────");
 if (result.warnings.length > 0) {
   console.log(`WARNINGS (${result.warnings.length}):`);
