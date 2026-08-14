@@ -8,7 +8,10 @@ export function AttireSection({ data }: { data: AttireData }) {
   const localPalette = templateConfig.palette || [];
 
   return (
-    <section id="attire_motif" className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200">
+    <section
+      id="attire_motif"
+      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+    >
       <div className="text-center mb-8">
         <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Dress Code</p>
         <h2 className="text-3xl font-bold text-gray-900">Attire & Motif</h2>
@@ -23,7 +26,9 @@ export function AttireSection({ data }: { data: AttireData }) {
 
         {localPalette.length > 0 && (
           <div className="pt-2">
-            <p className="text-xs uppercase tracking-wider text-gray-500 mb-2">Palette Inspiration</p>
+            <p className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+              Palette Inspiration
+            </p>
             <div className="flex justify-center items-center gap-3">
               {localPalette.map((swatch, idx) => (
                 <div key={idx} className="flex flex-col items-center gap-1">

@@ -15,9 +15,7 @@ import type {
   EntourageGroup,
   ExtraInfoItem,
   GiftOption,
-  TraditionGroup,
-  DebutCourtGroup,
-  GodparentsGroup,
+  RsvpData,
 } from "./wedding-template-data";
 import { isSectionEnabled } from "./section-visibility";
 
@@ -158,136 +156,108 @@ export function normalizeEventData(
 
   // 1. host_info (Couple)
   const hostContent = getSectionContent("host_info");
-  const groomName =
-    stringValue(hostContent.groomName ?? raw.groomName ?? hostContent.groom) || "Groom";
-  const brideName =
-    stringValue(hostContent.brideName ?? raw.brideName ?? hostContent.bride) || "Bride";
-  const displayAs =
-    (stringValue(hostContent.displayAs) as "groom_first" | "bride_first") || "groom_first";
+  const groomName = stringValue(hostContent.groomName) || "Groom";
+  const brideName = stringValue(hostContent.brideName) || "Bride";
+  const displayAs = stringValue(hostContent.displayAs) || "";
   const coupleData = {
     kind: "wedding" as const,
     groomName,
     brideName,
     displayAs,
     hostLine: stringValue(hostContent.hostLine) || "Together with their families",
-    shortHostMessage: stringValue(hostContent.shortHostMessage ?? hostContent.message),
+    shortHostMessage: stringValue(hostContent.shortHostMessage) || "",
   };
 
   // 2. countdown
   const countdownContent = getSectionContent("countdown");
   const countdownData = {
     title: stringValue(countdownContent.title),
-    shortNote: stringValue(countdownContent.shortNote ?? countdownContent.note),
-    targetDate: stringValue(
-      countdownContent.targetDate ?? raw.eventDate ?? raw.date ?? hostContent.eventDate
-    ),
-    enabled: boolValue(countdownContent.enabled) ?? true,
+    shortNote: stringValue(countdownContent.shortNote),
   };
 
   // 3. music_effects
   const musicContent = getSectionContent("music_effects");
   const musicData = {
-    musicLink: stringValue(musicContent.musicLink ?? musicContent.audioUrl ?? musicContent.url),
-    musicTitle: stringValue(
-      musicContent.musicTitle ?? musicContent.trackTitle ?? musicContent.title
-    ),
+    musicLink: stringValue(musicContent.musicLink),
+    musicTitle: stringValue(musicContent.musicTitle),
     playButtonLabel: stringValue(musicContent.playButtonLabel) || "Play Music",
-    shortNote: stringValue(musicContent.shortNote ?? musicContent.note),
+    shortNote: stringValue(musicContent.shortNote),
   };
 
   // 4. gallery
   const galleryContent = getSectionContent("gallery");
   const galleryData = {
-    sectionTitle: stringValue(galleryContent.sectionTitle ?? galleryContent.title) || "Our Moments",
-    sectionIntro: stringValue(
-      galleryContent.sectionIntro ?? galleryContent.description ?? galleryContent.intro
-    ),
+    sectionTitle: stringValue(galleryContent.sectionTitle) || "Our Moments",
+    sectionIntro: stringValue(galleryContent.sectionIntro),
   };
 
   // 5. main_event (Ceremony)
   const ceremonyContent = getSectionContent("main_event");
   const ceremonyData = {
-    eventLabel:
-      stringValue(ceremonyContent.eventLabel ?? ceremonyContent.title) || "The Holy Ceremony",
-    eventDate: stringValue(ceremonyContent.eventDate ?? raw.eventDate ?? raw.date),
-    eventTime: stringValue(ceremonyContent.eventTime ?? ceremonyContent.time),
+    eventLabel: stringValue(ceremonyContent.eventLabel) || "The Holy Ceremony",
+    eventDate: stringValue(ceremonyContent.eventDate ?? raw.eventDate),
+    eventTime: stringValue(ceremonyContent.eventTime ?? raw.eventTime),
     endTime: stringValue(ceremonyContent.endTime),
-    rsvpDeadline: stringValue(
-      ceremonyContent.rsvpDeadline ?? raw.rsvpDeadline ?? raw.rsvpDeadlineDate
-    ),
-    scheduleNote: stringValue(ceremonyContent.scheduleNote ?? ceremonyContent.note),
+    rsvpDeadline: stringValue(ceremonyContent.rsvpDeadline),
+    scheduleNote: stringValue(ceremonyContent.scheduleNote),
   };
 
   // 6. venue (Location)
   const venueContent = getSectionContent("venue");
   const venueData = {
-    venueName:
-      stringValue(venueContent.venueName ?? venueContent.name ?? ceremonyContent.venueName) ||
-      "Wedding Venue",
-    address:
-      stringValue(venueContent.address ?? venueContent.location ?? ceremonyContent.address) ||
-      "Venue Address",
-    mapsLink: stringValue(
-      venueContent.mapsLink ?? venueContent.googleMapsUrl ?? venueContent.mapUrl
-    ),
-    arrivalNote: stringValue(
-      venueContent.arrivalNote ?? venueContent.note ?? venueContent.parkingNote
-    ),
+    venueName: stringValue(venueContent.venueName ?? raw.venueName) || "Wedding Venue",
+    address: stringValue(venueContent.address ?? raw.venueAddress) || "Venue Address",
+    mapsLink: stringValue(venueContent.mapsLink),
+    arrivalNote: stringValue(venueContent.arrivalNote),
   };
 
   // 7. secondary_event (Reception)
   const receptionContent = getSectionContent("secondary_event");
   const receptionData = {
-    title:
-      stringValue(receptionContent.title ?? receptionContent.eventLabel) || "Dinner & Celebration",
-    venueName: stringValue(receptionContent.venueName ?? venueContent.venueName),
-    address: stringValue(receptionContent.address ?? venueContent.address),
-    startTime: stringValue(receptionContent.startTime ?? receptionContent.time),
+    title: stringValue(receptionContent.title) || "Dinner & Celebration",
+    venueName: stringValue(receptionContent.venueName),
+    address: stringValue(receptionContent.address),
+    startTime: stringValue(receptionContent.startTime),
     endTime: stringValue(receptionContent.endTime),
-    mapsLink: stringValue(receptionContent.mapsLink ?? venueContent.mapsLink),
-    note: stringValue(receptionContent.note ?? receptionContent.scheduleNote),
+    mapsLink: stringValue(receptionContent.mapsLink),
+    note: stringValue(receptionContent.note),
   };
 
   // 8. timeline_program
   const timelineContent = getSectionContent("timeline_program");
-  const rawTimelineItems = arrayOfRecords(
-    timelineContent.items ?? timelineContent.events ?? timelineContent.schedule
-  );
+  const rawTimelineItems = arrayOfRecords(timelineContent.items);
   const timelineItems: TimelineItem[] = rawTimelineItems.map((item, idx) => ({
     id: stringValue(item.id) || `timeline-${idx + 1}`,
-    time: stringValue(item.time ?? item.hour) || "",
-    title: stringValue(item.title ?? item.name) || "Program Item",
-    description: stringValue(item.description ?? item.details ?? item.note),
+    time: stringValue(item.time) || "",
+    title: stringValue(item.title) || "Program Item",
+    description: stringValue(item.description),
   }));
   const timelineData = {
-    sectionTitle:
-      stringValue(timelineContent.sectionTitle ?? timelineContent.title) || "Program & Timeline",
-    sectionIntro: stringValue(timelineContent.sectionIntro ?? timelineContent.intro),
+    sectionTitle: stringValue(timelineContent.sectionTitle) || "Program & Timeline",
+    sectionIntro: stringValue(timelineContent.sectionIntro),
     items: timelineItems,
   };
 
   // 9. entourage
   const entourageContent = getSectionContent("entourage");
-  const rawEntourageGroups = arrayOfRecords(
-    entourageContent.groups ?? entourageContent.roles ?? entourageContent.members
-  );
+  const rawEntourageGroups = arrayOfRecords(entourageContent.groups);
   const entourageGroups: EntourageGroup[] = rawEntourageGroups.map((grp, idx) => {
     let namesStr = "";
     if (typeof grp.names === "string") {
       namesStr = grp.names;
     } else if (Array.isArray(grp.names)) {
-      namesStr = grp.names.map((n) => (typeof n === "string" ? n : stringValue(n) || "")).join("\n");
-    } else if (Array.isArray(grp.members)) {
-      namesStr = grp.members.map((n) => (typeof n === "string" ? n : stringValue(n) || "")).join("\n");
+      namesStr = grp.names
+        .map((n) => (typeof n === "string" ? n : stringValue(n) || ""))
+        .join("\n");
     }
     return {
       id: stringValue(grp.id) || `entourage-${idx + 1}`,
-      groupTitle: stringValue(grp.groupTitle ?? grp.title ?? grp.role) || "Entourage Group",
+      groupTitle: stringValue(grp.groupTitle) || "Entourage Group",
       names: namesStr,
     };
   });
   const entourageData = {
-    introLine: stringValue(entourageContent.introLine ?? entourageContent.intro),
+    introLine: stringValue(entourageContent.introLine),
     groups: entourageGroups,
   };
 
@@ -300,67 +270,46 @@ export function normalizeEventData(
     sponsorsNamesStr = sponsorContent.names
       .map((n) => (typeof n === "string" ? n : stringValue(n) || ""))
       .join("\n");
-  } else if (Array.isArray(sponsorContent.sponsors)) {
-    sponsorsNamesStr = sponsorContent.sponsors
-      .map((s) => {
-        if (typeof s === "string") return s;
-        const sRec = record(s);
-        const m = stringValue(sRec.maleSponsor ?? sRec.male ?? sRec.ninong);
-        const f = stringValue(sRec.femaleSponsor ?? sRec.female ?? sRec.ninang);
-        if (m && f) return `${m} & ${f}`;
-        return m || f || "";
-      })
-      .filter(Boolean)
-      .join("\n");
   }
   const sponsorsData = {
-    introLine: stringValue(sponsorContent.introLine ?? sponsorContent.intro),
+    introLine: stringValue(sponsorContent.introLine),
     names: sponsorsNamesStr,
   };
 
   // 11. attire_motif
   const attireContent = getSectionContent("attire_motif");
   const attireData = {
-    sectionIntro: stringValue(attireContent.sectionIntro ?? attireContent.intro),
-    dressCodeNote: stringValue(
-      attireContent.dressCodeNote ?? attireContent.dressCodeTitle ?? attireContent.description
-    ),
-    colorMotifNote: stringValue(attireContent.colorMotifNote ?? attireContent.note),
+    sectionIntro: stringValue(attireContent.sectionIntro),
+    dressCodeNote: stringValue(attireContent.dressCodeNote),
+    colorMotifNote: stringValue(attireContent.colorMotifNote),
   };
 
   // 12. extra_info
   const extraContent = getSectionContent("extra_info");
-  const rawExtraItems = arrayOfRecords(extraContent.items ?? extraContent.details);
+  const rawExtraItems = arrayOfRecords(extraContent.items);
   const extraItems: ExtraInfoItem[] = rawExtraItems.map((i, idx) => ({
     id: stringValue(i.id) || `extra-${idx + 1}`,
-    title: stringValue(i.title ?? i.heading) || "Note",
-    details: stringValue(i.details ?? i.content ?? i.description) || "",
+    title: stringValue(i.title) || "Note",
+    details: stringValue(i.details) || "",
   }));
   const extraInfoData = {
-    sectionTitle: stringValue(extraContent.sectionTitle ?? extraContent.title) || "Good to Know",
-    sectionIntro: stringValue(extraContent.sectionIntro ?? extraContent.intro),
+    sectionTitle: stringValue(extraContent.sectionTitle) || "Good to Know",
+    sectionIntro: stringValue(extraContent.sectionIntro),
     items: extraItems,
   };
 
   // 13. rsvp_form
   const rsvpContent = getSectionContent("rsvp_form");
-  const rsvpState = record(raw.rsvp ?? content.rsvp);
-  const rsvpData = {
-    enabled: boolValue(rsvpState.enabled ?? rsvpContent.enabled) ?? true,
-    deadline: stringValue(rsvpState.deadline ?? rsvpContent.deadline ?? ceremonyData.rsvpDeadline),
-    deadlineLabel: stringValue(
-      rsvpState.deadlineLabel ?? rsvpContent.deadlineLabel ?? ceremonyData.rsvpDeadline
-    ),
-    note: stringValue(rsvpState.note ?? rsvpContent.note),
-    plusOneEnabled: boolValue(rsvpContent.plusOneEnabled ?? rsvpContent.allowCompanions) ?? true,
-    companionLimit: numberValue(rsvpContent.companionLimit, 3),
+  const rsvpData: RsvpData = {
+    plusOneEnabled: boolValue(rsvpContent.plusOneEnabled) ?? false,
+    companionLimit: numberValue(rsvpContent.companionLimit, 1),
     companionNameEnabled: boolValue(rsvpContent.companionNameEnabled) ?? true,
-    companionAgeEnabled: boolValue(rsvpContent.companionAgeEnabled) ?? true,
+    companionAgeEnabled: boolValue(rsvpContent.companionAgeEnabled) ?? false,
     emailEnabled: boolValue(rsvpContent.emailEnabled) ?? true,
     emailRequired: boolValue(rsvpContent.emailRequired) ?? true,
-    phoneEnabled: boolValue(rsvpContent.phoneEnabled) ?? true,
-    phoneRequired: boolValue(rsvpContent.phoneRequired) ?? true,
-    foodAllergiesEnabled: boolValue(rsvpContent.foodAllergiesEnabled) ?? true,
+    phoneEnabled: boolValue(rsvpContent.phoneEnabled) ?? false,
+    phoneRequired: boolValue(rsvpContent.phoneRequired) ?? false,
+    foodAllergiesEnabled: boolValue(rsvpContent.foodAllergiesEnabled) ?? false,
     messageToHostEnabled: boolValue(rsvpContent.messageToHostEnabled) ?? true,
     customQuestions: Array.isArray(rsvpContent.customQuestions) ? rsvpContent.customQuestions : [],
   };
@@ -370,119 +319,67 @@ export function normalizeEventData(
   const rawOptions = arrayOfRecords(giftContent.options);
   const giftOptions: GiftOption[] = rawOptions.slice(0, 2).map((opt, idx) => {
     const rawImage = record(opt.image);
-    const imageUrl = stringValue(rawImage.url ?? opt.qrCodeUrl ?? opt.qrUrl);
+    const imageUrl = stringValue(rawImage.url);
+    const imagePath = stringValue(rawImage.path) || "";
     return {
       id: stringValue(opt.id) || `opt-${idx + 1}`,
-      title: stringValue(opt.title ?? opt.accountType ?? opt.provider) || "Gift Option",
-      accountName: stringValue(opt.accountName ?? opt.name),
-      accountNumber: stringValue(opt.accountNumber ?? opt.number),
-      image: imageUrl ? { url: imageUrl, alt: stringValue(rawImage.alt) || "QR Code" } : null,
+      title: stringValue(opt.title) || "Gift Option",
+      image:
+        imageUrl || imagePath
+          ? { path: imagePath, url: imageUrl, alt: stringValue(rawImage.alt) }
+          : null,
     };
   });
   const giftsData = {
-    sectionIntro: stringValue(giftContent.sectionIntro ?? giftContent.intro),
-    giftNote: stringValue(giftContent.giftNote ?? giftContent.message ?? giftContent.note),
+    sectionIntro: stringValue(giftContent.sectionIntro),
+    giftNote: stringValue(giftContent.giftNote),
     options: giftOptions,
   };
 
   // 15. guestbook
   const guestbookContent = getSectionContent("guestbook");
   const rawMessages = arrayOfRecords(
-    guestbookContent.messages ?? raw.guestbookMessages ?? content.guestbookMessages
+    raw.publicGuestbookMessages ??
+      raw.guestbookMessages ??
+      content.publicGuestbookMessages ??
+      content.guestbookMessages ??
+      guestbookContent.messages
   );
   const guestbookMessages: GuestbookMessage[] = rawMessages.map((m, idx) => ({
     id: (m.id as string | number) ?? `msg-${idx + 1}`,
-    guestName: stringValue(m.guestName ?? m.name ?? m.author) || "Guest",
-    message: stringValue(m.message ?? m.text) || "",
-    submittedAt: stringValue(m.submittedAt ?? m.createdAt ?? m.date),
+    guestName: stringValue(m.guestName ?? m.name) || "Guest",
+    message: stringValue(m.message) || "",
+    submittedAt: stringValue(m.submittedAt ?? m.createdAt),
     approvedAt: stringValue(m.approvedAt),
   }));
   const guestbookData = {
-    sectionTitle:
-      stringValue(guestbookContent.sectionTitle ?? guestbookContent.title) || "Wishes & Blessings",
-    sectionIntro: stringValue(guestbookContent.sectionIntro ?? guestbookContent.intro),
+    sectionTitle: stringValue(guestbookContent.sectionTitle) || "Wishes & Blessings",
+    sectionIntro: stringValue(guestbookContent.sectionIntro),
     emptyStateMessage:
       stringValue(guestbookContent.emptyStateMessage) ||
-      "No approved messages yet. Check back soon!",
+      "Approved guest messages will appear here soon.",
     messages: guestbookMessages,
   };
 
   // 16. story_message (Scalar narrative)
   const storyContent = getSectionContent("story_message");
   const storyData = {
-    storyTitle: stringValue(storyContent.storyTitle ?? storyContent.title) || "Our Journey",
-    sectionIntro: stringValue(storyContent.sectionIntro ?? storyContent.intro),
-    storyBody: stringValue(
-      storyContent.storyBody ??
-        storyContent.message ??
-        storyContent.narrative ??
-        storyContent.description
-    ),
+    storyTitle: stringValue(storyContent.storyTitle) || "Our Journey",
+    sectionIntro: stringValue(storyContent.sectionIntro),
+    storyBody: stringValue(storyContent.storyBody),
   };
 
   // 17. contact_socials
   const contactContent = getSectionContent("contact_socials");
   const contactData = {
-    contactPerson: stringValue(
-      contactContent.contactPerson ?? contactContent.name ?? `${groomName} & ${brideName}`
-    ),
-    contactNumber: stringValue(
-      contactContent.contactNumber ?? contactContent.phone ?? contactContent.mobile
-    ),
+    contactPerson:
+      stringValue(contactContent.contactPerson) ||
+      (groomName && brideName ? `${groomName} & ${brideName}` : ""),
+    contactNumber: stringValue(contactContent.contactNumber),
     email: stringValue(contactContent.email),
-    facebookUrl: stringValue(contactContent.facebookUrl ?? contactContent.facebook),
-    instagramUrl: stringValue(contactContent.instagramUrl ?? contactContent.instagram),
-    tikTokUrl: stringValue(contactContent.tikTokUrl ?? contactContent.tiktok),
-  };
-
-  // 18. eighteen_roses_candles
-  const traditionsContent = getSectionContent("eighteen_roses_candles");
-  const rawTradGroups = arrayOfRecords(traditionsContent.groups);
-  const traditionGroups: TraditionGroup[] =
-    rawTradGroups.length > 0
-      ? rawTradGroups.map((grp, gIdx) => ({
-          id: stringValue(grp.id) || `trad-grp-${gIdx + 1}`,
-          title: stringValue(grp.title) || "Traditions",
-          kind: stringValue(grp.kind),
-          entries: arrayOfRecords(grp.entries).map((e, eIdx) => ({
-            id: stringValue(e.id) || `entry-${eIdx + 1}`,
-            name: stringValue(e.name) || "Participant",
-            message: stringValue(e.message ?? e.role),
-          })),
-        }))
-      : [];
-  const traditionsData = {
-    groups: traditionGroups,
-  };
-
-  // 19. debut_court
-  const debutContent = getSectionContent("debut_court");
-  const rawDebutGroups = arrayOfRecords(debutContent.groups);
-  const debutGroups: DebutCourtGroup[] = rawDebutGroups.map((grp, gIdx) => ({
-    id: stringValue(grp.id) || `debut-grp-${gIdx + 1}`,
-    title: stringValue(grp.title) || "Court",
-    names: arrayOfRecords(grp.names).map((m, mIdx) => ({
-      id: stringValue(m.id) || `member-${mIdx + 1}`,
-      name: stringValue(m.name) || "Member",
-    })),
-  }));
-  const debutCourtData = {
-    groups: debutGroups,
-  };
-
-  // 20. godparents
-  const godparentsContent = getSectionContent("godparents");
-  const rawGodparentGroups = arrayOfRecords(godparentsContent.groups);
-  const godparentGroups: GodparentsGroup[] = rawGodparentGroups.map((grp, gIdx) => ({
-    id: stringValue(grp.id) || `gp-grp-${gIdx + 1}`,
-    title: stringValue(grp.title) || "Godparents",
-    names: arrayOfRecords(grp.names).map((n, nIdx) => ({
-      id: stringValue(n.id) || `gp-${nIdx + 1}`,
-      name: stringValue(n.name) || "Godparent",
-    })),
-  }));
-  const godparentsData = {
-    groups: godparentGroups,
+    facebookUrl: stringValue(contactContent.facebookUrl),
+    instagramUrl: stringValue(contactContent.instagramUrl),
+    tikTokUrl: stringValue(contactContent.tikTokUrl),
   };
 
   // Assets Map
@@ -517,9 +414,12 @@ export function normalizeEventData(
     }
   }
 
-  const title = stringValue(raw.title ?? raw.name) || `${groomName} & ${brideName} Wedding`;
+  const title = stringValue(raw.title ?? raw.eventTitle) || `${groomName} & ${brideName} Wedding`;
   const coupleDisplayName =
-    displayAs === "bride_first" ? `${brideName} & ${groomName}` : `${groomName} & ${brideName}`;
+    displayAs ||
+    (groomName && brideName
+      ? `${groomName} & ${brideName}`
+      : groomName || brideName || "The Couple");
 
   return {
     contractVersion: (raw.contractVersion as number) || EVENT_WEBSITE_SECTION_CONTRACT_VERSION,
@@ -528,14 +428,15 @@ export function normalizeEventData(
     eventSlug,
     title,
     coupleDisplayName,
-    eventDate: stringValue(raw.eventDate ?? raw.date ?? ceremonyData.eventDate),
-    eventDateLabel: stringValue(raw.eventDate ?? raw.date ?? ceremonyData.eventDate),
-    eventTimeLabel: stringValue(ceremonyData.eventTime),
+    eventDate: stringValue(raw.eventDate ?? ceremonyData.eventDate),
+    eventDateLabel: stringValue(raw.eventDateLabel ?? raw.eventDate ?? ceremonyData.eventDate),
+    eventTimeLabel: stringValue(raw.eventTimeLabel ?? ceremonyData.eventTime),
     eventDateTimeLabel:
-      ceremonyData.eventDate && ceremonyData.eventTime
+      stringValue(raw.eventDateTimeLabel) ||
+      (ceremonyData.eventDate && ceremonyData.eventTime
         ? `${ceremonyData.eventDate} at ${ceremonyData.eventTime}`
-        : stringValue(ceremonyData.eventDate),
-    rsvpDeadlineLabel: stringValue(rsvpData.deadlineLabel ?? rsvpData.deadline),
+        : stringValue(ceremonyData.eventDate)),
+    rsvpDeadlineLabel: stringValue(raw.rsvpDeadlineLabel ?? ceremonyData.rsvpDeadline),
     timezone: stringValue(raw.timezone),
     publicUrl: stringValue(raw.publicUrl),
 
@@ -555,9 +456,6 @@ export function normalizeEventData(
     guestbook: guestbookData,
     story: storyData,
     contact: contactData,
-    traditions: traditionsData,
-    debutCourt: debutCourtData,
-    godparents: godparentsData,
     gallery: galleryData,
 
     sections: normalizedSectionsList,

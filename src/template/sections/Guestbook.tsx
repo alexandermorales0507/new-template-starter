@@ -7,7 +7,10 @@ export function GuestbookSection({ data }: { data: GuestbookData }) {
   const messages = data.messages || [];
 
   return (
-    <section id="guestbook" className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200">
+    <section
+      id="guestbook"
+      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+    >
       <div className="text-center mb-8">
         <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Wishes</p>
         <h2 className="text-3xl font-bold text-gray-900">
@@ -25,12 +28,12 @@ export function GuestbookSection({ data }: { data: GuestbookData }) {
               key={msg.id || idx}
               className="bg-gray-50 p-5 rounded-lg border border-gray-200 text-sm shadow-xs"
             >
-              <p className="text-gray-800 italic mb-3 leading-relaxed">&ldquo;{msg.message}&rdquo;</p>
+              <p className="text-gray-800 italic mb-3 leading-relaxed">
+                &ldquo;{msg.message}&rdquo;
+              </p>
               <div className="flex justify-between items-center text-xs text-gray-500 pt-2 border-t border-gray-200">
                 <span className="font-semibold text-gray-700">{msg.guestName || "Guest"}</span>
-                {msg.submittedAt && (
-                  <span>{new Date(msg.submittedAt).toLocaleDateString()}</span>
-                )}
+                {msg.submittedAt && <span>{new Date(msg.submittedAt).toLocaleDateString()}</span>}
               </div>
             </div>
           ))}

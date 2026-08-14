@@ -14,6 +14,7 @@ import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 type RsvpSectionProps = {
   data: RsvpData;
   eventSlug: string;
+  deadlineLabel?: string | null;
   apiBaseUrl?: string;
   accessToken?: string | null;
   isDemoMode?: boolean;
@@ -22,6 +23,7 @@ type RsvpSectionProps = {
 export function RSVPSection({
   data,
   eventSlug,
+  deadlineLabel,
   apiBaseUrl,
   accessToken,
   isDemoMode,
@@ -41,9 +43,7 @@ export function RSVPSection({
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  if (!data.enabled) return null;
-
-  const maxCompanions = Math.max(0, Math.min(data.companionLimit ?? 3, 10));
+  const maxCompanions = Math.max(0, Math.min(data.companionLimit ?? 1, 10));
 
   const handleCompanionCountChange = (count: number) => {
     setCompanionCount(count);
@@ -96,7 +96,8 @@ export function RSVPSection({
         data.plusOneEnabled && companions.length > 0
           ? companions.filter((c) => c.fullName.trim().length > 0)
           : undefined,
-      dietaryNotes: data.foodAllergiesEnabled && dietaryNotes.trim() ? dietaryNotes.trim() : undefined,
+      dietaryNotes:
+        data.foodAllergiesEnabled && dietaryNotes.trim() ? dietaryNotes.trim() : undefined,
       message: data.messageToHostEnabled && message.trim() ? message.trim() : undefined,
     };
 
@@ -118,14 +119,16 @@ export function RSVPSection({
   };
 
   return (
-    <section id="rsvp_form" className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200">
+    <section
+      id="rsvp_form"
+      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+    >
       <div className="text-center mb-8">
         <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Confirm Attendance</p>
         <h2 className="text-3xl font-bold text-gray-900">RSVP</h2>
-        {data.deadlineLabel && (
-          <p className="text-sm text-gray-600 mt-1">Please respond on or before {data.deadlineLabel}</p>
+        {deadlineLabel && (
+          <p className="text-sm text-gray-600 mt-1">Please respond on or before {deadlineLabel}</p>
         )}
-        {data.note && <p className="text-xs text-gray-500 max-w-md mx-auto mt-2 italic">{data.note}</p>}
         {isDemoMode && (
           <div className="inline-block mt-2 px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-full">
             Demo Mode RSVP (Simulated Submission)

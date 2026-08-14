@@ -22,7 +22,7 @@ export const DEMO_WEDDING_DATA: WeddingTemplateData = {
     kind: "wedding",
     groomName: "Alex Rivera",
     brideName: "Jamie Cruz",
-    displayAs: "groom_first",
+    displayAs: "Alex & Jamie",
     hostLine: "Together with their families",
     shortHostMessage: "We are overjoyed to invite you to celebrate the beginning of our forever.",
   },
@@ -30,8 +30,6 @@ export const DEMO_WEDDING_DATA: WeddingTemplateData = {
   countdown: {
     title: "Wedding Countdown",
     shortNote: "Until we say I do",
-    targetDate: "2026-10-24T15:00:00Z",
-    enabled: true,
   },
 
   music: {
@@ -196,19 +194,15 @@ export const DEMO_WEDDING_DATA: WeddingTemplateData = {
   },
 
   rsvp: {
-    enabled: true,
-    deadline: "2026-09-24",
-    deadlineLabel: "September 24, 2026",
-    note: "Kindly respond on or before September 24, 2026 so we can finalize seating arrangements.",
-    plusOneEnabled: true,
-    companionLimit: 3,
+    plusOneEnabled: false,
+    companionLimit: 1,
     companionNameEnabled: true,
-    companionAgeEnabled: true,
+    companionAgeEnabled: false,
     emailEnabled: true,
     emailRequired: true,
-    phoneEnabled: true,
-    phoneRequired: true,
-    foodAllergiesEnabled: true,
+    phoneEnabled: false,
+    phoneRequired: false,
+    foodAllergiesEnabled: false,
     messageToHostEnabled: true,
     customQuestions: [],
   },
@@ -221,9 +215,8 @@ export const DEMO_WEDDING_DATA: WeddingTemplateData = {
       {
         id: "opt-1",
         title: "GCash",
-        accountName: "Alex R.",
-        accountNumber: "0917-000-0000",
         image: {
+          path: "payment-qr-images/demo.png",
           url: "/template-assets/decorations/qr-demo.svg",
           alt: "GCash QR Code",
         },
@@ -231,8 +224,6 @@ export const DEMO_WEDDING_DATA: WeddingTemplateData = {
       {
         id: "opt-2",
         title: "BPI Bank Transfer",
-        accountName: "Alex Rivera",
-        accountNumber: "1234-5678-90",
         image: null,
       },
     ],
@@ -241,7 +232,7 @@ export const DEMO_WEDDING_DATA: WeddingTemplateData = {
   guestbook: {
     sectionTitle: "Wishes & Blessings",
     sectionIntro: "Leave a warm message for our new beginning.",
-    emptyStateMessage: "No approved messages yet. Check back soon!",
+    emptyStateMessage: "Approved guest messages will appear here soon.",
     messages: [
       {
         id: "1",
@@ -276,29 +267,6 @@ export const DEMO_WEDDING_DATA: WeddingTemplateData = {
     tikTokUrl: "https://tiktok.com/@alexandjamie2026",
   },
 
-  traditions: {
-    groups: [
-      {
-        id: "trad-1",
-        title: "Traditional Sponsors",
-        kind: "sponsors",
-        entries: [
-          { id: "e1", name: "Mark Tan & Bea Alonzo", message: "Candle Sponsors" },
-          { id: "e2", name: "Gabriel Reyes & Rhea Mendoza", message: "Veil Sponsors" },
-          { id: "e3", name: "David Santos & Patricia Luna", message: "Cord Sponsors" },
-        ],
-      },
-    ],
-  },
-
-  debutCourt: {
-    groups: [],
-  },
-
-  godparents: {
-    groups: [],
-  },
-
   sections: [
     { key: "host_info", title: "Couple", enabled: true, content: {} },
     { key: "countdown", title: "Countdown", enabled: true, content: {} },
@@ -317,9 +285,6 @@ export const DEMO_WEDDING_DATA: WeddingTemplateData = {
     { key: "guestbook", title: "Guestbook", enabled: true, content: {} },
     { key: "contact_socials", title: "Contact", enabled: true, content: {} },
     { key: "gallery", title: "Gallery", enabled: false, content: {} },
-    { key: "eighteen_roses_candles", title: "Traditions", enabled: false, content: {} },
-    { key: "debut_court", title: "Debut Court", enabled: false, content: {} },
-    { key: "godparents", title: "Godparents", enabled: false, content: {} },
   ],
 
   orderedSectionKeys: [

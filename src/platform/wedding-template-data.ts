@@ -27,20 +27,18 @@ export type NormalizedSection = {
 
 // host_info (Couple)
 export type CoupleData = {
-  kind?: "wedding";
+  kind: "wedding";
   groomName: string;
   brideName: string;
-  displayAs?: "groom_first" | "bride_first";
-  hostLine?: string;
-  shortHostMessage?: string;
+  displayAs: string;
+  hostLine: string;
+  shortHostMessage: string;
 };
 
 // countdown
 export type CountdownData = {
   title?: string;
   shortNote?: string;
-  targetDate?: string;
-  enabled: boolean;
 };
 
 // music_effects
@@ -134,10 +132,6 @@ export type ExtraInfoData = {
 
 // rsvp_form
 export type RsvpData = {
-  enabled: boolean;
-  deadline?: string;
-  deadlineLabel?: string;
-  note?: string;
   plusOneEnabled: boolean;
   companionLimit: number;
   companionNameEnabled: boolean;
@@ -152,17 +146,16 @@ export type RsvpData = {
 };
 
 // gift_details (Max 2 options)
-export type GiftOptionImage = {
-  url: string;
+export type EventWebsiteImageAsset = {
   alt?: string;
+  path: string;
+  url?: string;
 };
 
 export type GiftOption = {
   id: string;
   title: string;
-  accountName?: string;
-  accountNumber?: string;
-  image?: GiftOptionImage | null;
+  image: EventWebsiteImageAsset | null;
 };
 
 export type GiftsData = {
@@ -194,56 +187,6 @@ export type ContactData = {
   facebookUrl?: string;
   instagramUrl?: string;
   tikTokUrl?: string;
-};
-
-// eighteen_roses_candles
-export type TraditionEntry = {
-  id: string;
-  name: string;
-  message?: string;
-};
-
-export type TraditionGroup = {
-  id: string;
-  title: string;
-  kind?: string;
-  entries: TraditionEntry[];
-};
-
-export type TraditionsData = {
-  groups: TraditionGroup[];
-};
-
-// debut_court
-export type DebutCourtMember = {
-  id: string;
-  name: string;
-};
-
-export type DebutCourtGroup = {
-  id: string;
-  title: string;
-  names: DebutCourtMember[];
-};
-
-export type DebutCourtData = {
-  groups: DebutCourtGroup[];
-};
-
-// godparents
-export type GodparentMember = {
-  id: string;
-  name: string;
-};
-
-export type GodparentsGroup = {
-  id: string;
-  title: string;
-  names: GodparentMember[];
-};
-
-export type GodparentsData = {
-  groups: GodparentsGroup[];
 };
 
 // gallery (Metadata only; photos are local template assets)
@@ -284,9 +227,6 @@ export type WeddingTemplateData = {
   guestbook: GuestbookData;
   story: LoveStoryData;
   contact: ContactData;
-  traditions: TraditionsData;
-  debutCourt: DebutCourtData;
-  godparents: GodparentsData;
   gallery: GalleryData;
 
   sections: NormalizedSection[];

@@ -10,26 +10,46 @@ Welcome to the WebSerbisyo Custom Wedding Template Starter V2. This document exp
 
 The `src/platform/` directory handles:
 
+- Global platform contract knowledge (20 canonical section keys)
 - Event data loading and normalization (`load-event.ts`, `normalize-event.ts`)
 - Demo vs. Connected mode state management (`demo-wedding.ts`, `preview-context.ts`)
 - Dynamic section visibility and section ordering (`section-visibility.ts`, `contract.ts`)
 - RSVP submission handling and platform API calls (`submit-rsvp.ts`)
 - Type definitions (`wedding-template-data.ts`)
 
+The **Wedding Template Registry** (`src/template/section-registry.tsx`) registers exactly **17 Wedding-applicable renderers**. Non-wedding sections (`eighteen_roses_candles`, `debut_court`, `godparents`) are excluded from the wedding starter.
+
 ---
 
-## 2. Design Freely (`src/template/` & `public/template-assets/`)
+## 2. Asset & Data Ownership
+
+| Asset / Feature        | Data / Asset Source        | Ownership & Location                             |
+| ---------------------- | -------------------------- | ------------------------------------------------ |
+| **Hero Photo**         | Local artwork              | `public/template-assets/photos/hero/`            |
+| **Gallery Photos**     | Local/manual client photos | `public/template-assets/photos/gallery/`         |
+| **Love Story Photos**  | Local/manual client photos | `public/template-assets/photos/story/`           |
+| **Venue Photo**        | Local artwork              | `public/template-assets/photos/venue/`           |
+| **Attire Swatches**    | Local design palette       | `src/template/template.config.ts`                |
+| **Gift QR Images**     | Platform API               | Public HTTP URL from platform dashboard          |
+| **Parents**            | Entourage groups           | `entourage.groups` (e.g. "Parents of the Groom") |
+| **Private Access**     | Platform URL parameter     | `?access=<token>`                                |
+| **Guestbook Messages** | Platform API               | Approved messages included in `PublicEventDto`   |
+| **Gift Options**       | Platform API               | Maximum 2 options                                |
+
+---
+
+## 3. Design Freely (`src/template/` & `public/template-assets/`)
 
 You are encouraged to completely reimagine and redesign everything inside:
 
-- `src/template/sections/` — Section UI components
+- `src/template/sections/` — Section UI components (17 Wedding sections)
 - `src/template/components/` — Headers, footers, navigation, identity marks
 - `src/template/styles/` — Colors, typography, motion, geometry tokens
 - `public/template-assets/` — Local artwork, photos, icons, backgrounds
 
 ---
 
-## 3. Authoring Guidelines
+## 4. Authoring Guidelines
 
 ### You May
 
@@ -44,7 +64,7 @@ You are encouraged to completely reimagine and redesign everything inside:
 - Keep all platform data fields dynamic (`data.groomName`, `data.eventDate`, etc.)
 - Respect platform section ordering (`data.enabledSectionKeys`)
 - Render dynamic collections without assuming fixed counts (Timeline, Entourage, Sponsors, etc.)
-- Keep RSVP submissions connected via the shared platform adapter (`submitRSVP`)
+- Keep RSVP submissions connected via the shared platform adapter (`submitRsvp`)
 - Derive couple monograms/initials dynamically via `deriveCoupleIdentity()`
 - Maintain responsive layout support and keyboard accessibility (`template-focus-ring`)
 
@@ -53,13 +73,13 @@ You are encouraged to completely reimagine and redesign everything inside:
 - Hardcode client names, dates, or initials anywhere in TSX or CSS
 - Directly query Supabase or external backend databases from visual components
 - Remove or bypass platform RSVP submission logic
-- Fake unsupported platform features (e.g., custom RSVP questions or public guestbooks)
+- Fake unsupported platform features (e.g., custom RSVP questions or public guestbook POST)
 - Silently fallback to demo data when a live API request fails
 - Scatter hardcoded hex colors or static inline styles throughout TSX files
 
 ---
 
-## 4. Styling & Design Tokens
+## 5. Styling & Design Tokens
 
 Theme styles are centralized in `src/template/styles/`:
 
@@ -68,16 +88,9 @@ Theme styles are centralized in `src/template/styles/`:
 - `motion.css`: Motion duration tokens and `prefers-reduced-motion` accessibility baseline
 - `template.css`: Reusable neutral container, card, and focus utility classes
 
-**Rules**:
-
-- Use CSS tokens or Tailwind utilities instead of hardcoded hex values
-- Static inline theme styles (`style={{ color: '#123456' }}`) are discouraged
-- Genuinely dynamic data values (e.g., swatches from `data.colorPalette`) may remain inline
-- CSS Modules are permitted for isolated visual components when necessary
-
 ---
 
-## 5. Dynamic Couple Identity
+## 6. Dynamic Couple Identity
 
 Never hardcode client initials (e.g. "A & J"). Always use the template helper:
 
@@ -98,7 +111,7 @@ const identity = deriveCoupleIdentity(
 
 ---
 
-## 6. Local Asset Organization
+## 7. Local Asset Organization
 
 Store template-specific static assets in `public/template-assets/`:
 
@@ -112,7 +125,7 @@ Register asset references in `src/template/template-assets.ts`.
 
 ---
 
-## 7. Dependency Policy
+## 8. Dependency Policy
 
 The starter codebase remains minimal. Cloned templates may install additional npm packages (e.g. Framer Motion, Lenis) if required by the design concept.
 
@@ -120,7 +133,7 @@ The starter codebase remains minimal. Cloned templates may install additional np
 
 ---
 
-## 8. Development & Employee Workflow
+## 9. Development & Employee Workflow
 
 1. **Clone Starter**: `git clone <starter-repo>`
 2. **Install Dependencies**: `npm install`
@@ -133,8 +146,8 @@ The starter codebase remains minimal. Cloned templates may install additional np
 
 ### Commands Summary
 
-- `npm run check:template`: Verifies section registry, contract version, demo data, and platform core integrity.
-- `npm run verify`: Runs contract check, typecheck, linting, and formatting check.
+- `npm run check:template`: Verifies 17-wedding section registry, contract version, demo data, and platform core integrity.
+- `npm run verify`: Runs contract check, typecheck, and formatting check.
 - `npm run build`: Runs `verify` (prebuild) then `next build`. Offline-safe, no live network required.
 - `npm run verify:connection`: Read-only health check for configured live WebSerbisyo API event.
 

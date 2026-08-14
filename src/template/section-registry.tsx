@@ -17,9 +17,6 @@ import { GiftsSection } from "./sections/Gifts";
 import { GuestbookSection } from "./sections/Guestbook";
 import { LoveStorySection } from "./sections/LoveStory";
 import { ContactSection } from "./sections/Contact";
-import { TraditionsSection } from "./sections/Traditions";
-import { DebutCourtSection } from "./sections/DebutCourt";
-import { GodparentsSection } from "./sections/Godparents";
 
 export type SectionRendererProps = {
   data: WeddingTemplateData;
@@ -33,7 +30,13 @@ export const templateSectionRegistry: Record<
   (props: SectionRendererProps) => React.ReactNode
 > = {
   host_info: ({ data }) => <CoupleSection data={data.couple} />,
-  countdown: ({ data }) => <CountdownSection data={data.countdown} />,
+  countdown: ({ data }) => (
+    <CountdownSection
+      data={data.countdown}
+      eventDate={data.ceremony?.eventDate || data.eventDate || undefined}
+      eventTime={data.ceremony?.eventTime || undefined}
+    />
+  ),
   music_effects: ({ data }) => <MusicSection data={data.music} />,
   gallery: ({ data }) => <GallerySection data={data.gallery} />,
   main_event: ({ data }) => <CeremonySection data={data.ceremony} />,
@@ -48,6 +51,7 @@ export const templateSectionRegistry: Record<
     <RSVPSection
       data={data.rsvp}
       eventSlug={data.eventSlug}
+      deadlineLabel={data.rsvpDeadlineLabel || data.ceremony?.rsvpDeadline}
       apiBaseUrl={apiBaseUrl}
       accessToken={accessToken}
       isDemoMode={isDemoMode}
@@ -57,7 +61,4 @@ export const templateSectionRegistry: Record<
   guestbook: ({ data }) => <GuestbookSection data={data.guestbook} />,
   story_message: ({ data }) => <LoveStorySection data={data.story} />,
   contact_socials: ({ data }) => <ContactSection data={data.contact} />,
-  eighteen_roses_candles: ({ data }) => <TraditionsSection data={data.traditions} />,
-  debut_court: ({ data }) => <DebutCourtSection data={data.debutCourt} />,
-  godparents: ({ data }) => <GodparentsSection data={data.godparents} />,
 };

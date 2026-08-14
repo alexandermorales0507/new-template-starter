@@ -7,7 +7,10 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
   if (!data.items || data.items.length === 0) return null;
 
   return (
-    <section id="extra_info" className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200">
+    <section
+      id="extra_info"
+      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+    >
       <div className="text-center mb-8">
         <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Important Details</p>
         <h2 className="text-3xl font-bold text-gray-900">{data.sectionTitle || "Good to Know"}</h2>

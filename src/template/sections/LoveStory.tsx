@@ -9,7 +9,10 @@ export function LoveStorySection({ data }: { data: LoveStoryData }) {
   const storyPhotos = templateAssets.photos.story || [];
 
   return (
-    <section id="story_message" className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200">
+    <section
+      id="story_message"
+      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+    >
       <div className="text-center mb-8">
         <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Our Journey</p>
         <h2 className="text-3xl font-bold text-gray-900">{data.storyTitle || "Love Story"}</h2>

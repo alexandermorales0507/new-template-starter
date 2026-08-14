@@ -7,7 +7,10 @@ export function EntourageSection({ data }: { data: EntourageData }) {
   if (!data.groups || data.groups.length === 0) return null;
 
   return (
-    <section id="entourage" className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200">
+    <section
+      id="entourage"
+      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+    >
       <div className="text-center mb-8">
         <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Wedding Party</p>
         <h2 className="text-3xl font-bold text-gray-900">The Entourage</h2>
@@ -23,7 +26,10 @@ export function EntourageSection({ data }: { data: EntourageData }) {
             .filter(Boolean);
 
           return (
-            <div key={group.id} className="bg-gray-50 p-5 rounded-lg border border-gray-200 text-center">
+            <div
+              key={group.id}
+              className="bg-gray-50 p-5 rounded-lg border border-gray-200 text-center"
+            >
               <h3 className="font-semibold text-gray-900 text-sm mb-3 border-b border-gray-200 pb-2 uppercase tracking-wide">
                 {group.groupTitle}
               </h3>

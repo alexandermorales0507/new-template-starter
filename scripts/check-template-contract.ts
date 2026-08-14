@@ -4,6 +4,8 @@ import {
   eventWebsiteSectionContract,
   EVENT_WEBSITE_SECTION_CONTRACT_VERSION,
   eventWebsiteSectionKeySet,
+  WEDDING_APPLICABLE_SECTION_KEYS,
+  weddingApplicableSectionKeySet,
 } from "../src/platform/contract.js";
 import { templateSectionRegistry } from "../src/template/section-registry.js";
 import { demoWeddingData } from "../src/platform/demo-wedding.js";
@@ -38,34 +40,65 @@ if (EVENT_WEBSITE_SECTION_CONTRACT_VERSION === 1) {
   console.log(`✗ Contract version: ${EVENT_WEBSITE_SECTION_CONTRACT_VERSION}`);
 }
 
-// 2. SECTION REGISTRY VALIDATION
-console.log("\n[2] CANONICAL SECTION REGISTRY VALIDATION");
-const canonicalKeys = eventWebsiteSectionContract.map((entry) => entry.key);
+// 2. SECTION REGISTRY & WEDDING SCOPE VALIDATION
+console.log("\n[2] WEDDING SECTION REGISTRY SCOPE VALIDATION");
+const globalKeys = eventWebsiteSectionContract.map((entry) => entry.key);
+const weddingKeys = WEDDING_APPLICABLE_SECTION_KEYS;
 const registeredKeys = Object.keys(templateSectionRegistry);
 
-console.log(`Discovered ${canonicalKeys.length} canonical contract sections.`);
-console.log(`Discovered ${registeredKeys.length} registered template section components.`);
+console.log(`Global contract sections: ${globalKeys.length}`);
+console.log(`Wedding applicable sections: ${weddingKeys.length}`);
+console.log(`Registered template section components: ${registeredKeys.length}`);
+
+if (globalKeys.length !== 20) {
+  result.passed = false;
+  result.failures.push(`Global contract count mismatch. Expected 20, got ${globalKeys.length}`);
+}
+
+if (weddingKeys.length !== 17) {
+  result.passed = false;
+  result.failures.push(
+    `Wedding applicable section count mismatch. Expected 17, got ${weddingKeys.length}`
+  );
+}
+
+if (registeredKeys.length !== 17) {
+  result.passed = false;
+  result.failures.push(
+    `Template section registry count mismatch. Expected 17, got ${registeredKeys.length}`
+  );
+}
 
 let missingCount = 0;
-for (const key of canonicalKeys) {
+for (const key of weddingKeys) {
   if (templateSectionRegistry[key]) {
-    console.log(`  ✓ Registered: ${key}`);
+    console.log(`  ✓ Registered Wedding Renderer: ${key}`);
   } else {
     missingCount++;
-    result.failures.push(`Missing section renderer for canonical key: '${key}'`);
-    console.log(`  ✗ MISSING: ${key}`);
+    result.failures.push(`Missing template renderer for wedding key: '${key}'`);
+    console.log(`  ✗ MISSING WEDDING RENDERER: ${key}`);
+  }
+}
+
+const forbiddenWeddingKeys = ["eighteen_roses_candles", "debut_court", "godparents"];
+for (const key of forbiddenWeddingKeys) {
+  if (templateSectionRegistry[key]) {
+    result.failures.push(`Forbidden non-wedding section renderer registered: '${key}'`);
+    console.log(`  ✗ FORBIDDEN RENDERER REGISTERED: ${key}`);
   }
 }
 
 for (const regKey of registeredKeys) {
-  if (!eventWebsiteSectionKeySet.has(regKey)) {
-    result.failures.push(`Unknown section key registered in templateSectionRegistry: '${regKey}'`);
-    console.log(`  ✗ UNKNOWN KEY REGISTERED: ${regKey}`);
+  if (!weddingApplicableSectionKeySet.has(regKey)) {
+    result.failures.push(
+      `Unknown or non-wedding section key registered in templateSectionRegistry: '${regKey}'`
+    );
+    console.log(`  ✗ UNKNOWN/NON-WEDDING KEY REGISTERED: ${regKey}`);
   }
 }
 
-if (missingCount === 0) {
-  console.log(`✓ All ${canonicalKeys.length} canonical section keys have registered renderers.`);
+if (missingCount === 0 && registeredKeys.length === 17) {
+  console.log(`✓ Template section registry correctly contains exactly 17 Wedding renderers.`);
 } else {
   result.passed = false;
 }
@@ -79,7 +112,8 @@ if (
   demoWeddingData.couple &&
   demoWeddingData.ceremony &&
   demoWeddingData.venue &&
-  demoWeddingData.rsvp
+  demoWeddingData.rsvp &&
+  demoWeddingData.gifts
 ) {
   console.log(`✓ Demo wedding dataset ('${demoWeddingData.eventSlug}') is valid and complete.`);
 } else {
@@ -88,6 +122,32 @@ if (
     "src/platform/demo-wedding.ts is missing required WeddingTemplateData fields."
   );
   console.log("✗ Demo wedding dataset failed validation.");
+}
+
+// Verify gift options in demo data
+if (demoWeddingData.gifts?.options) {
+  if (demoWeddingData.gifts.options.length > 2) {
+    result.passed = false;
+    result.failures.push(
+      `Demo gift options exceed maximum limit of 2 (found ${demoWeddingData.gifts.options.length}).`
+    );
+  }
+  for (const opt of demoWeddingData.gifts.options as Record<string, unknown>[]) {
+    if (opt.accountName || opt.accountNumber) {
+      result.passed = false;
+      result.failures.push(
+        `Non-canonical gift option field found in demo data: ${JSON.stringify(opt)}`
+      );
+    }
+  }
+}
+
+// Verify non-wedding sections absent from demo section list
+for (const secKey of forbiddenWeddingKeys) {
+  if (demoWeddingData.enabledSectionKeys?.includes(secKey)) {
+    result.passed = false;
+    result.failures.push(`Forbidden non-wedding section enabled in demo data: '${secKey}'`);
+  }
 }
 
 // 4. PLATFORM CORE & RSVP GUARD
@@ -161,20 +221,27 @@ if (derivedTest.monogram === "A & J" && derivedTest.compactMonogram === "AJ") {
   console.log(`  ✗ IDENTITY DERIVATION TEST FAILED: ${JSON.stringify(derivedTest)}`);
 }
 
-// 7. PROHIBITED CLIENT RESIDUE SCAN
-console.log("\n[7] PROHIBITED CLIENT RESIDUE SCAN");
+// 7. PROHIBITED CLIENT RESIDUE & STALE ALIAS SCAN
+console.log("\n[7] PROHIBITED CLIENT RESIDUE & STALE ALIAS SCAN");
 const prohibitedTerms = ["Princess Anne", "Rafael", "Isabella", "Dianne", "Blue Hour"];
-function scanForResidue(dir: string) {
+const forbiddenFieldPatterns = [
+  { pattern: "groomParents", reason: "Parent fields are not in host_info" },
+  { pattern: "brideParents", reason: "Parent fields are not in host_info" },
+  { pattern: "accountName", reason: "Non-canonical gift option field" },
+  { pattern: "accountNumber", reason: "Non-canonical gift option field" },
+];
+
+function scanForResidueAndAliases(dir: string) {
   if (!fs.existsSync(dir)) return;
   const files = fs.readdirSync(dir, { recursive: true, withFileTypes: true });
   for (const file of files) {
     if (file.isFile() && !file.name.endsWith(".gitkeep")) {
       const filePath = path.join(file.parentPath || file.path, file.name);
-      // Skip node_modules or .next if any
       if (
         filePath.includes("node_modules") ||
         filePath.includes(".next") ||
-        filePath.includes("check-template-contract")
+        filePath.includes("check-template-contract") ||
+        filePath.includes(".git")
       )
         continue;
       const content = fs.readFileSync(filePath, "utf-8");
@@ -185,10 +252,19 @@ function scanForResidue(dir: string) {
           console.log(`  ✗ RESIDUE FOUND: '${term}' in ${filePath}`);
         }
       }
+      for (const { pattern, reason } of forbiddenFieldPatterns) {
+        if (content.includes(pattern)) {
+          result.passed = false;
+          result.failures.push(
+            `Forbidden field pattern '${pattern}' found in ${filePath} (${reason})`
+          );
+          console.log(`  ✗ FORBIDDEN PATTERN: '${pattern}' in ${filePath}`);
+        }
+      }
     }
   }
 }
-scanForResidue(path.resolve(process.cwd(), "src"));
+scanForResidueAndAliases(path.resolve(process.cwd(), "src"));
 
 // 8. SUMMARY
 console.log("\n──────────────────────────────────────────");

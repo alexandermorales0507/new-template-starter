@@ -7,17 +7,20 @@ import { Phone, Mail, Globe, User } from "lucide-react";
 export function ContactSection({ data }: { data: ContactData }) {
   const hasContent = Boolean(
     data.contactPerson ||
-      data.contactNumber ||
-      data.email ||
-      data.facebookUrl ||
-      data.instagramUrl ||
-      data.tikTokUrl
+    data.contactNumber ||
+    data.email ||
+    data.facebookUrl ||
+    data.instagramUrl ||
+    data.tikTokUrl
   );
 
   if (!hasContent) return null;
 
   return (
-    <section id="contact_socials" className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200">
+    <section
+      id="contact_socials"
+      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+    >
       <div className="text-center mb-8">
         <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Get in Touch</p>
         <h2 className="text-3xl font-bold text-gray-900">Contact &amp; Socials</h2>

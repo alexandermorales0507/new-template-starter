@@ -6,7 +6,13 @@ import type { CountdownData } from "@/platform/wedding-template-data";
 // PLATFORM DATA — KEEP DYNAMIC.
 // Event countdown timer widget.
 
-export function CountdownSection({ data }: { data: CountdownData }) {
+export type CountdownSectionProps = {
+  data: CountdownData;
+  eventDate?: string;
+  eventTime?: string;
+};
+
+export function CountdownSection({ data, eventDate, eventTime }: CountdownSectionProps) {
   const [timeLeft, setTimeLeft] = useState<{
     days: number;
     hours: number;
@@ -15,9 +21,11 @@ export function CountdownSection({ data }: { data: CountdownData }) {
   }>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    if (!data.targetDate) return;
+    if (!eventDate) return;
 
-    const targetTime = new Date(data.targetDate).getTime();
+    const dateStr = eventTime ? `${eventDate} ${eventTime}` : eventDate;
+    const targetTime = new Date(dateStr).getTime();
+    if (isNaN(targetTime)) return;
 
     const updateTimer = () => {
       const now = new Date().getTime();
@@ -38,9 +46,7 @@ export function CountdownSection({ data }: { data: CountdownData }) {
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [data.targetDate]);
-
-  if (!data.enabled) return null;
+  }, [eventDate, eventTime]);
 
   return (
     <section

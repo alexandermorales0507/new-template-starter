@@ -26,6 +26,29 @@ export type WeddingSectionKey =
   | "debut_court"
   | "godparents";
 
+export const WEDDING_APPLICABLE_SECTION_KEYS = [
+  "host_info",
+  "countdown",
+  "music_effects",
+  "gallery",
+  "main_event",
+  "venue",
+  "secondary_event",
+  "timeline_program",
+  "entourage",
+  "principal_sponsors",
+  "attire_motif",
+  "extra_info",
+  "rsvp_form",
+  "gift_details",
+  "guestbook",
+  "story_message",
+  "contact_socials",
+] as const;
+
+export type WeddingApplicableSectionKey = (typeof WEDDING_APPLICABLE_SECTION_KEYS)[number];
+export const weddingApplicableSectionKeySet = new Set<string>(WEDDING_APPLICABLE_SECTION_KEYS);
+
 export type SectionContractEntry = {
   key: WeddingSectionKey;
   label: string;

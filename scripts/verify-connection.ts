@@ -8,7 +8,7 @@ async function runVerifyConnection() {
   const env = getPublicEnv();
 
   if (env.designMode || !env.hasLiveConfig) {
-    console.log("STATUS: LIVE CONNECTION NOT CONFIGURED\n");
+    console.log("SKIPPED — CONNECTED ENVIRONMENT NOT CONFIGURED\n");
     console.log("The starter is currently running in local Design / Demo Mode.");
     console.log("To connect to a live WebSerbisyo event, configure environment variables:\n");
     console.log("  NEXT_PUBLIC_WEBSERBISYO_API_URL=https://api.webserbisyo.com");
@@ -38,7 +38,7 @@ async function runVerifyConnection() {
     console.log(`✓ Source mode: ${data.source}`);
     console.log(`✓ Couple: ${data.coupleDisplayName}`);
     console.log(`✓ Event Date: ${data.eventDateLabel || "N/A"}`);
-    console.log(`✓ RSVP Enabled: ${data.rsvp?.enabled ? "YES" : "NO"}`);
+    console.log(`✓ RSVP Enabled: ${data.enabledSectionKeys?.includes("rsvp_form") ? "YES" : "NO"}`);
 
     const enabled = data.enabledSectionKeys || [];
     const ordered = data.orderedSectionKeys || [];
