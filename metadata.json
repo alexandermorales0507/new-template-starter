@@ -1,0 +1,6 @@
+{
+  "name": "WebSerbisyo Custom Wedding Template Starter V2",
+  "description": "Standalone custom wedding template starter for WebSerbisyo platform",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

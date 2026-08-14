@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "../template/styles/tokens.css";
+@import "../template/styles/typography.css";
+@import "../template/styles/motion.css";
+@import "../template/styles/template.css";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    background-color: var(--surface-page);
+    color: var(--text-primary);
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
