@@ -258,12 +258,38 @@ export function useAudio() {
   return context;
 }
 
+export type FloatingMusicBubbleProps = {
+  layout?: "fixed" | "inline";
+  compact?: boolean;
+};
+
 /**
- * Floating Now-Playing Widget that appears when music is activated.
+ * Floating Now-Playing Widget that coexists beside the QuickDock in the floating cluster.
  */
-export function FloatingMusicBubble() {
+export function FloatingMusicBubble({
+  layout = "inline",
+  compact = false,
+}: FloatingMusicBubbleProps) {
   const { playbackState, isPlaying, musicTitle, play, pause, stop } = useAudio();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMusicSectionVisible, setIsMusicSectionVisible] = useState(false);
+
+  // Suppress floating bubble when the in-page #music_effects section is in view
+  useEffect(() => {
+    const musicSection = document.querySelector("#music_effects");
+    if (!musicSection) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsMusicSectionVisible(entry.isIntersecting && entry.intersectionRatio >= 0.25);
+      },
+      { threshold: [0, 0.25, 0.5] }
+    );
+
+    observer.observe(musicSection);
+    return () => observer.disconnect();
+  }, []);
 
   // Show floating bubble only after music has been activated (playing or paused)
   if (playbackState === "idle" || playbackState === "stopped") {
@@ -271,11 +297,26 @@ export function FloatingMusicBubble() {
   }
 
   const title = musicTitle || "Wedding Song";
+  const isInline = layout === "inline";
 
   return (
-    <div className="fixed bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end">
+    <div
+      className={
+        isInline
+          ? `relative z-10 flex shrink-0 flex-col items-end transition-opacity duration-300 ${
+              isMusicSectionVisible ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`
+          : `fixed bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end transition-opacity duration-300 ${
+              isMusicSectionVisible ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`
+      }
+    >
       {isExpanded && (
-        <div className="mb-3 w-72 max-w-[calc(100vw-2rem)] rounded-xl bg-white/95 backdrop-blur-md border border-gray-200 p-4 shadow-lg text-gray-900 select-none animate-in fade-in slide-in-from-bottom-2 duration-200">
+        <div
+          className={`mb-3 w-72 max-w-[calc(100vw-2rem)] rounded-xl bg-white/95 backdrop-blur-md border border-gray-200 p-4 shadow-xl text-gray-900 select-none animate-in fade-in slide-in-from-bottom-2 duration-200 ${
+            isInline ? "absolute bottom-full right-0" : ""
+          }`}
+        >
           <div className="flex justify-between items-start mb-3">
             <div className="flex gap-2.5 items-center min-w-0">
               <div
@@ -287,7 +328,7 @@ export function FloatingMusicBubble() {
                 <Music className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
                   Now Playing
                 </p>
                 <h4 className="text-sm font-semibold text-gray-900 truncate" title={title}>
@@ -297,19 +338,19 @@ export function FloatingMusicBubble() {
             </div>
             <button
               onClick={() => setIsExpanded(false)}
-              className="text-gray-400 hover:text-gray-600 p-1 rounded-md"
+              className="text-gray-400 hover:text-gray-600 p-1 rounded-md template-focus-ring"
               aria-label="Minimize player"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="flex gap-2 justify-center pt-1 border-t border-gray-100">
+          <div className="flex gap-2 justify-center pt-2 border-t border-gray-100">
             {isPlaying ? (
               <button
                 type="button"
                 onClick={pause}
-                className="py-1.5 px-3 bg-gray-900 text-white rounded-md text-xs font-medium flex items-center gap-1.5 hover:bg-gray-800 transition"
+                className="py-1.5 px-3 bg-gray-900 text-white rounded-md text-xs font-medium flex items-center gap-1.5 hover:bg-gray-800 transition cursor-pointer"
               >
                 <Pause className="w-3.5 h-3.5 fill-current" />
                 <span>Pause</span>
@@ -318,7 +359,7 @@ export function FloatingMusicBubble() {
               <button
                 type="button"
                 onClick={play}
-                className="py-1.5 px-3 bg-gray-900 text-white rounded-md text-xs font-medium flex items-center gap-1.5 hover:bg-gray-800 transition"
+                className="py-1.5 px-3 bg-gray-900 text-white rounded-md text-xs font-medium flex items-center gap-1.5 hover:bg-gray-800 transition cursor-pointer"
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
                 <span>Resume</span>
@@ -330,7 +371,7 @@ export function FloatingMusicBubble() {
                 stop();
                 setIsExpanded(false);
               }}
-              className="py-1.5 px-3 bg-gray-100 text-gray-700 rounded-md text-xs font-medium flex items-center gap-1.5 hover:bg-gray-200 transition"
+              className="py-1.5 px-3 bg-gray-100 text-gray-700 rounded-md text-xs font-medium flex items-center gap-1.5 hover:bg-gray-200 transition cursor-pointer"
             >
               <Square className="w-3.5 h-3.5 fill-current" />
               <span>Stop</span>
@@ -339,17 +380,20 @@ export function FloatingMusicBubble() {
         </div>
       )}
 
+      {/* Main floating bubble trigger */}
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
-        className="w-12 h-12 rounded-full bg-gray-900 text-white shadow-lg hover:bg-gray-800 flex items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-95 focus:outline-none template-focus-ring"
+        className={`rounded-full bg-gray-900 text-white shadow-xl hover:bg-gray-800 flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none template-focus-ring shrink-0 ${
+          compact ? "w-9 h-9 sm:w-10 sm:h-10" : "w-10 h-10 sm:w-11 sm:h-11"
+        }`}
         aria-label="Wedding song controls"
         title={isPlaying ? "Pause music" : "Play music"}
       >
         {isPlaying ? (
-          <Volume2 className="w-5 h-5 animate-pulse" />
+          <Volume2 className={compact ? "w-4 h-4 animate-pulse" : "w-5 h-5 animate-pulse"} />
         ) : (
-          <VolumeX className="w-5 h-5 opacity-75" />
+          <VolumeX className={compact ? "w-4 h-4 opacity-75" : "w-5 h-5 opacity-75"} />
         )}
       </button>
     </div>

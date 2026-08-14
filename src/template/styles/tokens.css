@@ -62,7 +62,28 @@
   --content-max-width: 56rem;
   --reading-max-width: 42rem;
 
-  /* LEVEL 3: COMPONENT SPECIFIC TOKENS */
+  /* LEVEL 3: COMPONENT & SHELL TOKENS */
   --nav-height: 4rem;
   --rsvp-card-border: var(--border-default);
+
+  --wedding-nav-height: 4rem;
+  --wedding-nav-bg-hero: transparent;
+  --wedding-nav-bg-scrolled: rgba(255, 255, 255, 0.95);
+  --wedding-nav-border-scrolled: var(--border-default);
+  --wedding-nav-shadow-scrolled: var(--shadow-soft);
+  --wedding-nav-text: var(--text-primary);
+  --wedding-nav-muted: var(--text-secondary);
+
+  --wedding-floating-bottom: calc(env(safe-area-inset-bottom) + 1.25rem);
+  --wedding-floating-gap: 0.5rem;
+  --wedding-dock-bg: rgba(255, 255, 255, 0.95);
+  --wedding-dock-border: var(--border-default);
+  --wedding-dock-primary-bg: var(--color-neutral-900);
+  --wedding-dock-primary-fg: var(--color-neutral-0);
+  --wedding-dock-secondary-bg: var(--color-neutral-50);
+  --wedding-dock-secondary-fg: var(--color-neutral-700);
+
+  --wedding-drawer-width: 26rem;
+  --wedding-drawer-bg: var(--surface-page);
+  --wedding-drawer-border: var(--border-default);
 }

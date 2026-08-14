@@ -4,8 +4,8 @@ import type { WeddingTemplateData } from "@/platform/wedding-template-data";
 import { templateSectionRegistry } from "./section-registry";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
-import { QuickDock } from "./components/QuickDock";
-import { AudioProvider, FloatingMusicBubble } from "./components/AudioPlayer";
+import { FloatingControls } from "./components/FloatingControls";
+import { AudioProvider } from "./components/AudioPlayer";
 import { buildWeddingNavigation } from "./navigation/wedding-navigation";
 
 export type TemplateRendererProps = {
@@ -32,7 +32,7 @@ export function TemplateRenderer({
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased selection:bg-gray-200">
         <Navbar data={data} />
 
-        <main className="flex-1">
+        <main className="flex-1 pt-16">
           {data.orderedSectionKeys.map((key) => {
             const renderSection = templateSectionRegistry[key];
             if (!renderSection) return null;
@@ -52,9 +52,8 @@ export function TemplateRenderer({
 
         <Footer data={data} />
 
-        {/* Floating Shell Layer */}
-        <QuickDock items={navModel.dockItems} />
-        <FloatingMusicBubble />
+        {/* Unified Floating Controls Cluster */}
+        <FloatingControls items={navModel.dockItems} />
       </div>
     </AudioProvider>
   );

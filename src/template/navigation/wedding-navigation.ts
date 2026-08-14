@@ -30,10 +30,10 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
 > = {
   host_info: {
     label: "Home",
-    anchor: "#host_info",
+    anchor: "/",
     group: "Celebration",
     iconName: "Home",
-    isPrimaryTopNav: false, // Monogram / Couple title serves as Home in TopNav
+    isPrimaryTopNav: false, // Monogram serves as Home in TopNav
     isDockEligible: false,
     isMoreEligible: true,
   },
@@ -69,7 +69,7 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
     anchor: "#main_event",
     group: "Event Essentials",
     iconName: "Calendar",
-    isPrimaryTopNav: true,
+    isPrimaryTopNav: false, // Essential logistics live in Dock
     isDockEligible: true,
     isMoreEligible: true,
   },
@@ -78,7 +78,7 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
     anchor: "#venue",
     group: "Event Essentials",
     iconName: "MapPin",
-    isPrimaryTopNav: true,
+    isPrimaryTopNav: false, // Essential logistics live in Dock
     isDockEligible: true,
     isMoreEligible: true,
   },
@@ -87,7 +87,7 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
     anchor: "#secondary_event",
     group: "Event Essentials",
     iconName: "Utensils",
-    isPrimaryTopNav: true,
+    isPrimaryTopNav: false, // Essential logistics live in Dock
     isDockEligible: true,
     isMoreEligible: true,
   },
@@ -123,7 +123,7 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
     anchor: "#attire_motif",
     group: "Event Essentials",
     iconName: "Shirt",
-    isPrimaryTopNav: true,
+    isPrimaryTopNav: false, // Essential logistics live in Dock
     isDockEligible: true,
     isMoreEligible: true,
   },
@@ -141,7 +141,7 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
     anchor: "/rsvp",
     group: "Guest Info & Actions",
     iconName: "Mail",
-    isPrimaryTopNav: true,
+    isPrimaryTopNav: false, // Primary CTA lives in Dock
     isDockEligible: true,
     isMoreEligible: true,
     isPrimaryAction: true,
@@ -184,6 +184,16 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
   },
 };
 
+// Curated browsing links priority for TopNav center
+const TOP_NAV_ORDER_PREFERENCE: WeddingApplicableSectionKey[] = [
+  "countdown",
+  "gallery",
+  "timeline_program",
+  "extra_info",
+  "guestbook",
+  "story_message",
+];
+
 const DOCK_PREFERENCE_ORDER: WeddingApplicableSectionKey[] = [
   "main_event",
   "venue",
@@ -213,6 +223,27 @@ export type CanonicalWeddingNavigation = {
 };
 
 /**
+ * Resolves a destination anchor or route based on the current pathname.
+ * - If destination is Home ("#host_info" or "/"), returns "/"
+ * - If on root ("/" or "") and anchor starts with "#", returns "#anchor"
+ * - If on a subroute (e.g. "/rsvp") and anchor starts with "#", returns "/#anchor"
+ * - If anchor is a subroute path (e.g. "/rsvp"), returns "/rsvp"
+ */
+export function resolveWeddingHref(anchor: string, currentPathname: string = "/"): string {
+  const isRoot = currentPathname === "/" || currentPathname === "";
+
+  if (anchor === "#host_info" || anchor === "/") {
+    return "/";
+  }
+
+  if (anchor.startsWith("#")) {
+    return isRoot ? anchor : `/${anchor}`;
+  }
+
+  return anchor;
+}
+
+/**
  * Builds the unified navigation model for a wedding template.
  */
 export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWeddingNavigation {
@@ -226,9 +257,13 @@ export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWedd
     ...WEDDING_SECTION_NAV_DEFINITIONS[key],
   }));
 
-  // Primary TopNav: Curated subset of enabled items (up to 6 items to avoid navbar horizontal sprawl)
-  const primaryNavCandidates = allEnabledItems.filter((item) => item.isPrimaryTopNav);
-  const primaryNavItems = primaryNavCandidates.slice(0, 6);
+  // Primary TopNav: Curated browsing sections (up to 5-6 items when enabled)
+  const primaryNavItems: WeddingNavItem[] = TOP_NAV_ORDER_PREFERENCE.filter((key) =>
+    enabledSet.has(key)
+  ).map((key) => ({
+    key,
+    ...WEDDING_SECTION_NAV_DEFINITIONS[key],
+  }));
 
   // Quick Dock items: Filtered essential shortcuts (up to 5 items)
   const dockItems: WeddingNavItem[] = DOCK_PREFERENCE_ORDER.filter((key) =>

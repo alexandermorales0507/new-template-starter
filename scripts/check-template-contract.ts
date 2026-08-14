@@ -16,7 +16,10 @@ import {
   formatTimeRange,
   formatRsvpDeadline,
 } from "../src/template/utils/event-formatting.js";
-import { buildWeddingNavigation } from "../src/template/navigation/wedding-navigation.js";
+import {
+  buildWeddingNavigation,
+  resolveWeddingHref,
+} from "../src/template/navigation/wedding-navigation.js";
 
 type CheckResult = {
   passed: boolean;
@@ -247,14 +250,24 @@ if (
 // 7. CANONICAL NAVIGATION MODEL GUARD
 console.log("\n[7] CANONICAL NAVIGATION MODEL GUARD");
 const navTest = buildWeddingNavigation(demoWeddingData);
+const homeResolvedOnRoot = resolveWeddingHref("/", "/");
+const homeResolvedOnSub = resolveWeddingHref("/", "/rsvp");
+const sectionResolvedOnRoot = resolveWeddingHref("#timeline_program", "/");
+const sectionResolvedOnSub = resolveWeddingHref("#timeline_program", "/rsvp");
+
 if (
   navTest.primaryNavItems.length > 0 &&
   navTest.dockItems.length > 0 &&
-  navTest.moreGroups.length > 0
+  navTest.moreGroups.length > 0 &&
+  homeResolvedOnRoot === "/" &&
+  homeResolvedOnSub === "/" &&
+  sectionResolvedOnRoot === "#timeline_program" &&
+  sectionResolvedOnSub === "/#timeline_program"
 ) {
   console.log(
     `  ✓ Navigation model verified: ${navTest.primaryNavItems.length} primary links, ${navTest.dockItems.length} dock shortcuts, ${navTest.moreGroups.length} categories`
   );
+  console.log("  ✓ Route-aware navigation resolver verified ('/' vs '/rsvp' resolution)");
 } else {
   result.passed = false;
   result.failures.push("Canonical navigation model generator failed validation.");

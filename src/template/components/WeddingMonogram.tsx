@@ -48,7 +48,7 @@ export function WeddingMonogram({
         className={`inline-flex flex-col items-center justify-center gap-1 ${className}`}
         {...props}
       >
-        <span className="inline-flex items-center gap-1.5 font-serif text-lg font-bold tracking-widest text-gray-900">
+        <span className="inline-flex items-center gap-1.5 font-serif text-xl font-bold tracking-widest text-gray-900">
           <span>{identity.groomInitial}</span>
           <span className="text-gray-400 font-normal">&amp;</span>
           <span>{identity.brideInitial}</span>
@@ -58,16 +58,17 @@ export function WeddingMonogram({
     );
   }
 
-  // Default nav variant
+  // Default nav variant: Minimal, elegant dynamic text glyphs ONLY (e.g. "J & A")
   return (
     <span
-      className={`inline-flex items-center gap-2 font-bold text-sm md:text-base text-gray-900 tracking-tight shrink-0 whitespace-nowrap ${className}`}
+      className={`wedding-nav-monogram font-serif text-lg md:text-xl font-bold tracking-widest text-gray-900 hover:opacity-80 transition-opacity select-none ${className}`}
       {...props}
     >
-      <span className="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs font-semibold shrink-0">
-        {identity.compactMonogram}
+      <span className="wedding-monogram-glyphs">
+        <span>{identity.groomInitial}</span>
+        <span className="text-gray-400 font-light mx-1">&amp;</span>
+        <span>{identity.brideInitial}</span>
       </span>
-      <span>{identity.displayName}</span>
     </span>
   );
 }
