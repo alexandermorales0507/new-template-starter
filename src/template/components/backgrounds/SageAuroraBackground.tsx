@@ -33,18 +33,20 @@ function hexToRgb(hex: string): [number, number, number] {
   return [((num >> 16) & 255) / 255, ((num >> 8) & 255) / 255, (num & 255) / 255];
 }
 
-const VERTEX_SHADER = `
-attribute vec2 position;
-attribute vec2 uv;
-varying vec2 vUv;
+// GLSL ES 3.00 Vertex Shader (#version 300 es MUST be character index 0)
+const VERTEX_SHADER = `#version 300 es
+in vec2 position;
+in vec2 uv;
+out vec2 vUv;
 void main() {
   vUv = uv;
   gl_Position = vec4(position, 0.0, 1.0);
 }
 `;
 
+// GLSL ES 3.00 Raymarch Fragment Shader (#version 300 es MUST be character index 0)
 function createFragmentShader(steps: number): string {
-  return `
+  return `#version 300 es
 precision highp float;
 
 uniform float uTime;
@@ -67,7 +69,8 @@ uniform float uOpacity;
 uniform float uGrain;
 uniform float uGrainIntensity;
 
-varying vec2 vUv;
+in vec2 vUv;
+out vec4 fragColor;
 
 float random(vec2 st) {
   return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
@@ -141,18 +144,19 @@ void main() {
   color *= uBrightness;
   
   if (uGrain > 0.5) {
-    float noise = (random(vUv + vec2(fract(uTime * 0.05), fract(uTime * 0.05 * 0.7))) - 0.5) * uGrainIntensity;
-    color += vec3(noise);
+    float noise = (random(vUv + fract(uTime * 0.05)) - 0.5) * uGrainIntensity;
+    color += noise;
   }
   
-  gl_FragColor = vec4(clamp(color, 0.0, 1.0), uOpacity);
+  fragColor = vec4(clamp(color, 0.0, 1.0), uOpacity);
 }
 `;
 }
 
 /**
  * Sage Estate Botanical Aurora Animated Background
- * Uses WebGL2 Gradient Waves shader (OGL) with responsive text-safe veils,
+ * Uses WebGL2 Gradient Waves shader (OGL) with strict GLSL ES 300 compilation,
+ * WebGL2 context guard, atomic readiness validation, responsive text-safe veils,
  * reduced-motion detection, intersection-based pause, and defensive static fallback.
  */
 export function SageAuroraBackground({
@@ -200,6 +204,9 @@ export function SageAuroraBackground({
     if (!container || !canvas) return;
 
     let renderer: Renderer | null = null;
+    let program: Program | null = null;
+    let mesh: Mesh | null = null;
+    let isDisposed = false;
     let animationFrameId: number | null = null;
     let isVisible = true;
     let isTabActive = !document.hidden;
@@ -214,6 +221,7 @@ export function SageAuroraBackground({
         alpha: true,
         antialias: false,
         dpr: Math.min(window.devicePixelRatio || 1, 2),
+        webgl: 2,
       });
     } catch {
       setIsSupported(false);
@@ -226,8 +234,13 @@ export function SageAuroraBackground({
       return;
     }
 
-    let program: Program;
-    let mesh: Mesh;
+    // Hard WebGL2 check: GLSL ES 3.00 shaders (#version 300 es) require true WebGL2 context
+    const isWebGL2 =
+      typeof WebGL2RenderingContext !== "undefined" && gl instanceof WebGL2RenderingContext;
+    if (!isWebGL2) {
+      setIsSupported(false);
+      return;
+    }
 
     try {
       const geometry = new Triangle(gl);
@@ -258,17 +271,21 @@ export function SageAuroraBackground({
           uGrainIntensity: { value: grainIntensity },
         },
         transparent: true,
+        cullFace: false,
         depthTest: false,
         depthWrite: false,
       });
 
-      // Defensive check: if program linking failed, fallback to static CSS
-      if (!program.attributeLocations) {
+      // Guard: Ensure program linked successfully and generated attribute/uniform maps
+      if (!program.attributeLocations || !program.uniformLocations) {
         setIsSupported(false);
         return;
       }
 
       mesh = new Mesh(gl, { geometry, program });
+
+      // Synchronous first-render validation before starting RAF loop
+      renderer.render({ scene: mesh });
     } catch {
       setIsSupported(false);
       return;
@@ -276,7 +293,7 @@ export function SageAuroraBackground({
 
     // Handle container resizing
     const handleResize = () => {
-      if (!container || !renderer || !program) return;
+      if (!container || !renderer || !program || isDisposed) return;
       const width = Math.max(1, container.clientWidth);
       const height = Math.max(1, container.clientHeight);
       renderer.setSize(width, height);
@@ -287,11 +304,12 @@ export function SageAuroraBackground({
     const resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(container);
 
-    // Render loop with visibility pause
+    // Continuous render loop with visibility and lifecycle guards
     let startTime = performance.now();
 
     const animate = (now: number) => {
-      if (isVisible && isTabActive && renderer && program?.attributeLocations) {
+      if (isDisposed) return;
+      if (isVisible && isTabActive && renderer && mesh && program) {
         const elapsed = (now - startTime) * 0.001;
         program.uniforms.uTime.value = elapsed;
         try {
@@ -319,7 +337,7 @@ export function SageAuroraBackground({
     // Pause when browser tab is inactive
     const handleVisibilityChange = () => {
       isTabActive = !document.hidden;
-      if (isTabActive) {
+      if (isTabActive && program) {
         startTime = performance.now() - (program.uniforms.uTime.value as number) * 1000;
       }
     };
@@ -327,6 +345,7 @@ export function SageAuroraBackground({
 
     // Cleanup on unmount
     return () => {
+      isDisposed = true;
       if (animationFrameId !== null) {
         cancelAnimationFrame(animationFrameId);
       }
@@ -338,7 +357,7 @@ export function SageAuroraBackground({
         const loseContextExt = gl.getExtension("WEBGL_lose_context");
         loseContextExt?.loseContext();
       } catch {
-        // Ignore errors during context loss
+        // Ignore context loss error on teardown
       }
     };
   }, [
