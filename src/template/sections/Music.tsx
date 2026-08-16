@@ -3,17 +3,19 @@
 import { useEffect } from "react";
 import type { MusicData } from "@/platform/wedding-template-data";
 import { useAudio } from "@/template/components/AudioPlayer";
-import { Music, Play, Pause, Square } from "lucide-react";
+import { Reveal } from "@/template/components/motion/Reveal";
+import { parseMusicMeta } from "@/template/utils/music-meta";
+import { motion, useReducedMotion } from "motion/react";
+import { Play, Pause, Square, Music4 } from "lucide-react";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// Music & Audio effects section.
-// Renders as a full in-page section within normal document flow.
-// Controls playback through the shared template audio context.
+// SAGE ESTATE CELEBRATION SOUNDTRACK
+// Controls playback through the shared template audio context with animated vinyl disc.
 
 export function MusicSection({ data }: { data: MusicData }) {
+  const shouldReduceMotion = useReducedMotion();
   const { playbackState, isPlaying, play, pause, stop, setMusicData } = useAudio();
 
-  const title = data.musicTitle || "Our Wedding Song";
   const link = data.musicLink;
   const playLabel = data.playButtonLabel || "Play Song";
   const note = data.shortNote;
@@ -26,68 +28,115 @@ export function MusicSection({ data }: { data: MusicData }) {
 
   if (!link && !data.musicTitle) return null;
 
+  const { displayTitle, displayArtist } = parseMusicMeta(data.musicTitle);
+
   return (
     <section
       id="music_effects"
-      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200 text-center"
+      className="template-section section-surface-primary template-section-compact text-center"
     >
-      <div className="mb-6">
-        <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Ambiance</p>
-        <h2 className="text-3xl font-bold text-gray-900">Our Wedding Song</h2>
-      </div>
+      <div className="template-container-narrow">
+        <Reveal direction="up" distance={16}>
+          <div className="mb-6 space-y-2">
+            <span className="text-role-subheading text-[var(--wedding-accent-soft)]">
+              CELEBRATION SOUNDTRACK
+            </span>
+            <h2 className="text-role-heading text-[var(--wedding-on-primary)]">Our Wedding Song</h2>
+          </div>
+        </Reveal>
 
-      <div className="bg-gray-50 p-6 md:p-8 rounded-xl border border-gray-200 max-w-md mx-auto shadow-xs">
-        <div className="w-16 h-16 rounded-full bg-gray-900 text-white mx-auto mb-4 flex items-center justify-center shadow-md">
-          <Music className={`w-8 h-8 ${isPlaying ? "animate-pulse" : ""}`} />
-        </div>
+        <Reveal direction="up" distance={20} delay={0.1}>
+          <div
+            data-surface="light"
+            className="surface-light-reset bg-[var(--wedding-surface)] p-6 sm:p-8 rounded-2xl border border-[var(--wedding-border)] max-w-md mx-auto shadow-card relative overflow-hidden text-[var(--wedding-text)]"
+          >
+            {/* Spinning Vinyl Disc with Beamed-Note Center */}
+            <div className="relative w-28 h-28 mx-auto mb-6 flex items-center justify-center z-10">
+              {/* Pulsating outer light ring */}
+              {isPlaying && !shouldReduceMotion && (
+                <div className="absolute inset-0 rounded-full border border-[var(--wedding-accent)]/40 scale-110 animate-ping pointer-events-none" />
+              )}
 
-        <h3 className="font-semibold text-gray-900 text-lg mb-1 truncate" title={title}>
-          {title}
-        </h3>
-
-        {note && (
-          <p className="text-xs md:text-sm text-gray-600 italic max-w-xs mx-auto mb-6 leading-relaxed">
-            &ldquo;{note}&rdquo;
-          </p>
-        )}
-
-        {link && (
-          <div className="flex justify-center items-center gap-3">
-            {isPlaying ? (
-              <button
-                type="button"
-                onClick={pause}
-                className="py-2.5 px-5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2 template-focus-ring cursor-pointer"
-                aria-label="Pause song"
+              {/* Spinning vinyl disc */}
+              <motion.div
+                animate={{ rotate: !shouldReduceMotion && isPlaying ? 360 : 0 }}
+                transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
+                className="w-full h-full rounded-full bg-gradient-to-br from-[var(--wedding-surface-dark)] via-[#15231c] to-[var(--wedding-surface-dark)] border-2 border-[var(--wedding-accent)]/30 shadow-xl flex items-center justify-center relative group"
               >
-                <Pause className="w-4 h-4 fill-current" />
-                <span>Pause</span>
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={play}
-                className="py-2.5 px-5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2 template-focus-ring cursor-pointer"
-                aria-label={playbackState === "paused" ? "Resume song" : playLabel}
-              >
-                <Play className="w-4 h-4 fill-current" />
-                <span>{playbackState === "paused" ? "Resume" : playLabel}</span>
-              </button>
+                {/* Concentric record grooves */}
+                <div className="absolute inset-2 rounded-full border border-[var(--wedding-accent)]/15 pointer-events-none" />
+                <div className="absolute inset-4 rounded-full border border-[var(--wedding-accent)]/15 pointer-events-none" />
+                <div className="absolute inset-6 rounded-full border border-[var(--wedding-accent)]/15 pointer-events-none" />
+
+                {/* Center label with Music4 beamed note */}
+                <div className="w-10 h-10 rounded-full bg-[var(--wedding-accent-soft)] flex items-center justify-center shadow-inner">
+                  <Music4
+                    className="w-4 h-4 text-[var(--wedding-surface-dark)]"
+                    aria-hidden="true"
+                  />
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Connected Song Title with Guaranteed Dark Forest Contrast */}
+            <h3
+              className="font-serif font-bold text-[var(--wedding-text)] text-2xl sm:text-3xl mb-1 truncate"
+              title={displayTitle}
+            >
+              {displayTitle}
+            </h3>
+
+            {displayArtist && (
+              <p className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-[var(--wedding-accent)] mb-4">
+                {displayArtist}
+              </p>
             )}
 
-            {(playbackState === "playing" || playbackState === "paused") && (
-              <button
-                type="button"
-                onClick={stop}
-                className="py-2.5 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium rounded-lg transition-colors flex items-center gap-2 template-focus-ring cursor-pointer"
-                aria-label="Stop song"
-              >
-                <Square className="w-4 h-4 fill-current" />
-                <span>Stop</span>
-              </button>
+            {note && (
+              <p className="text-sm text-[var(--wedding-text-muted)] italic max-w-xs mx-auto mb-6 leading-relaxed font-serif">
+                &ldquo;{note}&rdquo;
+              </p>
+            )}
+
+            {link && (
+              <div className="flex justify-center items-center gap-3 pt-2 font-sans">
+                {isPlaying ? (
+                  <button
+                    type="button"
+                    onClick={pause}
+                    className="py-3 px-6 bg-[var(--wedding-primary)] hover:bg-[var(--wedding-primary-hover)] text-[var(--wedding-on-primary)] text-sm font-semibold rounded-xl transition-all shadow-xs flex items-center gap-2 template-focus-ring cursor-pointer min-h-[44px]"
+                    aria-label="Pause song"
+                  >
+                    <Pause className="w-4 h-4 fill-current" />
+                    <span>Pause</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={play}
+                    className="py-3 px-6 bg-[var(--wedding-primary)] hover:bg-[var(--wedding-primary-hover)] text-[var(--wedding-on-primary)] text-sm font-semibold rounded-xl transition-all shadow-xs flex items-center gap-2 template-focus-ring cursor-pointer min-h-[44px]"
+                    aria-label={playbackState === "paused" ? "Resume song" : playLabel}
+                  >
+                    <Play className="w-4 h-4 fill-current" />
+                    <span>{playbackState === "paused" ? "Resume" : playLabel}</span>
+                  </button>
+                )}
+
+                {(playbackState === "playing" || playbackState === "paused") && (
+                  <button
+                    type="button"
+                    onClick={stop}
+                    className="py-3 px-5 bg-[var(--wedding-surface-alt)] hover:bg-[var(--wedding-border)] text-[var(--wedding-text)] text-sm font-medium rounded-xl transition-colors flex items-center gap-2 template-focus-ring cursor-pointer border border-[var(--wedding-border-subtle)] min-h-[44px]"
+                    aria-label="Stop song"
+                  >
+                    <Square className="w-4 h-4 fill-current" />
+                    <span>Stop</span>
+                  </button>
+                )}
+              </div>
             )}
           </div>
-        )}
+        </Reveal>
       </div>
     </section>
   );

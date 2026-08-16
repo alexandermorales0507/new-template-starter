@@ -1,13 +1,23 @@
-/* SHARED NEUTRAL TEMPLATE LAYOUT & CONTROL BASE */
+/* ==========================================================================
+   SAGE ESTATE — THE GLASSHOUSE LEDGER
+   SHARED TEMPLATE LAYOUT & FULL-WIDTH SECTION ENVIRONMENT
+   ========================================================================== */
+
+:root {
+  --section-space-mobile: clamp(3.5rem, 7vw, 6rem);
+  --section-space-desktop: clamp(4rem, 8vw, 6.5rem);
+  --section-space-compact-mobile: clamp(2.5rem, 5vw, 4rem);
+  --section-space-compact-desktop: clamp(3rem, 6vw, 4.5rem);
+  --content-max-width: 68rem;
+  --reading-max-width: 46rem;
+}
+
+/* Full-width 100vw Section Wrapper */
 .template-section {
+  width: 100%;
+  position: relative;
   padding-top: var(--section-space-mobile);
   padding-bottom: var(--section-space-mobile);
-  padding-left: 1rem;
-  padding-right: 1rem;
-  max-width: var(--content-max-width);
-  margin-left: auto;
-  margin-right: auto;
-  border-bottom: 1px solid var(--border-default);
 }
 
 @media (min-width: 768px) {
@@ -17,15 +27,199 @@
   }
 }
 
+/* Compact Section Spacing (for tight transition moments) */
+.template-section-compact {
+  padding-top: var(--section-space-compact-mobile);
+  padding-bottom: var(--section-space-compact-mobile);
+}
+
+@media (min-width: 768px) {
+  .template-section-compact {
+    padding-top: var(--section-space-compact-desktop);
+    padding-bottom: var(--section-space-compact-desktop);
+  }
+}
+
+/* Centralized Inner Content Container */
+.template-container {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .template-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Reading Max-Width Container (for Story, RSVP, FAQ, Sponsors) */
+.template-container-narrow {
+  width: 100%;
+  max-width: var(--reading-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .template-container-narrow {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* ==========================================================================
+   CENTRALIZED SECTION SURFACE & CONTRAST AUTOMATION
+   ========================================================================== */
+
+/* 1. Light Parchment Surface (Page Canvas) */
+.section-surface-ivory,
+.surface-ivory {
+  background-color: var(--wedding-bg);
+  color: var(--wedding-text);
+}
+
+/* 2. Pure Stationery / Paper Surface (Cards & Content Sections) */
+.section-surface-paper,
+.surface-paper,
 .template-card {
-  background-color: var(--surface-card);
-  border: 1px solid var(--border-default);
+  background-color: var(--wedding-surface);
+  color: var(--wedding-text);
+}
+
+/* 3. Mist Sage Wash Surface (Alternating Light Bands) */
+.section-surface-sage,
+.surface-sage {
+  background-color: var(--wedding-surface-alt);
+  color: var(--wedding-text);
+}
+
+/* 4. Primary Conservatory Sage Surface (Callout / Music Bands) */
+.section-surface-primary,
+.surface-primary {
+  background-color: var(--wedding-primary);
+  color: var(--wedding-on-primary);
+}
+
+.section-surface-primary > div > * > h1,
+.section-surface-primary > div > * > h2,
+.section-surface-primary > div > * > .text-role-heading,
+.section-surface-primary > div > * > .text-role-heading-major {
+  color: var(--wedding-on-primary);
+}
+
+.section-surface-primary > div > * > p.intro,
+.section-surface-primary > div > * > .text-role-lead {
+  color: var(--wedding-accent-soft);
+}
+
+/* 5. Deep Estate Forest Surface (Reception, RSVP, Footer) */
+.section-surface-forest,
+.section-surface-dark,
+.surface-dark {
+  background-color: var(--wedding-surface-dark);
+  color: var(--wedding-on-dark);
+}
+
+.section-surface-forest > div > * > h1,
+.section-surface-forest > div > * > h2,
+.section-surface-forest > div > * > .text-role-heading,
+.section-surface-forest > div > * > .text-role-heading-major,
+.section-surface-dark > div > * > h1,
+.section-surface-dark > div > * > h2 {
+  color: var(--wedding-on-dark);
+}
+
+.section-surface-forest > div > * > p.intro,
+.section-surface-forest > div > * > .text-role-lead,
+.section-surface-dark > div > * > p.intro {
+  color: var(--wedding-accent-soft);
+}
+
+/* ==========================================================================
+   SYSTEMIC SURFACE CONTEXT RESET FOR NESTED CONTAINERS
+   Guarantees that nested light cards in dark/primary sections maintain dark text.
+   ========================================================================== */
+
+.surface-light-reset,
+[data-surface="light"],
+.template-card,
+.ledger-panel,
+.correspondence-sheet,
+.specimen-frame {
+  color: var(--wedding-text);
+}
+
+.surface-light-reset h1,
+.surface-light-reset h2,
+.surface-light-reset h3,
+.surface-light-reset h4,
+[data-surface="light"] h1,
+[data-surface="light"] h2,
+[data-surface="light"] h3,
+[data-surface="light"] h4,
+.template-card h1,
+.template-card h2,
+.template-card h3,
+.template-card h4,
+.ledger-panel h1,
+.ledger-panel h2,
+.ledger-panel h3,
+.ledger-panel h4,
+.correspondence-sheet h1,
+.correspondence-sheet h2,
+.correspondence-sheet h3,
+.correspondence-sheet h4 {
+  color: var(--wedding-text);
+}
+
+.surface-light-reset p,
+[data-surface="light"] p,
+.template-card p,
+.ledger-panel p,
+.correspondence-sheet p {
+  color: inherit;
+}
+
+/* ==========================================================================
+   FORM INPUT MOBILE READABILITY (16PX BASELINE PREVENTS AUTO-ZOOM)
+   ========================================================================== */
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+  font-size: 1rem !important; /* 16px solid mobile baseline */
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   SHARED CARD & INTERACTION BASE
+   ========================================================================== */
+
+.template-card {
+  background-color: var(--wedding-surface);
+  border: 1px solid var(--wedding-border);
   border-radius: var(--radius-card);
-  padding: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  box-shadow: var(--shadow-xs);
+  transition: all 0.2s ease;
+}
+
+.template-card:hover {
+  box-shadow: var(--shadow-soft);
 }
 
 .template-focus-ring:focus-visible {
-  outline: 2px solid var(--focus-ring);
+  outline: 2px solid var(--wedding-focus);
   outline-offset: 2px;
 }
 
@@ -39,13 +233,39 @@
 }
 
 .wedding-nav[data-scrolled="true"] {
-  background-color: var(--wedding-nav-bg-scrolled, rgba(255, 255, 255, 0.95));
-  border-bottom: 1px solid var(--wedding-nav-border-scrolled, rgba(229, 231, 235, 1));
-  box-shadow: var(--wedding-nav-shadow-scrolled, 0 4px 6px -1px rgba(0, 0, 0, 0.05));
+  background-color: var(--wedding-nav-bg-scrolled, rgba(247, 244, 234, 0.94));
+  border-bottom: 1px solid var(--wedding-nav-border-scrolled, rgba(199, 207, 188, 0.8));
+  box-shadow: var(--wedding-nav-shadow-scrolled, 0 4px 12px -2px rgba(36, 52, 44, 0.06));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 section[id] {
-  scroll-margin-top: calc(var(--wedding-nav-height, 4rem) + 0.5rem);
+  scroll-margin-top: calc(var(--wedding-nav-height, 4.25rem) + 0.5rem);
+}
+
+/* SAGE GALLERY CUSTOM PAGINATION BULLETS */
+.sage-gallery-bullet {
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background-color: var(--wedding-border);
+  opacity: 0.8;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  min-width: 0.625rem;
+}
+
+.sage-gallery-bullet:hover {
+  background-color: var(--wedding-primary);
+  opacity: 1;
+}
+
+.sage-gallery-bullet-active {
+  width: 2rem !important;
+  border-radius: 9999px !important;
+  background-color: var(--wedding-primary) !important;
+  opacity: 1 !important;
+  box-shadow: var(--shadow-xs);
 }

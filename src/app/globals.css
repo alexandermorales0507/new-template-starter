@@ -1,8 +1,14 @@
 @import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/effect-creative";
+@import "swiper/css/effect-coverflow";
+@import "swiper/css/pagination";
 @import "../template/styles/tokens.css";
 @import "../template/styles/typography.css";
 @import "../template/styles/motion.css";
 @import "../template/styles/template.css";
+@import "../template/styles/geometry.css";
+@import "../template/styles/patterns.css";
 
 @layer base {
   html {
@@ -12,8 +18,8 @@
   body {
     overflow-x: hidden;
     width: 100%;
-    background-color: var(--surface-page);
-    color: var(--text-primary);
+    background-color: var(--wedding-bg);
+    color: var(--wedding-text);
   }
 }
 

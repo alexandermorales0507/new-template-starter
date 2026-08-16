@@ -15,14 +15,16 @@ export type TemplateConfig = {
 };
 
 export const templateConfig: TemplateConfig = {
-  id: "custom-wedding-starter",
-  name: "Custom Wedding Template Starter",
-  version: 2,
-  description: "WebSerbisyo Custom Wedding Template Starter with design system foundation.",
+  id: "template-03-sage-estate",
+  name: "Sage Estate — The Glasshouse Ledger",
+  version: 1,
+  description:
+    "English Garden Estate architectural wedding template with warm ivory surfaces and conservatory sage accents.",
   palette: [
-    { name: "Navy Slate", hex: "#334155" },
-    { name: "Muted Blue", hex: "#64748b" },
-    { name: "Soft Sky", hex: "#cbd5e1" },
-    { name: "Warm Cream", hex: "#f1f5f9" },
+    { name: "Conservatory Sage", hex: "#657A57" },
+    { name: "Mist Sage", hex: "#DDE5D3" },
+    { name: "Deep Forest", hex: "#304438" },
+    { name: "Antique Brass", hex: "#C9A86A" },
+    { name: "Warm Cream", hex: "#F7F4EA" },
   ],
 };

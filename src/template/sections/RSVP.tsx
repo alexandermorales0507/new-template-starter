@@ -4,11 +4,15 @@ import { useState } from "react";
 import type { RsvpData } from "@/platform/wedding-template-data";
 import { submitRsvp, type PublicRsvpPayload } from "@/platform/submit-rsvp";
 import { formatRsvpDeadline } from "@/template/utils/event-formatting";
-import { CheckCircle2, AlertCircle, Loader2, Heart } from "lucide-react";
+import { CorrespondenceSheet } from "@/template/components/containers/CorrespondenceSheet";
+import { Reveal } from "@/template/components/motion/Reveal";
+import { Magnetic } from "@/template/components/motion/Magnetic";
+import { CheckCircle2, AlertCircle, Loader2, Heart, Send, User, UserPlus } from "lucide-react";
 
 // PLATFORM ACTION — DO NOT REIMPLEMENT.
 // Keep submission through the shared platform adapter.
 // PLATFORM VISIBILITY: Respect dashboard state.
+// SAGE ESTATE FORMAL RESPONSE CARD (THE GLASSHOUSE LEDGER)
 
 export type RsvpProps = {
   data: RsvpData;
@@ -122,27 +126,37 @@ export function RSVPForm({
   };
 
   return (
-    <div className="bg-gray-50 p-6 md:p-8 rounded-xl border border-gray-200 max-w-2xl mx-auto shadow-xs">
+    <CorrespondenceSheet
+      title="Formal Response Card"
+      dateStamp={formattedDeadline ? `DUE BY ${formattedDeadline.toUpperCase()}` : "ESTATE ARCHIVE"}
+      className="max-w-2xl mx-auto shadow-md"
+    >
       {success ? (
-        <div className="text-center py-8 space-y-3">
-          <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
-          <h3 className="text-xl font-bold text-gray-900">Thank You!</h3>
-          <p className="text-sm text-gray-600 max-w-md mx-auto leading-relaxed">
-            Your RSVP response has been successfully received. We look forward to celebrating
-            together!
+        <div className="text-center py-10 space-y-3">
+          <CheckCircle2 className="w-14 h-14 text-[var(--wedding-primary)] mx-auto" />
+          <h3 className="text-2xl font-serif font-bold text-[var(--wedding-text)]">
+            Response Recorded
+          </h3>
+          <p className="text-base text-[var(--wedding-text)] max-w-md mx-auto leading-relaxed font-sans">
+            Your formal RSVP response has been registered in the estate ledger. We look forward to
+            celebrating together!
           </p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6 pt-2 font-sans">
           {errorMsg && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-md text-red-700 text-sm flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+            <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 shrink-0 text-red-600" />
               <span>{errorMsg}</span>
             </div>
           )}
 
+          {/* Full Name */}
           <div>
-            <label htmlFor="guestName" className="block text-sm font-medium text-gray-800 mb-1">
+            <label
+              htmlFor="guestName"
+              className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
+            >
               Full Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -152,33 +166,37 @@ export function RSVPForm({
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
               placeholder="Your First and Last Name"
-              className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white"
+              className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] transition-colors min-h-[46px]"
             />
           </div>
 
+          {/* Attendance Choice */}
           <div>
-            <label className="block text-sm font-medium text-gray-800 mb-2">
-              Will you be attending?
+            <label className="block text-sm font-semibold text-[var(--wedding-text)] mb-2">
+              Will you attend? <span className="text-red-500">*</span>
             </label>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => setAttendanceStatus("attending")}
-                className={`py-2.5 px-4 rounded-lg text-sm font-medium border text-center transition-colors cursor-pointer ${
+                className={`py-3.5 px-4 rounded-xl text-sm font-semibold border text-center transition-all cursor-pointer flex items-center justify-center gap-2 min-h-[46px] ${
                   attendanceStatus === "attending"
-                    ? "bg-gray-900 text-white border-gray-900 shadow-xs"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+                    ? "bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] border-[var(--wedding-primary)] shadow-sm"
+                    : "bg-[var(--wedding-surface)] text-[var(--wedding-text)] border-[var(--wedding-border)] hover:bg-[var(--wedding-surface-alt)]"
                 }`}
               >
-                Joyfully Accept
+                <Heart
+                  className={`w-4 h-4 ${attendanceStatus === "attending" ? "fill-white/20" : ""}`}
+                />
+                <span>Joyfully Accept</span>
               </button>
               <button
                 type="button"
                 onClick={() => setAttendanceStatus("not_attending")}
-                className={`py-2.5 px-4 rounded-lg text-sm font-medium border text-center transition-colors cursor-pointer ${
+                className={`py-3.5 px-4 rounded-xl text-sm font-semibold border text-center transition-all cursor-pointer min-h-[46px] ${
                   attendanceStatus === "not_attending"
-                    ? "bg-gray-900 text-white border-gray-900 shadow-xs"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+                    ? "bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] border-[var(--wedding-primary)] shadow-sm"
+                    : "bg-[var(--wedding-surface)] text-[var(--wedding-text)] border-[var(--wedding-border)] hover:bg-[var(--wedding-surface-alt)]"
                 }`}
               >
                 Regretfully Decline
@@ -186,11 +204,15 @@ export function RSVPForm({
             </div>
           </div>
 
+          {/* Contact Fields */}
           {(data.emailEnabled || data.phoneEnabled) && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {data.emailEnabled && (
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-800 mb-1">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
+                  >
                     Email Address {data.emailRequired && <span className="text-red-500">*</span>}
                   </label>
                   <input
@@ -200,14 +222,17 @@ export function RSVPForm({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@example.com"
-                    className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white"
+                    className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[46px]"
                   />
                 </div>
               )}
               {data.phoneEnabled && (
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-800 mb-1">
-                    Mobile Number {data.phoneRequired && <span className="text-red-500">*</span>}
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
+                  >
+                    Mobile Phone {data.phoneRequired && <span className="text-red-500">*</span>}
                   </label>
                   <input
                     id="phone"
@@ -216,34 +241,65 @@ export function RSVPForm({
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="09170000000"
-                    className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white"
+                    className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[46px]"
                   />
                 </div>
               )}
             </div>
           )}
 
+          {/* Additional Companions */}
           {data.plusOneEnabled && maxCompanions > 0 && attendanceStatus === "attending" && (
-            <div className="pt-2 border-t border-gray-200">
+            <div className="pt-3 border-t border-[var(--wedding-border-subtle)] space-y-3">
               <label
                 htmlFor="companionCount"
-                className="block text-sm font-medium text-gray-800 mb-1"
+                className="block text-sm font-semibold text-[var(--wedding-text)] mb-1"
               >
                 Additional Companions
               </label>
-              <select
-                id="companionCount"
-                value={companionCount}
-                onChange={(e) => handleCompanionCountChange(Number(e.target.value))}
-                className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white"
-              >
-                <option value={0}>0 (Just Me)</option>
-                {Array.from({ length: maxCompanions }, (_, i) => i + 1).map((num) => (
-                  <option key={num} value={num}>
-                    +{num} Companion{num > 1 ? "s" : ""}
-                  </option>
-                ))}
-              </select>
+
+              {maxCompanions === 1 ? (
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => handleCompanionCountChange(0)}
+                    className={`py-3 px-4 rounded-xl text-sm font-medium border flex items-center justify-center gap-2 cursor-pointer min-h-[44px] transition-all ${
+                      companionCount === 0
+                        ? "bg-[var(--wedding-surface-alt)] border-[var(--wedding-primary)] font-semibold text-[var(--wedding-text)] shadow-xs"
+                        : "bg-[var(--wedding-surface)] border-[var(--wedding-border)] text-[var(--wedding-text-muted)]"
+                    }`}
+                  >
+                    <User className="w-4 h-4 text-[var(--wedding-primary)]" />
+                    <span>Solo Guest</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleCompanionCountChange(1)}
+                    className={`py-3 px-4 rounded-xl text-sm font-medium border flex items-center justify-center gap-2 cursor-pointer min-h-[44px] transition-all ${
+                      companionCount === 1
+                        ? "bg-[var(--wedding-surface-alt)] border-[var(--wedding-primary)] font-semibold text-[var(--wedding-text)] shadow-xs"
+                        : "bg-[var(--wedding-surface)] border-[var(--wedding-border)] text-[var(--wedding-text-muted)]"
+                    }`}
+                  >
+                    <UserPlus className="w-4 h-4 text-[var(--wedding-primary)]" />
+                    <span>+1 Companion</span>
+                  </button>
+                </div>
+              ) : (
+                <select
+                  id="companionCount"
+                  value={companionCount}
+                  onChange={(e) => handleCompanionCountChange(Number(e.target.value))}
+                  className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[46px]"
+                >
+                  <option value={0}>0 (Solo Guest)</option>
+                  {Array.from({ length: maxCompanions }, (_, i) => i + 1).map((num) => (
+                    <option key={num} value={num}>
+                      +{num} Guest{num > 1 ? "s" : ""}
+                    </option>
+                  ))}
+                </select>
+              )}
 
               {companions.length > 0 && (
                 <div className="mt-3 space-y-3">
@@ -254,15 +310,15 @@ export function RSVPForm({
                           type="text"
                           value={comp.fullName}
                           onChange={(e) => updateCompanion(idx, "fullName", e.target.value)}
-                          placeholder={`Companion #${idx + 1} Name`}
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white"
+                          placeholder={`Companion #${idx + 1} Full Name`}
+                          className="flex-1 px-3.5 py-3 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] bg-[var(--wedding-surface)] min-h-[44px]"
                         />
                       )}
                       {data.companionAgeEnabled && (
                         <select
                           value={comp.ageLabel}
                           onChange={(e) => updateCompanion(idx, "ageLabel", e.target.value)}
-                          className="w-28 px-2 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white"
+                          className="w-32 px-3 py-3 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] bg-[var(--wedding-surface)] min-h-[44px]"
                         >
                           <option value="Adult">Adult</option>
                           <option value="Child">Child</option>
@@ -276,11 +332,12 @@ export function RSVPForm({
             </div>
           )}
 
+          {/* Dietary Restrictions */}
           {data.foodAllergiesEnabled && attendanceStatus === "attending" && (
             <div>
               <label
                 htmlFor="dietaryNotes"
-                className="block text-sm font-medium text-gray-800 mb-1"
+                className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
               >
                 Dietary Restrictions / Food Allergies
               </label>
@@ -289,45 +346,57 @@ export function RSVPForm({
                 type="text"
                 value={dietaryNotes}
                 onChange={(e) => setDietaryNotes(e.target.value)}
-                placeholder="e.g. Vegetarian, Peanut allergy"
-                className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white"
+                placeholder="e.g. Vegetarian, Peanut allergy, Halal"
+                className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[46px]"
               />
             </div>
           )}
 
+          {/* Message for Couple */}
           {data.messageToHostEnabled && (
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-800 mb-1">
-                Message for the Couple
+              <label
+                htmlFor="message"
+                className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
+              >
+                Warm Note for the Couple
               </label>
               <textarea
                 id="message"
                 rows={3}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Leave a warm wish or note..."
-                className="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-white"
+                placeholder="Write your wishes or thoughts..."
+                className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[80px]"
               />
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full py-3.5 px-4 bg-gray-900 hover:bg-gray-800 text-white font-semibold text-sm rounded-lg transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:opacity-50 cursor-pointer shadow-sm"
-          >
-            {submitting ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Submitting RSVP...
-              </>
-            ) : (
-              "Submit RSVP Response"
-            )}
-          </button>
+          {/* Submit Action — Centered & Prominent */}
+          <div className="pt-3 w-full max-w-sm mx-auto flex justify-center">
+            <Magnetic intensity={0.15} className="block w-full">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full py-4 px-6 bg-[var(--wedding-primary)] hover:bg-[var(--wedding-primary-hover)] text-[var(--wedding-on-primary)] font-semibold text-base rounded-xl transition-all flex items-center justify-center gap-2.5 focus:outline-none template-focus-ring disabled:opacity-50 cursor-pointer shadow-md active:scale-98 min-h-[48px]"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Submitting Response...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    <span>Submit RSVP Response</span>
+                  </>
+                )}
+              </button>
+            </Magnetic>
+          </div>
         </form>
       )}
-    </div>
+    </CorrespondenceSheet>
   );
 }
 
@@ -340,25 +409,35 @@ export function RSVPSection(props: RsvpProps) {
   return (
     <section
       id="rsvp_form"
-      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+      className="template-section section-surface-forest pattern-ledger-rule pattern-subtle pattern-dark"
     >
-      <div className="text-center mb-8">
-        <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Confirm Attendance</p>
-        <h2 className="text-3xl font-bold text-gray-900">RSVP</h2>
-        {formattedDeadline && (
-          <p className="text-sm text-gray-600 mt-1">
-            Please respond on or before{" "}
-            <strong className="font-semibold text-gray-800">{formattedDeadline}</strong>
-          </p>
-        )}
-        {props.isDemoMode && (
-          <div className="inline-block mt-2 px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-full">
-            Demo Mode RSVP (Simulated Submission)
+      <div className="template-container-narrow">
+        <Reveal direction="up" distance={16}>
+          <div className="text-center mb-8 sm:mb-10 space-y-2">
+            <span className="text-role-subheading text-[var(--wedding-accent-soft)]">
+              FOLIO // 11 &bull; RSVP CONFIRMATION
+            </span>
+            <h2 className="text-role-heading-major text-[var(--wedding-on-dark)] tracking-tight">
+              RSVP
+            </h2>
+            {formattedDeadline && (
+              <p className="text-base text-[var(--wedding-accent-soft)] mt-1 font-sans">
+                Kindly respond on or before{" "}
+                <strong className="font-semibold text-white">{formattedDeadline}</strong>
+              </p>
+            )}
+            {props.isDemoMode && (
+              <div className="inline-block mt-2 px-3 py-1 bg-[var(--wedding-accent-soft)]/20 border border-[var(--wedding-accent)]/50 text-[var(--wedding-on-dark)] text-xs font-mono rounded-full">
+                Demo Mode RSVP (Simulated Submission)
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </Reveal>
 
-      <RSVPForm {...props} />
+        <Reveal direction="up" distance={24} delay={0.1}>
+          <RSVPForm {...props} />
+        </Reveal>
+      </div>
     </section>
   );
 }

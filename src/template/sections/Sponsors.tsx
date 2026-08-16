@@ -1,8 +1,9 @@
 import type { SponsorsData } from "@/platform/wedding-template-data";
+import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
+import { Reveal } from "@/template/components/motion/Reveal";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// Principal Sponsors section.
-// Renders responsive witness list in canonical order without inventing pairs.
+// SAGE ESTATE FORMAL PATRON REGISTER (QUIET SECTION)
 
 function parseSponsorNames(rawNames: string): string[] {
   if (!rawNames || typeof rawNames !== "string") return [];
@@ -27,36 +28,46 @@ function parseSponsorNames(rawNames: string): string[] {
 }
 
 export function SponsorsSection({ data }: { data: SponsorsData }) {
-  const namesList = parseSponsorNames(data.names || "");
-
-  if (namesList.length === 0) return null;
+  const names = parseSponsorNames(data.names || "");
+  if (names.length === 0) return null;
 
   return (
-    <section
-      id="principal_sponsors"
-      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
-    >
-      <div className="text-center mb-8">
-        <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Witnesses</p>
-        <h2 className="text-3xl font-bold text-gray-900">Principal Sponsors</h2>
-        {data.introLine && (
-          <p className="text-sm text-gray-600 max-w-md mx-auto mt-2 leading-relaxed">
-            {data.introLine}
-          </p>
-        )}
-      </div>
+    <section id="principal_sponsors" className="template-section section-surface-paper">
+      <div className="template-container-narrow">
+        <Reveal direction="up" distance={16}>
+          <div className="text-center mb-10 sm:mb-12 space-y-2">
+            <span className="text-role-subheading">FOLIO // 08 &bull; PRINCIPAL SPONSORS</span>
+            <h2 className="text-role-heading-quiet text-[var(--wedding-text)] tracking-tight">
+              Principal Sponsors
+            </h2>
+            {data.introLine && (
+              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed">
+                {data.introLine}
+              </p>
+            )}
+          </div>
+        </Reveal>
 
-      <div className="bg-gray-50 p-6 md:p-8 rounded-xl border border-gray-200 max-w-2xl mx-auto shadow-xs">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 text-sm text-gray-800 text-center sm:text-left">
-          {namesList.map((sponsor, idx) => (
-            <li
-              key={idx}
-              className="py-1 px-2 border-b border-gray-100 last:border-none sm:last:border-b"
-            >
-              {sponsor}
-            </li>
-          ))}
-        </ul>
+        <Reveal direction="up" distance={20} delay={0.1}>
+          <LedgerPanel
+            title="Roll of Principal Sponsors"
+            indexTag="OFFICIAL REGISTER"
+            headerAlign="center"
+            className="bg-[var(--wedding-surface)] shadow-xs"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 pt-2 font-sans">
+              {names.map((name, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 py-2.5 border-b border-[var(--wedding-border-subtle)] text-base font-medium text-[var(--wedding-text)] font-sans"
+                >
+                  <span className="w-2 h-2 rotate-45 bg-[var(--wedding-accent)] shrink-0" />
+                  <span>{name}</span>
+                </div>
+              ))}
+            </div>
+          </LedgerPanel>
+        </Reveal>
       </div>
     </section>
   );

@@ -92,6 +92,29 @@ export function formatEventDateShort(dateStr?: string | null): string {
 }
 
 /**
+ * Formats YYYY-MM-DD to estate numeric style "04 — 19 — 2027"
+ */
+export function formatEstateDate(dateStr?: string | null): string {
+  if (!dateStr || typeof dateStr !== "string") return "";
+  const match = dateStr.trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (match) {
+    const year = match[1];
+    const month = match[2];
+    const day = match[3];
+    return `${month} — ${day} — ${year}`;
+  }
+
+  const d = parseLocalDate(dateStr);
+  if (!d) return dateStr.trim();
+
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  const yyyy = String(d.getFullYear());
+
+  return `${mm} — ${dd} — ${yyyy}`;
+}
+
+/**
  * Formats 24-hour time "16:00" or "16:00:00" to 12-hour "4:00 PM"
  */
 export function formatEventTime(timeStr?: string | null): string {

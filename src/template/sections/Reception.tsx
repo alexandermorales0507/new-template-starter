@@ -1,75 +1,98 @@
 import type { ReceptionData } from "@/platform/wedding-template-data";
-import { formatTimeRange, formatEventDateLong } from "@/template/utils/event-formatting";
-import { Clock, MapPin, Calendar } from "lucide-react";
+import { formatTimeRange } from "@/template/utils/event-formatting";
+import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
+import { Reveal } from "@/template/components/motion/Reveal";
+import { Clock, MapPin, Navigation, Info } from "lucide-react";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// Reception (Secondary Event) details.
-// Note: secondary_event has no canonical date field; date is safely derived from ceremony.
+// SAGE ESTATE RECEPTION (THE GLASSHOUSE LEDGER)
 
 export type ReceptionSectionProps = {
   data: ReceptionData;
   eventDate?: string | null;
 };
 
-export function ReceptionSection({ data, eventDate }: ReceptionSectionProps) {
-  const formattedTime = formatTimeRange(data.startTime, data.endTime);
-  const formattedDate = formatEventDateLong(eventDate);
+export function ReceptionSection({ data }: ReceptionSectionProps) {
+  const timeFormatted = formatTimeRange(data.startTime, data.endTime);
+  const title = data.title || "The Reception";
 
   return (
     <section
       id="secondary_event"
-      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+      className="template-section section-surface-forest pattern-glazing-grid pattern-subtle pattern-dark"
     >
-      <div className="text-center mb-8">
-        <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Reception</p>
-        <h2 className="text-3xl font-bold text-gray-900">{data.title || "The Celebration"}</h2>
-      </div>
-
-      <div className="bg-gray-50 p-6 md:p-8 rounded-xl border border-gray-200 max-w-2xl mx-auto space-y-4 shadow-xs">
-        {formattedDate && (
-          <div className="flex items-center gap-3 text-gray-800">
-            <Calendar className="w-5 h-5 text-gray-500 shrink-0" />
-            <span className="font-medium text-base">{formattedDate}</span>
+      <div className="template-container-narrow">
+        <Reveal direction="up" distance={16}>
+          <div className="text-center mb-8 sm:mb-10 space-y-2">
+            <span className="text-role-subheading text-[var(--wedding-accent-soft)]">
+              FOLIO // 05 &bull; RECEPTION
+            </span>
+            <h2 className="text-role-heading text-[var(--wedding-on-dark)] tracking-tight">
+              {title}
+            </h2>
           </div>
-        )}
+        </Reveal>
 
-        {formattedTime && (
-          <div className="flex items-center gap-3 text-gray-800">
-            <Clock className="w-5 h-5 text-gray-500 shrink-0" />
-            <span className="text-base">{formattedTime}</span>
-          </div>
-        )}
+        <Reveal direction="up" distance={20} delay={0.1}>
+          <LedgerPanel
+            title={data.venueName || "Reception Grounds"}
+            indexTag="RECORD // 02"
+            className="bg-[var(--wedding-surface)] text-[var(--wedding-text)] shadow-card"
+          >
+            <div className="space-y-4 pt-1 font-sans">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {timeFormatted && (
+                  <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)]">
+                    <Clock className="w-5 h-5 text-[var(--wedding-primary)] shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-role-metadata text-[var(--wedding-text-muted)] block mb-0.5">
+                        Program Hours
+                      </span>
+                      <p className="text-base sm:text-lg font-bold text-[var(--wedding-text)] font-serif">
+                        {timeFormatted}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
-        {(data.venueName || data.address) && (
-          <div className="flex items-start gap-3 text-gray-800">
-            <MapPin className="w-5 h-5 text-gray-500 shrink-0 mt-0.5" />
-            <div>
-              {data.venueName && (
-                <p className="font-semibold text-gray-900 text-base">{data.venueName}</p>
+                {data.address && (
+                  <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)]">
+                    <MapPin className="w-5 h-5 text-[var(--wedding-primary)] shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-role-metadata text-[var(--wedding-text-muted)] block mb-0.5">
+                        Location
+                      </span>
+                      <p className="text-base font-medium text-[var(--wedding-text)] leading-relaxed font-sans">
+                        {data.address}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {data.note && (
+                <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)] text-sm text-[var(--wedding-text)]">
+                  <Info className="w-5 h-5 text-[var(--wedding-primary)] shrink-0 mt-0.5" />
+                  <p className="leading-relaxed font-sans text-sm sm:text-base">{data.note}</p>
+                </div>
               )}
-              {data.address && <p className="text-sm text-gray-600 mt-0.5">{data.address}</p>}
+
+              {data.mapsLink && (
+                <div className="pt-2 font-sans">
+                  <a
+                    href={data.mapsLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2.5 py-3 px-6 bg-[var(--wedding-primary)] hover:bg-[var(--wedding-primary-hover)] text-[var(--wedding-on-primary)] text-sm font-semibold rounded-xl transition-all shadow-xs template-focus-ring cursor-pointer min-h-[44px]"
+                  >
+                    <Navigation className="w-4 h-4" />
+                    <span>Reception Directions</span>
+                  </a>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-
-        {data.note && (
-          <p className="text-xs text-gray-500 italic pt-2 border-t border-gray-200 leading-relaxed">
-            Note: {data.note}
-          </p>
-        )}
-
-        {data.mapsLink && (
-          <div className="pt-2">
-            <a
-              href={data.mapsLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 underline template-focus-ring"
-            >
-              Directions to Reception &rarr;
-            </a>
-          </div>
-        )}
+          </LedgerPanel>
+        </Reveal>
       </div>
     </section>
   );

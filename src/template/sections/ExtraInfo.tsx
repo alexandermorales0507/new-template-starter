@@ -1,7 +1,16 @@
+"use client";
+
 import type { ExtraInfoData } from "@/platform/wedding-template-data";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/template/components/ui/Accordion";
+import { Reveal } from "@/template/components/motion/Reveal";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// Extra Information & Good to Know details.
+// SAGE ESTATE GUEST GUIDANCE & FAQ (THE GLASSHOUSE LEDGER)
 
 export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
   if (!data.items || data.items.length === 0) return null;
@@ -9,22 +18,45 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
   return (
     <section
       id="extra_info"
-      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+      className="template-section section-surface-sage pattern-archival-dot pattern-subtle"
     >
-      <div className="text-center mb-8">
-        <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Important Details</p>
-        <h2 className="text-3xl font-bold text-gray-900">{data.sectionTitle || "Good to Know"}</h2>
-        {data.sectionIntro && (
-          <p className="text-sm text-gray-600 max-w-md mx-auto mt-2">{data.sectionIntro}</p>
-        )}
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-        {data.items.map((item) => (
-          <div key={item.id} className="bg-gray-50 p-5 rounded-lg border border-gray-200">
-            <h3 className="font-semibold text-gray-900 text-base mb-2">{item.title}</h3>
-            <p className="text-sm text-gray-700 leading-relaxed">{item.details}</p>
+      <div className="template-container-narrow">
+        <Reveal direction="up" distance={16}>
+          <div className="text-center mb-10 sm:mb-12 space-y-2">
+            <span className="text-role-subheading">
+              FOLIO // 10 &bull; GUEST GUIDANCE &amp; FAQ
+            </span>
+            <h2 className="text-role-heading text-[var(--wedding-text)] tracking-tight">
+              {data.sectionTitle || "Frequently Asked Questions"}
+            </h2>
+            {data.sectionIntro && (
+              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed">
+                {data.sectionIntro}
+              </p>
+            )}
           </div>
-        ))}
+        </Reveal>
+
+        <Reveal direction="up" distance={20} delay={0.1}>
+          <div className="bg-[var(--wedding-surface)] rounded-2xl border border-[var(--wedding-border)] p-6 sm:p-8 shadow-card">
+            <Accordion type="single" collapsible className="w-full space-y-2">
+              {data.items.map((item, idx) => (
+                <AccordionItem
+                  key={item.id || idx}
+                  value={`item-${idx + 1}`}
+                  className="border-b border-[var(--wedding-border-subtle)] last:border-0"
+                >
+                  <AccordionTrigger className="font-serif text-base sm:text-lg font-bold text-[var(--wedding-text)] hover:text-[var(--wedding-primary)] py-4 text-left">
+                    {item.title}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm sm:text-base text-[var(--wedding-text)] font-sans leading-relaxed pt-1 pb-4">
+                    {item.details}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

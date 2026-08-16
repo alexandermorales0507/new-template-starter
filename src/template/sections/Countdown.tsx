@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 import type { CountdownData } from "@/platform/wedding-template-data";
+import { AnimatedNumber } from "@/template/components/interactive/AnimatedNumber";
+import { Reveal } from "@/template/components/motion/Reveal";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// Event countdown timer widget.
+// SAGE ESTATE COUNTDOWN (THE GLASSHOUSE LEDGER)
+// Real timer calculations mapped to rolling FLIP digits.
 
 export type CountdownSectionProps = {
   data: CountdownData;
@@ -62,48 +65,48 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
     return () => clearInterval(interval);
   }, [eventDate, eventTime]);
 
+  const units = [
+    { label: "DAYS", value: timeLeft.days },
+    { label: "HOURS", value: timeLeft.hours },
+    { label: "MINUTES", value: timeLeft.minutes },
+    { label: "SECONDS", value: timeLeft.seconds },
+  ];
+
   return (
     <section
       id="countdown"
-      className="template-section py-12 px-4 max-w-3xl mx-auto text-center border-b border-gray-200"
+      className="template-section section-surface-sage template-section-compact"
     >
-      <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-        {data.title || "Counting Down To Our Big Day"}
-      </h2>
-      {data.shortNote && (
-        <p className="text-sm text-gray-500 mb-6 max-w-md mx-auto leading-relaxed">
-          {data.shortNote}
-        </p>
-      )}
-      <div className="grid grid-cols-4 gap-3 sm:gap-4 max-w-md mx-auto mt-4">
-        <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <span className="block text-2xl sm:text-3xl font-bold text-gray-900">
-            {timeLeft.days}
-          </span>
-          <span className="text-[10px] sm:text-xs uppercase text-gray-500 font-medium">Days</span>
-        </div>
-        <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <span className="block text-2xl sm:text-3xl font-bold text-gray-900">
-            {timeLeft.hours}
-          </span>
-          <span className="text-[10px] sm:text-xs uppercase text-gray-500 font-medium">Hours</span>
-        </div>
-        <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <span className="block text-2xl sm:text-3xl font-bold text-gray-900">
-            {timeLeft.minutes}
-          </span>
-          <span className="text-[10px] sm:text-xs uppercase text-gray-500 font-medium">
-            Minutes
-          </span>
-        </div>
-        <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-          <span className="block text-2xl sm:text-3xl font-bold text-gray-900">
-            {timeLeft.seconds}
-          </span>
-          <span className="text-[10px] sm:text-xs uppercase text-gray-500 font-medium">
-            Seconds
-          </span>
-        </div>
+      <div className="template-container-narrow text-center">
+        <Reveal direction="up" distance={16}>
+          <div className="mb-6 sm:mb-8 space-y-2">
+            <span className="text-role-subheading">COUNTDOWN RECORD</span>
+            <h2 className="text-role-heading text-[var(--wedding-text)]">
+              {data.title || "Counting Down To Our Big Day"}
+            </h2>
+            {data.shortNote && (
+              <p className="text-role-lead max-w-md mx-auto leading-relaxed">{data.shortNote}</p>
+            )}
+          </div>
+        </Reveal>
+
+        <Reveal direction="up" distance={20} delay={0.1}>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-xl mx-auto">
+            {units.map((unit) => (
+              <div
+                key={unit.label}
+                className="flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border border-[var(--wedding-border)] bg-[var(--wedding-surface)] shadow-xs hover:border-[var(--wedding-accent)]/50 transition-colors"
+              >
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold font-mono tracking-tight text-[var(--wedding-text)] tabular-nums">
+                  <AnimatedNumber value={unit.value} format={{ minimumIntegerDigits: 2 }} />
+                </span>
+                <span className="mt-1.5 text-xs font-mono font-bold tracking-[0.2em] text-[var(--wedding-text-muted)] uppercase">
+                  {unit.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

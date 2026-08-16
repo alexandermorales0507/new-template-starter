@@ -43,7 +43,7 @@ export function QuickDock({ items, compact = false, className = "" }: QuickDockP
 
   return (
     <aside
-      className={`wedding-guest-dock bg-white/95 backdrop-blur-md border border-gray-200 shadow-xl rounded-full flex items-center shrink-0 ${
+      className={`wedding-guest-dock bg-[var(--wedding-dock-bg)] backdrop-blur-md border border-[var(--border-default)] shadow-xl rounded-full flex items-center shrink-0 ${
         compact ? "gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3 sm:py-2" : "gap-2.5 sm:gap-3 px-3.5 py-2"
       } ${className}`}
       role="toolbar"
@@ -67,8 +67,8 @@ export function QuickDock({ items, compact = false, className = "" }: QuickDockP
                 compact ? "w-[38px] h-[38px]" : "w-11 h-11"
               } ${
                 isPrimary
-                  ? "bg-gray-900 text-white shadow-md hover:bg-gray-800 hover:scale-105 active:scale-95"
-                  : "bg-gray-50 text-gray-700 hover:bg-gray-100 hover:text-gray-900 active:scale-95 border border-gray-100"
+                  ? "bg-[var(--action-primary)] text-[var(--action-text)] shadow-md hover:bg-[var(--action-primary-hover)] hover:scale-105 active:scale-95"
+                  : "bg-[var(--surface-muted)] text-[var(--text-secondary)] hover:bg-[var(--border-default)] hover:text-[var(--text-primary)] active:scale-95 border border-[var(--border-subtle)]"
               }`}
               aria-label={item.label}
             >
@@ -77,7 +77,7 @@ export function QuickDock({ items, compact = false, className = "" }: QuickDockP
 
             {/* Floating Tooltip */}
             <div
-              className={`absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-gray-900 text-white text-[11px] font-medium rounded-md whitespace-nowrap shadow-md pointer-events-none transition-opacity duration-150 ${
+              className={`absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-[var(--surface-dark)] text-[var(--text-on-dark)] text-[11px] font-mono uppercase tracking-wider rounded-md whitespace-nowrap shadow-md pointer-events-none transition-opacity duration-150 ${
                 activeTooltip === item.key ? "opacity-100" : "opacity-0"
               }`}
               role="tooltip"

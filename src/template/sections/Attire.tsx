@@ -1,54 +1,87 @@
 import type { AttireData } from "@/platform/wedding-template-data";
 import { templateConfig } from "@/template/template.config";
+import { Reveal } from "@/template/components/motion/Reveal";
+import { Shirt, Sparkles } from "lucide-react";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// Attire & Motif details. Color palette swatches come from template-local configuration.
+// SAGE ESTATE ATTIRE & PALETTE GUIDE (THE GLASSHOUSE LEDGER)
+// Swatches come from templateConfig.palette (template-local).
 
 export function AttireSection({ data }: { data: AttireData }) {
-  const localPalette = templateConfig.palette || [];
+  const palette = templateConfig.palette || [];
 
   return (
     <section
       id="attire_motif"
-      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
+      className="template-section section-surface-ivory pattern-lattice pattern-standard"
     >
-      <div className="text-center mb-8">
-        <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Dress Code</p>
-        <h2 className="text-3xl font-bold text-gray-900">Attire & Motif</h2>
-        {data.sectionIntro && (
-          <p className="text-sm text-gray-600 max-w-md mx-auto mt-2">{data.sectionIntro}</p>
-        )}
-      </div>
-      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 max-w-2xl mx-auto text-center space-y-4">
-        {data.dressCodeNote && (
-          <p className="text-sm text-gray-800 leading-relaxed font-medium">{data.dressCodeNote}</p>
-        )}
-
-        {localPalette.length > 0 && (
-          <div className="pt-2">
-            <p className="text-xs uppercase tracking-wider text-gray-500 mb-2">
-              Palette Inspiration
-            </p>
-            <div className="flex justify-center items-center gap-3">
-              {localPalette.map((swatch, idx) => (
-                <div key={idx} className="flex flex-col items-center gap-1">
-                  <div
-                    className="w-8 h-8 rounded-full border border-gray-300 shadow-xs"
-                    style={{ backgroundColor: swatch.hex }}
-                    title={`${swatch.name} (${swatch.hex})`}
-                  />
-                  <span className="text-[10px] text-gray-500 font-medium">{swatch.name}</span>
-                </div>
-              ))}
-            </div>
+      <div className="template-container-narrow">
+        <Reveal direction="up" distance={16}>
+          <div className="text-center mb-10 sm:mb-12 space-y-2">
+            <span className="text-role-subheading">FOLIO // 09 &bull; ATTIRE &amp; PALETTE</span>
+            <h2 className="text-role-heading text-[var(--wedding-text)] tracking-tight">
+              Dress Code &amp; Palette
+            </h2>
+            {data.sectionIntro && (
+              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed">
+                {data.sectionIntro}
+              </p>
+            )}
           </div>
-        )}
+        </Reveal>
 
-        {data.colorMotifNote && (
-          <p className="text-xs text-gray-600 italic pt-2 border-t border-gray-200">
-            {data.colorMotifNote}
-          </p>
-        )}
+        <Reveal direction="up" distance={20} delay={0.1}>
+          <div className="bg-[var(--wedding-surface)] rounded-2xl border border-[var(--wedding-border)] p-6 sm:p-8 shadow-card space-y-6 font-sans">
+            {data.dressCodeNote && (
+              <div className="flex items-start gap-4 p-4 sm:p-5 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)]">
+                <Shirt className="w-5 h-5 text-[var(--wedding-primary)] shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-role-metadata text-[var(--wedding-text-muted)] block mb-1">
+                    Dress Code Guidelines
+                  </span>
+                  <p className="text-base text-[var(--wedding-text)] leading-relaxed font-sans">
+                    {data.dressCodeNote}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {data.colorMotifNote && (
+              <div className="flex items-start gap-4 p-4 sm:p-5 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)]">
+                <Sparkles className="w-5 h-5 text-[var(--wedding-accent)] shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-role-metadata text-[var(--wedding-text-muted)] block mb-1">
+                    Motif &amp; Atmosphere
+                  </span>
+                  <p className="text-base text-[var(--wedding-text)] leading-relaxed font-sans">
+                    {data.colorMotifNote}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {palette.length > 0 && (
+              <div className="pt-2 text-center">
+                <span className="text-role-metadata text-[var(--wedding-accent)] block mb-4">
+                  Suggested Color Inspiration
+                </span>
+                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+                  {palette.map((color, idx) => (
+                    <div key={idx} className="flex flex-col items-center gap-2 group">
+                      <div
+                        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-white shadow-md group-hover:scale-110 transition-transform ring-1 ring-[var(--wedding-border)]"
+                        style={{ backgroundColor: color.hex }}
+                      />
+                      <span className="text-xs font-mono font-semibold text-[var(--wedding-text)]">
+                        {color.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

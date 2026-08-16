@@ -1,43 +1,59 @@
 import type { LoveStoryData } from "@/platform/wedding-template-data";
 import { templateAssets } from "@/template/template-assets";
+import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
+import { CorrespondenceSheet } from "@/template/components/containers/CorrespondenceSheet";
+import { Reveal } from "@/template/components/motion/Reveal";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// Love Story / Narrative section. Visual photo is managed as a local template asset.
+// SAGE ESTATE LOVE STORY JOURNAL (THE GLASSHOUSE LEDGER)
 
 export function LoveStorySection({ data }: { data: LoveStoryData }) {
   if (!data.storyBody && !data.storyTitle) return null;
   const storyPhotos = templateAssets.photos.story || [];
 
   return (
-    <section
-      id="story_message"
-      className="template-section py-12 px-4 max-w-4xl mx-auto border-b border-gray-200"
-    >
-      <div className="text-center mb-8">
-        <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">Our Journey</p>
-        <h2 className="text-3xl font-bold text-gray-900">{data.storyTitle || "Love Story"}</h2>
-        {data.sectionIntro && (
-          <p className="text-sm text-gray-600 max-w-xl mx-auto mt-2">{data.sectionIntro}</p>
-        )}
-      </div>
+    <section id="story_message" className="template-section section-surface-paper">
+      <div className="template-container-narrow">
+        <Reveal direction="up" distance={16}>
+          <div className="text-center mb-8 sm:mb-12 space-y-2">
+            <span className="text-role-subheading">FOLIO // 14 &bull; OUR STORY</span>
+            <h2 className="text-role-heading-major text-[var(--wedding-text)] tracking-tight">
+              {data.storyTitle || "Our Story"}
+            </h2>
+            {data.sectionIntro && (
+              <p className="text-role-lead max-w-lg mx-auto mt-2 leading-relaxed">
+                {data.sectionIntro}
+              </p>
+            )}
+          </div>
+        </Reveal>
 
-      <div className="max-w-2xl mx-auto space-y-6">
-        {storyPhotos.length > 0 && (
-          <div className="mb-6">
-            <img
-              src={storyPhotos[0]}
-              alt="Our Story"
-              className="w-full h-64 object-cover rounded-lg border border-gray-200 shadow-sm"
-            />
+        <Reveal direction="up" distance={20} delay={0.1}>
+          <div className="max-w-2xl mx-auto space-y-6">
+            {storyPhotos.length > 0 && (
+              <SpecimenFrame
+                src={storyPhotos[0]}
+                alt="Our Story Photo"
+                caption="Archival Journal Memory"
+                specimenNumber="MEMORY // 14"
+                aspectRatio="landscape"
+                className="shadow-soft bg-[var(--wedding-surface)]"
+              />
+            )}
+
+            {data.storyBody && (
+              <CorrespondenceSheet
+                senderLabel="ESTATE DISPATCH"
+                dateStamp="OUR CHRONICLE"
+                className="bg-[var(--wedding-surface)]"
+              >
+                <p className="text-base sm:text-lg text-[var(--wedding-text)] leading-relaxed font-sans text-left pt-1">
+                  &ldquo;{data.storyBody}&rdquo;
+                </p>
+              </CorrespondenceSheet>
+            )}
           </div>
-        )}
-        {data.storyBody && (
-          <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 text-center">
-            <p className="text-base text-gray-700 leading-relaxed italic">
-              &ldquo;{data.storyBody}&rdquo;
-            </p>
-          </div>
-        )}
+        </Reveal>
       </div>
     </section>
   );

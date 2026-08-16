@@ -1,7 +1,9 @@
 "use client";
 
 import React, { createContext, useContext, useState, useRef, useEffect, useCallback } from "react";
-import { Music, Play, Pause, Square, Volume2, VolumeX, X } from "lucide-react";
+import { Play, Pause, Square, Music4, X } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { parseMusicMeta } from "@/template/utils/music-meta";
 
 export type AudioPlaybackState = "idle" | "playing" | "paused" | "stopped";
 export type AudioSourceType = "direct" | "youtube" | "none";
@@ -272,107 +274,164 @@ export function FloatingMusicBubble({
 }: FloatingMusicBubbleProps) {
   const { playbackState, isPlaying, musicTitle, play, pause, stop } = useAudio();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMusicSectionVisible, setIsMusicSectionVisible] = useState(false);
+
+  // Recede floating bubble when in-page #music_effects section is in viewport
+  useEffect(() => {
+    const musicSec = document.querySelector("#music_effects");
+    if (!musicSec) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsMusicSectionVisible(entry.isIntersecting && entry.intersectionRatio >= 0.3);
+      },
+      { threshold: [0, 0.3, 0.6] }
+    );
+
+    observer.observe(musicSec);
+    return () => observer.disconnect();
+  }, []);
 
   // Show floating bubble only after music has been activated (playing or paused)
   if (playbackState === "idle" || playbackState === "stopped") {
     return null;
   }
 
-  const title = musicTitle || "Wedding Song";
+  const { displayTitle, displayArtist } = parseMusicMeta(musicTitle);
   const isInline = layout === "inline";
 
   return (
     <div
       className={
         isInline
-          ? "relative z-10 flex shrink-0 flex-col items-end transition-opacity duration-300 opacity-100"
-          : "fixed bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end transition-opacity duration-300 opacity-100"
+          ? "relative z-10 flex shrink-0 flex-col items-end font-sans"
+          : `fixed bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end transition-opacity duration-300 font-sans ${
+              isMusicSectionVisible ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`
       }
     >
-      {isExpanded && (
-        <div
-          className={`mb-3 w-72 max-w-[calc(100vw-2rem)] rounded-2xl bg-white/95 backdrop-blur-md border border-gray-200 p-4 shadow-2xl text-gray-900 select-none animate-in fade-in slide-in-from-bottom-2 duration-200 ${
-            isInline ? "absolute bottom-full right-0" : ""
-          }`}
-        >
-          <div className="flex justify-between items-start mb-3">
-            <div className="flex gap-3 items-center min-w-0">
-              <div
-                className={`w-9 h-9 rounded-full bg-gray-900 flex items-center justify-center text-white shrink-0 ${
-                  isPlaying ? "animate-spin" : ""
-                }`}
-                style={{ animationDuration: "6s" }}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.85, y: 16 }}
+            transition={{ type: "spring", stiffness: 350, damping: 26 }}
+            className={`mb-3 w-72 max-w-[calc(100vw-2rem)] rounded-2xl bg-[var(--wedding-surface)]/95 backdrop-blur-md border border-[var(--wedding-border)] p-4 shadow-2xl text-[var(--wedding-text)] select-none ${
+              isInline ? "absolute bottom-full right-0" : ""
+            }`}
+          >
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex gap-3 items-center min-w-0">
+                {/* Mini spinning vinyl disc indicator */}
+                <div
+                  className={`w-9 h-9 rounded-full bg-[var(--wedding-surface-dark)] flex items-center justify-center text-[var(--wedding-accent-soft)] shrink-0 shadow-inner ${
+                    isPlaying ? "animate-spin" : ""
+                  }`}
+                  style={{ animationDuration: "6s" }}
+                >
+                  <Music4 className="w-4 h-4 text-[var(--wedding-accent-soft)]" />
+                </div>
+                <div className="min-w-0">
+                  <h4
+                    className="font-serif text-sm font-semibold text-[var(--wedding-text)] truncate leading-tight"
+                    title={displayTitle}
+                  >
+                    {displayTitle}
+                  </h4>
+                  {displayArtist && (
+                    <p className="text-[10px] font-mono text-[var(--wedding-accent)] uppercase tracking-widest truncate">
+                      {displayArtist}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsExpanded(false)}
+                className="text-[var(--wedding-text-muted)] hover:text-[var(--wedding-text)] p-1 rounded-full hover:bg-[var(--wedding-surface-alt)] transition template-focus-ring cursor-pointer"
+                aria-label="Minimize player"
               >
-                <Music className="w-4 h-4" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                  Now Playing
-                </p>
-                <h4 className="text-sm font-semibold text-gray-900 truncate" title={title}>
-                  {title}
-                </h4>
-              </div>
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            <button
-              onClick={() => setIsExpanded(false)}
-              className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition template-focus-ring"
-              aria-label="Minimize player"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
 
-          <div className="flex gap-2 justify-center pt-2 border-t border-gray-100">
-            {isPlaying ? (
+            <div className="h-px bg-gradient-to-r from-[var(--wedding-border)]/50 to-transparent mb-3" />
+
+            <div className="flex gap-2 justify-center">
+              {isPlaying ? (
+                <button
+                  type="button"
+                  onClick={pause}
+                  className="py-1.5 px-3 bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-[var(--wedding-primary-hover)] transition cursor-pointer shadow-xs"
+                >
+                  <Pause className="w-3.5 h-3.5 fill-current" />
+                  <span>Pause</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={play}
+                  className="py-1.5 px-3 bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-[var(--wedding-primary-hover)] transition cursor-pointer shadow-xs"
+                >
+                  <Play className="w-3.5 h-3.5 fill-current" />
+                  <span>Resume</span>
+                </button>
+              )}
               <button
                 type="button"
-                onClick={pause}
-                className="py-1.5 px-3 bg-gray-900 text-white rounded-md text-xs font-medium flex items-center gap-1.5 hover:bg-gray-800 transition cursor-pointer"
+                onClick={() => {
+                  stop();
+                  setIsExpanded(false);
+                }}
+                className="py-1.5 px-3 bg-[var(--wedding-surface-alt)] text-[var(--wedding-text)] rounded-lg text-xs font-medium flex items-center gap-1.5 hover:bg-[var(--wedding-border)] transition cursor-pointer border border-[var(--wedding-border-subtle)]"
               >
-                <Pause className="w-3.5 h-3.5 fill-current" />
-                <span>Pause</span>
+                <Square className="w-3.5 h-3.5 fill-current" />
+                <span>Stop</span>
               </button>
-            ) : (
-              <button
-                type="button"
-                onClick={play}
-                className="py-1.5 px-3 bg-gray-900 text-white rounded-md text-xs font-medium flex items-center gap-1.5 hover:bg-gray-800 transition cursor-pointer"
-              >
-                <Play className="w-3.5 h-3.5 fill-current" />
-                <span>Resume</span>
-              </button>
-            )}
-            <button
-              type="button"
-              onClick={() => {
-                stop();
-                setIsExpanded(false);
-              }}
-              className="py-1.5 px-3 bg-gray-100 text-gray-700 rounded-md text-xs font-medium flex items-center gap-1.5 hover:bg-gray-200 transition cursor-pointer"
-            >
-              <Square className="w-3.5 h-3.5 fill-current" />
-              <span>Stop</span>
-            </button>
-          </div>
-        </div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Main floating bubble trigger */}
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
-        className={`rounded-full bg-gray-900 text-white shadow-2xl hover:bg-gray-800 flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none template-focus-ring shrink-0 ${
+        className={`rounded-full bg-[var(--wedding-surface-dark)] text-[var(--wedding-on-dark)] shadow-2xl border-2 border-[var(--wedding-accent)]/50 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none template-focus-ring shrink-0 relative group ${
           compact ? "w-12 h-12" : "w-14 h-14"
         }`}
         aria-label="Wedding song controls"
         title={isPlaying ? "Pause music" : "Play music"}
       >
-        {isPlaying ? (
-          <Volume2 className={compact ? "w-5 h-5 animate-pulse" : "w-6 h-6 animate-pulse"} />
-        ) : (
-          <VolumeX className={compact ? "w-5 h-5 opacity-75" : "w-6 h-6 opacity-75"} />
-        )}
+        <AnimatePresence mode="wait">
+          {isPlaying ? (
+            <motion.div
+              key="playing-music"
+              initial={{ rotate: -180, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 180, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative flex items-center justify-center"
+            >
+              {/* Pulsating border rings when playing */}
+              <div className="absolute inset-0 -m-1.5 rounded-full border border-[var(--wedding-accent)] opacity-60 animate-ping pointer-events-none" />
+              <Music4 className="w-6 h-6 text-[var(--wedding-accent)] animate-pulse" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="paused-music"
+              initial={{ rotate: -180, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 180, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center justify-center"
+            >
+              <Music4 className="w-6 h-6 text-[var(--wedding-accent-soft)] opacity-80" />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </button>
     </div>
   );

@@ -1,54 +1,77 @@
-/* DESIGN SYSTEM TOKENS - 60/30/10 ARCHITECTURE READY */
+/* ==========================================================================
+   SAGE ESTATE — THE GLASSHOUSE LEDGER
+   DESIGN SYSTEM TOKENS (60 / 30 / 10 BOTANICAL ARCHITECTURE)
+   ========================================================================== */
+
 :root {
-  /* LEVEL 1: PRIMITIVE TOKENS */
-  --color-neutral-0: #ffffff;
-  --color-neutral-50: #f9fafb;
-  --color-neutral-100: #f3f4f6;
-  --color-neutral-200: #e5e7eb;
-  --color-neutral-300: #d1d5db;
-  --color-neutral-400: #9ca3af;
-  --color-neutral-500: #6b7280;
-  --color-neutral-600: #4b5563;
-  --color-neutral-700: #374151;
-  --color-neutral-800: #1f2937;
-  --color-neutral-900: #111827;
+  /* ==========================================================================
+     PRIMARY SEMANTIC WEDDING TOKENS (AUTHORITATIVE SAGE ESTATE PALETTE)
+     ========================================================================== */
+  /* 60% Dominant Base Surfaces (Cream / Ivory / Pure Paper Stationery) */
+  --wedding-bg: #f7f4ea; /* Warm Cream / Ivory Page Canvas */
+  --wedding-surface: #fffdf7; /* Soft Warm Paper Stationery (Cards/Panels) */
+  --wedding-surface-card: #ffffff; /* Pure Stationery Surface */
 
-  --color-brand-primary: #111827;
-  --color-brand-secondary: #4b5563;
-  --color-brand-accent: #2563eb;
+  /* 30% Secondary Botanical Identity (Mist Sage Wash / Conservatory Sage) */
+  --wedding-surface-alt: #dde5d3; /* Mist Sage Wash (Alternating Section Bands) */
+  --wedding-primary: #657a57; /* Conservatory Sage (Primary Brand Action) */
+  --wedding-primary-hover: #4f6445; /* Deep Dusk Sage (Hover / Active Action) */
+  --wedding-border: #c7cfbc; /* Hairline Glazing Border */
+  --wedding-border-subtle: #e1e7d9; /* Ledger Rule Line */
+  --wedding-text: #24342c; /* Deep Pine Charcoal (Headings & Primary Text) */
+  --wedding-text-muted: #5d695f; /* Slate Botanical Gray (Secondary & Body Text) */
 
-  /* LEVEL 2: SEMANTIC TOKENS (60 / 30 / 10 SURFACE & TEXT BALANCE) */
-  /* 60% Dominant Base Surfaces */
-  --surface-page: var(--color-neutral-0);
-  --surface-card: var(--color-neutral-50);
-  --surface-muted: var(--color-neutral-100);
-  --surface-dark: var(--color-neutral-900);
+  /* 10% Accents & Dark Anchors (Deep Estate Forest & Antique Brass Gold) */
+  --wedding-surface-dark: #304438; /* Deep Estate Forest (Reception, RSVP, Footer) */
+  --wedding-surface-dark-alt: #223322; /* Deepest Shade Anchor */
+  --wedding-accent: #c9a86a; /* Antique Brass Gold (Seals, Borders, Badges) */
+  --wedding-accent-soft: #ebdcc9; /* Soft Champagne Gold (Muted Brass Glyphs) */
+  --wedding-on-primary: #ffffff; /* Text on Sage & Forest Actions */
+  --wedding-on-dark: #f7f8f5; /* Text on Deep Forest Surfaces */
+  --wedding-focus: #657a57; /* Focus Ring Accent */
 
-  /* 30% Secondary Visual Identity */
-  --text-primary: var(--color-neutral-900);
-  --text-secondary: var(--color-neutral-600);
-  --text-muted: var(--color-neutral-400);
-  --text-on-dark: var(--color-neutral-0);
-  --border-default: var(--color-neutral-200);
-  --border-subtle: var(--color-neutral-100);
+  /* COMPATIBILITY ALIASES (MAP DIRECTLY TO SEMANTIC TOKENS) */
+  --surface-page: var(--wedding-bg);
+  --surface-card: var(--wedding-surface);
+  --surface-muted: var(--wedding-surface-alt);
+  --surface-dark: var(--wedding-surface-dark);
 
-  /* 10% Accents & Actions */
-  --action-primary: var(--color-neutral-900);
-  --action-primary-hover: var(--color-neutral-800);
-  --action-text: var(--color-neutral-0);
-  --accent-primary: var(--color-brand-accent);
-  --focus-ring: #2563eb;
+  --text-primary: var(--wedding-text);
+  --text-secondary: var(--wedding-text-muted);
+  --text-muted: var(--wedding-text-muted);
+  --text-on-dark: var(--wedding-on-dark);
+  --border-default: var(--wedding-border);
+  --border-subtle: var(--wedding-border-subtle);
+
+  --action-primary: var(--wedding-primary);
+  --action-primary-hover: var(--wedding-primary-hover);
+  --action-text: var(--wedding-on-primary);
+  --accent-primary: var(--wedding-accent);
+  --focus-ring: var(--wedding-focus);
+
+  /* Legacy color aliases mapped strictly to new palette */
+  --color-sage-daylight: var(--wedding-bg);
+  --color-sage-paper: var(--wedding-surface-card);
+  --color-sage-wash: var(--wedding-surface-alt);
+  --color-sage-primary: var(--wedding-primary);
+  --color-sage-primary-hover: var(--wedding-primary-hover);
+  --color-sage-forest: var(--wedding-surface-dark);
+  --color-sage-forest-dark: var(--wedding-surface-dark-alt);
+  --color-brass-accent: var(--wedding-accent);
+  --color-brass-soft: var(--wedding-accent-soft);
+  --color-brass-gold: var(--wedding-accent);
 
   /* GEOMETRY & RADIUS */
-  --radius-sm: 0.25rem;
-  --radius-card: 0.5rem;
-  --radius-control: 0.375rem;
+  --radius-sm: 0.375rem;
+  --radius-card: 1rem;
+  --radius-control: 0.5rem;
   --radius-pill: 9999px;
 
-  /* SHADOWS */
-  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-floating: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  /* SHADOWS (PAPER-LIKE RESTRAINED ELEVATION) */
+  --shadow-xs: 0 1px 2px 0 rgba(36, 52, 44, 0.04);
+  --shadow-soft: 0 4px 12px -2px rgba(36, 52, 44, 0.06), 0 2px 4px -1px rgba(36, 52, 44, 0.03);
+  --shadow-floating:
+    0 12px 32px -4px rgba(36, 52, 44, 0.14), 0 4px 12px -2px rgba(36, 52, 44, 0.06);
 
   /* SPACING & LAYOUT */
   --space-xs: 0.5rem;
@@ -57,22 +80,20 @@
   --space-lg: 2rem;
   --space-xl: 3rem;
 
-  --section-space-mobile: 2.5rem;
-  --section-space-desktop: 4rem;
-  --content-max-width: 56rem;
-  --reading-max-width: 42rem;
+  --section-space-mobile: clamp(3.5rem, 6vw, 4.5rem);
+  --section-space-desktop: clamp(5rem, 8vw, 7rem);
+  --content-max-width: 68rem;
+  --reading-max-width: 44rem;
 
-  /* LEVEL 3: COMPONENT & SHELL TOKENS */
-  --nav-height: 4rem;
-  --rsvp-card-border: var(--border-default);
-
-  --wedding-nav-height: 4rem;
+  /* SHELL & NAVIGATION TOKENS */
+  --nav-height: 4.25rem;
+  --wedding-nav-height: 4.25rem;
   --wedding-nav-bg-hero: transparent;
-  --wedding-nav-bg-scrolled: rgba(255, 255, 255, 0.95);
-  --wedding-nav-border-scrolled: var(--border-default);
+  --wedding-nav-bg-scrolled: rgba(247, 244, 234, 0.94);
+  --wedding-nav-border-scrolled: var(--wedding-border);
   --wedding-nav-shadow-scrolled: var(--shadow-soft);
-  --wedding-nav-text: var(--text-primary);
-  --wedding-nav-muted: var(--text-secondary);
+  --wedding-nav-text: var(--wedding-text);
+  --wedding-nav-muted: var(--wedding-text-muted);
 
   --wedding-floating-bottom: calc(env(safe-area-inset-bottom) + 1.25rem);
   --wedding-floating-gap: 0.75rem;
@@ -83,23 +104,24 @@
   --wedding-music-circle-size-compact: 3rem;
   --wedding-music-card-radius: 1rem;
   --wedding-floating-shadow:
-    0 12px 32px -4px rgba(0, 0, 0, 0.18), 0 4px 12px -2px rgba(0, 0, 0, 0.08);
-  --wedding-card-shadow: 0 18px 48px -8px rgba(0, 0, 0, 0.14), 0 6px 16px -4px rgba(0, 0, 0, 0.06);
+    0 12px 32px -4px rgba(36, 52, 44, 0.18), 0 4px 12px -2px rgba(36, 52, 44, 0.08);
+  --wedding-card-shadow:
+    0 18px 48px -8px rgba(36, 52, 44, 0.08), 0 6px 16px -4px rgba(36, 52, 44, 0.03);
 
-  --wedding-dock-bg: rgba(255, 255, 255, 0.95);
-  --wedding-dock-border: var(--border-default);
-  --wedding-dock-primary-bg: var(--color-neutral-900);
-  --wedding-dock-primary-fg: var(--color-neutral-0);
-  --wedding-dock-secondary-bg: var(--color-neutral-50);
-  --wedding-dock-secondary-fg: var(--color-neutral-700);
+  --wedding-dock-bg: rgba(255, 253, 247, 0.95);
+  --wedding-dock-border: var(--wedding-border);
+  --wedding-dock-primary-bg: var(--wedding-primary);
+  --wedding-dock-primary-fg: var(--wedding-on-primary);
+  --wedding-dock-secondary-bg: var(--wedding-surface-alt);
+  --wedding-dock-secondary-fg: var(--wedding-text);
 
   --wedding-drawer-width: 26rem;
-  --wedding-drawer-bg: var(--surface-page);
-  --wedding-drawer-border: var(--border-default);
+  --wedding-drawer-bg: var(--wedding-bg);
+  --wedding-drawer-border: var(--wedding-border);
 
-  --wedding-footer-pt-full: 2.5rem;
-  --wedding-footer-pb-full: 7rem;
-  --wedding-footer-pt-compact: 1.5rem;
-  --wedding-footer-pb-compact: 5.5rem;
-  --wedding-footer-gap: 2rem;
+  --wedding-footer-pt-full: 3.5rem;
+  --wedding-footer-pb-full: 7.5rem;
+  --wedding-footer-pt-compact: 2.5rem;
+  --wedding-footer-pb-compact: 6rem;
+  --wedding-footer-gap: 2.5rem;
 }
