@@ -37,7 +37,7 @@ export function MusicSection({ data }: { data: MusicData }) {
   return (
     <section
       id="music_effects"
-      className="template-section section-surface-primary template-section-compact text-center relative overflow-x-clip"
+      className="template-section section-surface-primary template-section-compact text-center relative overflow-x-clip !pt-20 md:!pt-24"
     >
       {/* Decorative Parterre Trellis Pattern Background (Floral Garden on Forest Canvas) */}
       <DecorativePattern

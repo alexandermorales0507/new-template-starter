@@ -39,7 +39,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
   return (
     <section
       id="gallery"
-      className="template-section !pt-10 !pb-14 sm:!pt-12 sm:!pb-16 md:!pt-14 md:!pb-18 section-surface-paper text-center relative overflow-x-clip"
+      className="template-section !pt-20 !pb-14 sm:!pt-24 sm:!pb-16 md:!pt-28 md:!pb-18 section-surface-paper text-center relative overflow-x-clip"
     >
       {/* Decorative Glasshouse Grid Pattern Background (Readable Paper Atmosphere) */}
       <DecorativePattern
