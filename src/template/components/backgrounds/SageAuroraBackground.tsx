@@ -128,7 +128,7 @@ void main() {
     vec3 lightDir = normalize(vec3(0.3, 0.8, -0.5));
     
     float diff = max(dot(n, lightDir), 0.0);
-    float fresnel = pow(1.0 - max(dot(-rd, n), 0.0), 3.0);
+    float fresnel = pow(clamp(1.0 - max(dot(-rd, n), 0.0), 0.0, 1.0), 3.0);
     float crestFactor = smoothstep(0.0, uAmplitude * 0.9, p.y);
     
     vec3 waveCol = mix(uWaveColor, uCrestColor, clamp(crestFactor * 0.7 + fresnel * 0.6, 0.0, 1.0));
@@ -141,8 +141,8 @@ void main() {
   color *= uBrightness;
   
   if (uGrain > 0.5) {
-    float noise = (random(vUv + fract(uTime * 0.05)) - 0.5) * uGrainIntensity;
-    color += noise;
+    float noise = (random(vUv + vec2(fract(uTime * 0.05), fract(uTime * 0.05 * 0.7))) - 0.5) * uGrainIntensity;
+    color += vec3(noise);
   }
   
   gl_FragColor = vec4(clamp(color, 0.0, 1.0), uOpacity);
@@ -226,39 +226,57 @@ export function SageAuroraBackground({
       return;
     }
 
-    const geometry = new Triangle(gl);
-    const program = new Program(gl, {
-      vertex: VERTEX_SHADER,
-      fragment: createFragmentShader(stepsCount),
-      uniforms: {
-        uTime: { value: 0 },
-        uResolution: { value: [container.clientWidth, container.clientHeight] },
-        uSpeed: { value: speed },
-        uAmplitude: { value: amplitude },
-        uWaveScale: { value: waveScale },
-        uWaveRatio: { value: waveRatio },
-        uSwell: { value: swell },
-        uTurbulence: { value: turbulence },
-        uTilt: { value: tilt },
-        uZoom: { value: zoom },
-        uHeight: { value: height },
-        uFogDepth: { value: fogDepth },
-        uHorizonColor: { value: hexToRgb(horizonColor) },
-        uWaveColor: { value: hexToRgb(waveColor) },
-        uCrestColor: { value: hexToRgb(crestColor) },
-        uBrightness: { value: brightness },
-        uOpacity: { value: opacity },
-        uGrain: { value: grain ? 1.0 : 0.0 },
-        uGrainIntensity: { value: grainIntensity },
-      },
-      transparent: true,
-    });
+    let program: Program;
+    let mesh: Mesh;
 
-    const mesh = new Mesh(gl, { geometry, program });
+    try {
+      const geometry = new Triangle(gl);
+      program = new Program(gl, {
+        vertex: VERTEX_SHADER,
+        fragment: createFragmentShader(stepsCount),
+        uniforms: {
+          uTime: { value: 0 },
+          uResolution: {
+            value: [Math.max(1, container.clientWidth), Math.max(1, container.clientHeight)],
+          },
+          uSpeed: { value: speed },
+          uAmplitude: { value: amplitude },
+          uWaveScale: { value: waveScale },
+          uWaveRatio: { value: waveRatio },
+          uSwell: { value: swell },
+          uTurbulence: { value: turbulence },
+          uTilt: { value: tilt },
+          uZoom: { value: zoom },
+          uHeight: { value: height },
+          uFogDepth: { value: fogDepth },
+          uHorizonColor: { value: hexToRgb(horizonColor) },
+          uWaveColor: { value: hexToRgb(waveColor) },
+          uCrestColor: { value: hexToRgb(crestColor) },
+          uBrightness: { value: brightness },
+          uOpacity: { value: opacity },
+          uGrain: { value: grain ? 1.0 : 0.0 },
+          uGrainIntensity: { value: grainIntensity },
+        },
+        transparent: true,
+        depthTest: false,
+        depthWrite: false,
+      });
+
+      // Defensive check: if program linking failed, fallback to static CSS
+      if (!program.attributeLocations) {
+        setIsSupported(false);
+        return;
+      }
+
+      mesh = new Mesh(gl, { geometry, program });
+    } catch {
+      setIsSupported(false);
+      return;
+    }
 
     // Handle container resizing
     const handleResize = () => {
-      if (!container || !renderer) return;
+      if (!container || !renderer || !program) return;
       const width = Math.max(1, container.clientWidth);
       const height = Math.max(1, container.clientHeight);
       renderer.setSize(width, height);
@@ -273,10 +291,15 @@ export function SageAuroraBackground({
     let startTime = performance.now();
 
     const animate = (now: number) => {
-      if (isVisible && isTabActive) {
+      if (isVisible && isTabActive && renderer && program?.attributeLocations) {
         const elapsed = (now - startTime) * 0.001;
         program.uniforms.uTime.value = elapsed;
-        renderer?.render({ scene: mesh });
+        try {
+          renderer.render({ scene: mesh });
+        } catch {
+          setIsSupported(false);
+          return;
+        }
       }
       animationFrameId = requestAnimationFrame(animate);
     };
