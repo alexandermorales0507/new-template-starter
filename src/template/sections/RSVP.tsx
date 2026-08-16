@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import type { RsvpData } from "@/platform/wedding-template-data";
+import { sageDecorations } from "@/template/template-assets";
 import { submitRsvp, type PublicRsvpPayload } from "@/platform/submit-rsvp";
 import { formatRsvpDeadline } from "@/template/utils/event-formatting";
 import { CorrespondenceSheet } from "@/template/components/containers/CorrespondenceSheet";
@@ -401,7 +403,7 @@ export function RSVPForm({
 }
 
 /**
- * In-page RSVP Section component.
+ * In-page RSVP Section component with Signature Botanical Framing.
  */
 export function RSVPSection(props: RsvpProps) {
   const formattedDeadline = formatRsvpDeadline(props.deadlineLabel);
@@ -409,7 +411,7 @@ export function RSVPSection(props: RsvpProps) {
   return (
     <section
       id="rsvp_form"
-      className="template-section section-surface-forest pattern-ledger-rule pattern-subtle pattern-dark"
+      className="template-section section-surface-forest pattern-ledger-rule pattern-subtle pattern-dark relative overflow-x-clip pb-20 sm:pb-24"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
@@ -435,7 +437,54 @@ export function RSVPSection(props: RsvpProps) {
         </Reveal>
 
         <Reveal direction="up" distance={24} delay={0.1}>
-          <RSVPForm {...props} />
+          <div className="relative">
+            {/* Top-Left Botanical Corner Asset 1 */}
+            <div
+              aria-hidden="true"
+              className="absolute -top-7 -left-7 sm:-top-10 sm:-left-10 md:-top-14 md:-left-14 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-52 lg:h-52 pointer-events-none select-none z-10 opacity-95"
+            >
+              <Image
+                src={sageDecorations.glasshouseCornerLeft}
+                alt=""
+                width={208}
+                height={208}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            {/* Top-Right Botanical Corner Asset 2 */}
+            <div
+              aria-hidden="true"
+              className="absolute -top-7 -right-7 sm:-top-10 sm:-right-10 md:-top-14 md:-right-14 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-52 lg:h-52 pointer-events-none select-none z-10 opacity-95"
+            >
+              <Image
+                src={sageDecorations.glasshouseCornerRight}
+                alt=""
+                width={208}
+                height={208}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            {/* Form Stage (Interactive Controls) */}
+            <div className="relative z-20">
+              <RSVPForm {...props} />
+            </div>
+
+            {/* Grand Parterre Estate Floral Base Asset 3 in normal flow below the form */}
+            <div
+              aria-hidden="true"
+              className="relative mx-auto mt-6 sm:mt-8 w-64 sm:w-80 md:w-[460px] lg:w-[520px] pointer-events-none select-none z-10 opacity-95"
+            >
+              <Image
+                src={sageDecorations.parterreGrand}
+                alt=""
+                width={520}
+                height={390}
+                className="w-full h-auto object-contain mx-auto"
+              />
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>

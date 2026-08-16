@@ -3,6 +3,8 @@
 import { useState, useCallback } from "react";
 import Image from "next/image";
 import type { GalleryData } from "@/platform/wedding-template-data";
+import { sageDecorations } from "@/template/template-assets";
+import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { galleryPhotos, type GalleryPhotoItem } from "@/template/content/gallery";
 import { SkewCarousel } from "@/template/components/interactive/SkewCarousel";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/template/components/ui/Dialog";
@@ -36,9 +38,17 @@ export function GallerySection({ data }: { data: GalleryData }) {
   return (
     <section
       id="gallery"
-      className="template-section !pt-10 !pb-14 sm:!pt-12 sm:!pb-16 md:!pt-14 md:!pb-18 section-surface-paper text-center overflow-hidden"
+      className="template-section !pt-10 !pb-14 sm:!pt-12 sm:!pb-16 md:!pt-14 md:!pb-18 section-surface-paper text-center relative overflow-hidden"
     >
-      <div className="template-container">
+      {/* Decorative Glasshouse Grid Pattern Background (Subtle Paper Atmosphere) */}
+      <DecorativePattern
+        src={sageDecorations.glasshouseGridPattern}
+        opacity={0.07}
+        objectPosition="center 35%"
+        blendMode="multiply"
+      />
+
+      <div className="template-container relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="mb-5 sm:mb-7 space-y-2">
             <span className="text-role-subheading">PHOTO FOLIO // 04</span>

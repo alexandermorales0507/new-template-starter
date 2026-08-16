@@ -38,3 +38,12 @@ export const templateAssets: TemplateAssets = {
   illustrations: {},
   icons: {},
 };
+
+export const sageDecorations = {
+  glasshouseCornerLeft: "/template-assets/decorations/sage-glasshouse-corner-left.webp",
+  glasshouseCornerRight: "/template-assets/decorations/sage-glasshouse-corner-right.webp",
+  parterreGrand: "/template-assets/decorations/sage-parterre-estate-floral-grand.webp",
+  ledgerCrest: "/template-assets/decorations/sage-ledger-crest-ornament.webp",
+  glasshouseGridPattern: "/template-assets/backgrounds/sage-glasshouse-grid-pattern.webp",
+  parterreTrellisPattern: "/template-assets/backgrounds/sage-parterre-trellis-pattern.webp",
+} as const;

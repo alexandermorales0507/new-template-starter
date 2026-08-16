@@ -1,4 +1,6 @@
 import type { GuestbookData } from "@/platform/wedding-template-data";
+import { sageDecorations } from "@/template/template-assets";
+import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { formatGuestbookDate } from "@/template/utils/event-formatting";
 import { StaggerList } from "@/template/components/motion/StaggerList";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -11,8 +13,19 @@ export function GuestbookSection({ data }: { data: GuestbookData }) {
   const messages = data.messages || [];
 
   return (
-    <section id="guestbook" className="template-section section-surface-sage">
-      <div className="template-container-narrow">
+    <section
+      id="guestbook"
+      className="template-section section-surface-sage relative overflow-hidden"
+    >
+      {/* Decorative Parterre Trellis Pattern Background (Different Crop) */}
+      <DecorativePattern
+        src={sageDecorations.parterreTrellisPattern}
+        opacity={0.09}
+        objectPosition="center 65%"
+        blendMode="multiply"
+      />
+
+      <div className="template-container-narrow relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-10 sm:mb-12 space-y-2">
             <span className="text-role-subheading">FOLIO // 13 &bull; WORDS OF BLESSING</span>

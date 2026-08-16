@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import type { CountdownData } from "@/platform/wedding-template-data";
+import { sageDecorations } from "@/template/template-assets";
+import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { AnimatedNumber } from "@/template/components/interactive/AnimatedNumber";
 import { Reveal } from "@/template/components/motion/Reveal";
 
@@ -75,9 +77,17 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
   return (
     <section
       id="countdown"
-      className="template-section section-surface-sage template-section-compact"
+      className="template-section section-surface-sage template-section-compact relative overflow-hidden"
     >
-      <div className="template-container-narrow text-center">
+      {/* Decorative Glasshouse Grid Pattern Background */}
+      <DecorativePattern
+        src={sageDecorations.glasshouseGridPattern}
+        opacity={0.11}
+        objectPosition="center center"
+        blendMode="multiply"
+      />
+
+      <div className="template-container-narrow text-center relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="mb-6 sm:mb-8 space-y-2">
             <span className="text-role-subheading">COUNTDOWN RECORD</span>

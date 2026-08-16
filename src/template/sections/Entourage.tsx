@@ -1,4 +1,6 @@
 import type { EntourageData } from "@/platform/wedding-template-data";
+import { sageDecorations } from "@/template/template-assets";
+import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
 import { Reveal } from "@/template/components/motion/Reveal";
 
@@ -39,8 +41,19 @@ export function EntourageSection({ data }: { data: EntourageData }) {
   if (validGroups.length === 0) return null;
 
   return (
-    <section id="entourage" className="template-section section-surface-sage">
-      <div className="template-container">
+    <section
+      id="entourage"
+      className="template-section section-surface-sage relative overflow-hidden"
+    >
+      {/* Decorative Parterre Trellis Pattern Background (Estate Garden Atmosphere) */}
+      <DecorativePattern
+        src={sageDecorations.parterreTrellisPattern}
+        opacity={0.11}
+        objectPosition="center center"
+        blendMode="multiply"
+      />
+
+      <div className="template-container relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-10 sm:mb-14 space-y-2">
             <span className="text-role-subheading">FOLIO // 07 &bull; THE ENTOURAGE</span>
