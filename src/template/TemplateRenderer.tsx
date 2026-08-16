@@ -3,6 +3,7 @@
 import type { WeddingTemplateData } from "@/platform/wedding-template-data";
 import { templateSectionRegistry } from "./section-registry";
 import { Navbar } from "./components/Navbar";
+import { FallingPetals } from "./components/decorations/FallingPetals";
 import { Footer } from "./components/Footer";
 import { FloatingControls } from "./components/FloatingControls";
 import { AudioProvider } from "./components/AudioPlayer";
@@ -31,6 +32,7 @@ export function TemplateRenderer({
     >
       <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans antialiased selection:bg-gray-200">
         <Navbar data={data} />
+        <FallingPetals />
 
         <main className="flex-1 pt-16">
           {data.orderedSectionKeys

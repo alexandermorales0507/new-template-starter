@@ -29,7 +29,7 @@ export function CoupleSection({ data, storyEnabled = true }: CoupleSectionProps)
   return (
     <section
       id="host_info"
-      className="template-section section-surface-aurora relative isolate overflow-hidden min-h-0 pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-8 lg:pb-8 text-[var(--wedding-on-dark)]"
+      className="template-section section-surface-aurora relative isolate overflow-hidden min-h-0 pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-6 lg:pb-8 text-[var(--wedding-on-dark)]"
     >
       {/* Botanical Dawn Animated Aurora Gradient Waves */}
       <SageAuroraBackground />
@@ -37,7 +37,7 @@ export function CoupleSection({ data, storyEnabled = true }: CoupleSectionProps)
       <div className="template-container relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center lg:items-start">
           {/* Left Column: Editorial Typography & Actions (Left-aligned on desktop, Centered on mobile/tablet) */}
-          <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left lg:pt-1.5">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left lg:pt-2">
             {/* 1. Folio Stamp */}
             <Reveal direction="down" distance={16}>
               <div className="flex items-center justify-center lg:justify-start">

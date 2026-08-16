@@ -38,6 +38,34 @@
   --wedding-glass-sage-border: rgba(221, 229, 211, 0.4);
   --wedding-glass-blur: 14px;
 
+  /* SAGE ESTATE AMBIENT PETAL PALETTE */
+  --wedding-petal-light-highlight: #fffdf7; /* Warm Cloud Ivory */
+  --wedding-petal-light-base: #f7f4ea;
+  --wedding-petal-light-shadow: #e8e2d2;
+  --wedding-petal-light-vein: #c5bc9f;
+
+  --wedding-petal-secondary-highlight: #e8efe0; /* Mist / Pale Botanical Sage */
+  --wedding-petal-secondary-base: #dde5d3;
+  --wedding-petal-secondary-shadow: #b8c4a9;
+  --wedding-petal-secondary-vein: #97a884;
+
+  --wedding-petal-primary-highlight: #a8be92; /* Luminous Botanical Sage */
+  --wedding-petal-primary-base: #8fa878;
+  --wedding-petal-primary-shadow: #6f8857;
+  --wedding-petal-primary-vein: #4e653a;
+
+  --wedding-petal-metallic-highlight: #e2cca3; /* Antique Gold / Champagne */
+  --wedding-petal-metallic-base: #c9a86a;
+  --wedding-petal-metallic-shadow: #a7864b;
+  --wedding-petal-metallic-vein: #7d612e;
+
+  --wedding-petal-botanical-highlight: #4a6354; /* Deep Forest Accent */
+  --wedding-petal-botanical-base: #304438;
+  --wedding-petal-botanical-shadow: #213027;
+  --wedding-petal-botanical-vein: #151f19;
+
+  --wedding-petal-canvas-shadow: rgba(23, 33, 27, 0.1);
+
   /* COMPATIBILITY ALIASES (MAP DIRECTLY TO SEMANTIC TOKENS) */
   --surface-page: var(--wedding-bg);
   --surface-card: var(--wedding-surface);
