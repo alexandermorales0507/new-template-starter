@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import Image from "next/image";
 import type { MusicData } from "@/platform/wedding-template-data";
-import { sageDecorations } from "@/template/template-assets";
+import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { useAudio } from "@/template/components/AudioPlayer";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { parseMusicMeta } from "@/template/utils/music-meta";
@@ -35,7 +34,7 @@ export function MusicSection({ data }: { data: MusicData }) {
   return (
     <section
       id="music_effects"
-      className="template-section section-surface-primary template-section-compact text-center"
+      className="template-section section-surface-primary template-section-compact text-center relative overflow-x-clip"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
@@ -50,21 +49,11 @@ export function MusicSection({ data }: { data: MusicData }) {
         <Reveal direction="up" distance={20} delay={0.1}>
           <div
             data-surface="light"
-            className="surface-light-reset bg-[var(--wedding-surface)] p-6 sm:p-8 rounded-2xl border border-[var(--wedding-border)] max-w-md mx-auto shadow-card relative overflow-hidden text-[var(--wedding-text)]"
+            className="surface-light-reset bg-[var(--wedding-surface)] p-6 sm:p-8 rounded-2xl border border-[var(--wedding-border)] max-w-md mx-auto shadow-card relative overflow-visible text-[var(--wedding-text)]"
           >
-            {/* Subtle Archival Crest Watermark on Tablet/Desktop */}
-            <div
-              aria-hidden="true"
-              className="hidden sm:block absolute -top-8 -right-8 w-44 h-44 opacity-[0.07] pointer-events-none select-none z-0"
-            >
-              <Image
-                src={sageDecorations.ledgerCrest}
-                alt=""
-                width={176}
-                height={176}
-                className="object-contain"
-              />
-            </div>
+            {/* Botanical Corner Pair on White Music Panel */}
+            <BotanicalCornerPair size="md" />
+
             {/* Spinning Vinyl Disc with Beamed-Note Center */}
             <div className="relative w-28 h-28 mx-auto mb-6 flex items-center justify-center z-10">
               {/* Pulsating outer light ring */}

@@ -40,12 +40,12 @@ export function GallerySection({ data }: { data: GalleryData }) {
       id="gallery"
       className="template-section !pt-10 !pb-14 sm:!pt-12 sm:!pb-16 md:!pt-14 md:!pb-18 section-surface-paper text-center relative overflow-hidden"
     >
-      {/* Decorative Glasshouse Grid Pattern Background (Subtle Paper Atmosphere) */}
+      {/* Decorative Glasshouse Grid Pattern Background (Full Strength) */}
       <DecorativePattern
         src={sageDecorations.glasshouseGridPattern}
-        opacity={0.07}
+        opacity={1}
         objectPosition="center 35%"
-        blendMode="multiply"
+        blendMode="normal"
       />
 
       <div className="template-container relative z-10">

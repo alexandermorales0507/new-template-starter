@@ -1,5 +1,6 @@
 import type { GuestbookData } from "@/platform/wedding-template-data";
 import { sageDecorations } from "@/template/template-assets";
+import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { formatGuestbookDate } from "@/template/utils/event-formatting";
 import { StaggerList } from "@/template/components/motion/StaggerList";
@@ -15,14 +16,14 @@ export function GuestbookSection({ data }: { data: GuestbookData }) {
   return (
     <section
       id="guestbook"
-      className="template-section section-surface-sage relative overflow-hidden"
+      className="template-section section-surface-sage relative overflow-x-clip"
     >
-      {/* Decorative Parterre Trellis Pattern Background (Different Crop) */}
+      {/* Decorative Parterre Trellis Pattern Background (Full Strength) */}
       <DecorativePattern
         src={sageDecorations.parterreTrellisPattern}
-        opacity={0.09}
+        opacity={1}
         objectPosition="center 65%"
-        blendMode="multiply"
+        blendMode="normal"
       />
 
       <div className="template-container-narrow relative z-10">
@@ -49,17 +50,22 @@ export function GuestbookSection({ data }: { data: GuestbookData }) {
                 return (
                   <div
                     key={msg.id || idx}
-                    className="bg-[var(--wedding-surface)] p-6 sm:p-7 rounded-2xl border border-[var(--wedding-border)] shadow-xs transition-shadow hover:shadow-soft space-y-4 relative font-sans"
+                    className="relative overflow-visible bg-[var(--wedding-surface)] p-6 sm:p-7 rounded-2xl border border-[var(--wedding-border)] shadow-xs transition-shadow hover:shadow-soft space-y-4 font-sans"
                   >
-                    <p className="text-[var(--wedding-text)] italic leading-relaxed text-base sm:text-lg font-serif">
-                      &ldquo;{msg.message}&rdquo;
-                    </p>
-                    <div className="flex justify-between items-center text-xs text-[var(--wedding-text-muted)] pt-3 border-t border-[var(--wedding-border-subtle)] font-mono">
-                      <span className="font-serif font-bold text-[var(--wedding-text)] text-base not-italic flex items-center gap-2">
-                        <Heart className="w-3.5 h-3.5 text-[var(--wedding-accent)] fill-current" />
-                        {msg.guestName || "Guest"}
-                      </span>
-                      {formattedDate && <span className="text-[11px]">{formattedDate}</span>}
+                    {/* Botanical Corner Pair on Guest Message Card */}
+                    <BotanicalCornerPair size="sm" />
+
+                    <div className="relative z-10 space-y-4">
+                      <p className="text-[var(--wedding-text)] italic leading-relaxed text-base sm:text-lg font-serif">
+                        &ldquo;{msg.message}&rdquo;
+                      </p>
+                      <div className="flex justify-between items-center text-xs text-[var(--wedding-text-muted)] pt-3 border-t border-[var(--wedding-border-subtle)] font-mono">
+                        <span className="font-serif font-bold text-[var(--wedding-text)] text-base not-italic flex items-center gap-2">
+                          <Heart className="w-3.5 h-3.5 text-[var(--wedding-accent)] fill-current" />
+                          {msg.guestName || "Guest"}
+                        </span>
+                        {formattedDate && <span className="text-[11px]">{formattedDate}</span>}
+                      </div>
                     </div>
                   </div>
                 );

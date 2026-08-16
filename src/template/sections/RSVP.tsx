@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import type { RsvpData } from "@/platform/wedding-template-data";
 import { sageDecorations } from "@/template/template-assets";
+import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { submitRsvp, type PublicRsvpPayload } from "@/platform/submit-rsvp";
 import { formatRsvpDeadline } from "@/template/utils/event-formatting";
 import { CorrespondenceSheet } from "@/template/components/containers/CorrespondenceSheet";
@@ -437,37 +438,12 @@ export function RSVPSection(props: RsvpProps) {
         </Reveal>
 
         <Reveal direction="up" distance={24} delay={0.1}>
-          <div className="relative">
-            {/* Top-Left Botanical Corner Asset 1 */}
-            <div
-              aria-hidden="true"
-              className="absolute -top-7 -left-7 sm:-top-10 sm:-left-10 md:-top-14 md:-left-14 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-52 lg:h-52 pointer-events-none select-none z-10 opacity-95"
-            >
-              <Image
-                src={sageDecorations.glasshouseCornerLeft}
-                alt=""
-                width={208}
-                height={208}
-                className="w-full h-full object-contain"
-              />
-            </div>
+          <div className="relative overflow-visible">
+            {/* Signature LG Botanical Corner Pair at z-20 overlapping the paper edge */}
+            <BotanicalCornerPair size="lg" />
 
-            {/* Top-Right Botanical Corner Asset 2 */}
-            <div
-              aria-hidden="true"
-              className="absolute -top-7 -right-7 sm:-top-10 sm:-right-10 md:-top-14 md:-right-14 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-52 lg:h-52 pointer-events-none select-none z-10 opacity-95"
-            >
-              <Image
-                src={sageDecorations.glasshouseCornerRight}
-                alt=""
-                width={208}
-                height={208}
-                className="w-full h-full object-contain"
-              />
-            </div>
-
-            {/* Form Stage (Interactive Controls) */}
-            <div className="relative z-20">
+            {/* Form Stage (Interactive Controls above florals, Sheet Paper at base) */}
+            <div className="relative z-10">
               <RSVPForm {...props} />
             </div>
 

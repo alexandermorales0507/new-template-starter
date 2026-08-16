@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { CountdownData } from "@/platform/wedding-template-data";
 import { sageDecorations } from "@/template/template-assets";
+import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { AnimatedNumber } from "@/template/components/interactive/AnimatedNumber";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -79,12 +80,12 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
       id="countdown"
       className="template-section section-surface-sage template-section-compact relative overflow-hidden"
     >
-      {/* Decorative Glasshouse Grid Pattern Background */}
+      {/* Decorative Glasshouse Grid Pattern Background (Full Strength) */}
       <DecorativePattern
         src={sageDecorations.glasshouseGridPattern}
-        opacity={0.11}
+        opacity={1}
         objectPosition="center center"
-        blendMode="multiply"
+        blendMode="normal"
       />
 
       <div className="template-container-narrow text-center relative z-10">
@@ -101,16 +102,19 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
         </Reveal>
 
         <Reveal direction="up" distance={20} delay={0.1}>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 max-w-xl mx-auto">
             {units.map((unit) => (
               <div
                 key={unit.label}
-                className="flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border border-[var(--wedding-border)] bg-[var(--wedding-surface)] shadow-xs hover:border-[var(--wedding-accent)]/50 transition-colors"
+                className="relative flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border border-[var(--wedding-border)] bg-[var(--wedding-surface)] shadow-xs hover:border-[var(--wedding-accent)]/50 transition-colors overflow-visible"
               >
-                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold font-mono tracking-tight text-[var(--wedding-text)] tabular-nums">
+                {/* Micro Botanical Corner Pair on each Number Card */}
+                <BotanicalCornerPair size="xs" />
+
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold font-mono tracking-tight text-[var(--wedding-text)] tabular-nums relative z-10">
                   <AnimatedNumber value={unit.value} format={{ minimumIntegerDigits: 2 }} />
                 </span>
-                <span className="mt-1.5 text-xs font-mono font-bold tracking-[0.2em] text-[var(--wedding-text-muted)] uppercase">
+                <span className="mt-1.5 text-xs font-mono font-bold tracking-[0.2em] text-[var(--wedding-text-muted)] uppercase relative z-10">
                   {unit.label}
                 </span>
               </div>

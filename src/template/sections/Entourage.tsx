@@ -1,5 +1,6 @@
 import type { EntourageData } from "@/platform/wedding-template-data";
 import { sageDecorations } from "@/template/template-assets";
+import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -43,14 +44,14 @@ export function EntourageSection({ data }: { data: EntourageData }) {
   return (
     <section
       id="entourage"
-      className="template-section section-surface-sage relative overflow-hidden"
+      className="template-section section-surface-sage relative overflow-x-clip"
     >
-      {/* Decorative Parterre Trellis Pattern Background (Estate Garden Atmosphere) */}
+      {/* Decorative Parterre Trellis Pattern Background (Full Strength) */}
       <DecorativePattern
         src={sageDecorations.parterreTrellisPattern}
-        opacity={0.11}
+        opacity={1}
         objectPosition="center center"
-        blendMode="multiply"
+        blendMode="normal"
       />
 
       <div className="template-container relative z-10">
@@ -68,28 +69,33 @@ export function EntourageSection({ data }: { data: EntourageData }) {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 lg:gap-8">
           {validGroups.map((group, gIdx) => {
             const names = parseEntourageNames(group.names);
 
             return (
               <Reveal key={group.id || gIdx} direction="up" distance={20} delay={gIdx * 0.05}>
-                <LedgerPanel
-                  title={group.groupTitle || "Wedding Party"}
-                  indexTag={`ROLE // 0${gIdx + 1}`}
-                  className="h-full bg-[var(--wedding-surface)] hover:border-[var(--wedding-accent)]/50 transition-colors shadow-xs text-center"
-                >
-                  <ul className="space-y-2.5 pt-1 font-sans">
-                    {names.map((name, nIdx) => (
-                      <li
-                        key={nIdx}
-                        className="text-base font-semibold text-[var(--wedding-text)] font-serif border-b border-[var(--wedding-border-subtle)] pb-2 last:border-0 last:pb-0"
-                      >
-                        {name}
-                      </li>
-                    ))}
-                  </ul>
-                </LedgerPanel>
+                <div className="relative overflow-visible h-full">
+                  {/* Botanical Corner Pair on Entourage Card */}
+                  <BotanicalCornerPair size="sm" />
+
+                  <LedgerPanel
+                    title={group.groupTitle || "Wedding Party"}
+                    indexTag={`ROLE // 0${gIdx + 1}`}
+                    className="h-full bg-[var(--wedding-surface)] hover:border-[var(--wedding-accent)]/50 transition-colors shadow-xs text-center relative z-10"
+                  >
+                    <ul className="space-y-2.5 pt-1 font-sans">
+                      {names.map((name, nIdx) => (
+                        <li
+                          key={nIdx}
+                          className="text-base font-semibold text-[var(--wedding-text)] font-serif border-b border-[var(--wedding-border-subtle)] pb-2 last:border-0 last:pb-0"
+                        >
+                          {name}
+                        </li>
+                      ))}
+                    </ul>
+                  </LedgerPanel>
+                </div>
               </Reveal>
             );
           })}

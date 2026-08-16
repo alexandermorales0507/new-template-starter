@@ -1,6 +1,7 @@
 "use client";
 
 import type { ExtraInfoData } from "@/platform/wedding-template-data";
+import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import {
   Accordion,
   AccordionItem,
@@ -18,7 +19,7 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
   return (
     <section
       id="extra_info"
-      className="template-section section-surface-sage pattern-archival-dot pattern-subtle"
+      className="template-section section-surface-sage pattern-archival-dot pattern-subtle relative overflow-x-clip"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
@@ -38,23 +39,28 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
         </Reveal>
 
         <Reveal direction="up" distance={20} delay={0.1}>
-          <div className="bg-[var(--wedding-surface)] rounded-2xl border border-[var(--wedding-border)] p-6 sm:p-8 shadow-card">
-            <Accordion type="single" collapsible className="w-full space-y-2">
-              {data.items.map((item, idx) => (
-                <AccordionItem
-                  key={item.id || idx}
-                  value={`item-${idx + 1}`}
-                  className="border-b border-[var(--wedding-border-subtle)] last:border-0"
-                >
-                  <AccordionTrigger className="font-serif text-base sm:text-lg font-bold text-[var(--wedding-text)] hover:text-[var(--wedding-primary)] py-4 text-left">
-                    {item.title}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm sm:text-base text-[var(--wedding-text)] font-sans leading-relaxed pt-1 pb-4">
-                    {item.details}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          <div className="relative overflow-visible">
+            {/* Botanical Corner Pair on FAQ Container */}
+            <BotanicalCornerPair size="md" />
+
+            <div className="bg-[var(--wedding-surface)] rounded-2xl border border-[var(--wedding-border)] p-6 sm:p-8 shadow-card relative z-10">
+              <Accordion type="single" collapsible className="w-full space-y-2">
+                {data.items.map((item, idx) => (
+                  <AccordionItem
+                    key={item.id || idx}
+                    value={`item-${idx + 1}`}
+                    className="border-b border-[var(--wedding-border-subtle)] last:border-0"
+                  >
+                    <AccordionTrigger className="font-serif text-base sm:text-lg font-bold text-[var(--wedding-text)] hover:text-[var(--wedding-primary)] py-4 text-left">
+                      {item.title}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm sm:text-base text-[var(--wedding-text)] font-sans leading-relaxed pt-1 pb-4">
+                      {item.details}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
           </div>
         </Reveal>
       </div>

@@ -17,9 +17,9 @@ export interface DecorativePatternProps {
 export function DecorativePattern({
   src,
   alt = "",
-  opacity = 0.12,
+  opacity = 1,
   objectPosition = "center center",
-  blendMode = "multiply",
+  blendMode = "normal",
   className,
 }: DecorativePatternProps) {
   const blendClass =
