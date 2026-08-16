@@ -24,33 +24,39 @@ const sizeConfig: Record<
   }
 > = {
   xs: {
-    // Countdown number cards (~24px mobile, 28px tablet, 32px desktop)
-    dimensionClass: "w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8",
-    leftOffsetClass: "-top-1.5 -left-1.5 sm:-top-2 sm:-left-2",
-    rightOffsetClass: "-top-1.5 -right-1.5 sm:-top-2 sm:-right-2",
-    pixelDim: 32,
-  },
-  sm: {
-    // Timeline, Entourage, Guestbook cards (~36px mobile, 44px tablet, 48px desktop)
-    dimensionClass: "w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12",
-    leftOffsetClass: "-top-2 -left-2 sm:-top-2.5 sm:-left-2.5 md:-top-3 md:-left-3",
-    rightOffsetClass: "-top-2 -right-2 sm:-top-2.5 sm:-right-2.5 md:-top-3 md:-right-3",
+    // Countdown number cards (~36px mobile, 42px tablet, 48px desktop)
+    dimensionClass: "w-9 h-9 sm:w-[42px] sm:h-[42px] md:w-12 md:h-12",
+    leftOffsetClass:
+      "-top-[10px] -left-[10px] sm:-top-[12px] sm:-left-[12px] md:-top-[14px] md:-left-[14px]",
+    rightOffsetClass:
+      "-top-[10px] -right-[10px] sm:-top-[12px] sm:-right-[12px] md:-top-[14px] md:-right-[14px]",
     pixelDim: 48,
   },
+  sm: {
+    // Timeline, Entourage, Guestbook cards (~52px mobile, 64px tablet, 72px desktop)
+    dimensionClass: "w-[52px] h-[52px] sm:w-16 sm:h-16 md:w-[72px] md:h-[72px]",
+    leftOffsetClass:
+      "-top-[14px] -left-[14px] sm:-top-[18px] sm:-left-[18px] md:-top-[20px] md:-left-[20px]",
+    rightOffsetClass:
+      "-top-[14px] -right-[14px] sm:-top-[18px] sm:-right-[18px] md:-top-[20px] md:-right-[20px]",
+    pixelDim: 72,
+  },
   md: {
-    // Ceremony, Venue, Reception, Music, Sponsors, Attire, Extra Info, Gifts (~56px mobile, 64px tablet, 72-80px desktop)
-    dimensionClass: "w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-20 lg:h-20",
-    leftOffsetClass: "-top-3 -left-3 sm:-top-4 sm:-left-4 md:-top-5 md:-left-5",
-    rightOffsetClass: "-top-3 -right-3 sm:-top-4 sm:-right-4 md:-top-5 md:-right-5",
-    pixelDim: 80,
+    // Ceremony, Venue, Reception, Music, Sponsors, Attire, Extra Info, Gifts (~72px mobile, 88px tablet, 104px desktop)
+    dimensionClass: "w-[72px] h-[72px] sm:w-[88px] sm:h-[88px] md:w-[104px] md:h-[104px]",
+    leftOffsetClass:
+      "-top-[20px] -left-[20px] sm:-top-[24px] sm:-left-[24px] md:-top-[28px] md:-left-[28px]",
+    rightOffsetClass:
+      "-top-[20px] -right-[20px] sm:-top-[24px] sm:-right-[24px] md:-top-[28px] md:-right-[28px]",
+    pixelDim: 104,
   },
   lg: {
-    // RSVP, Love Story Description (~96px mobile, 128px tablet, 160-192px desktop)
+    // RSVP master reference (~96px mobile, 128px tablet, 160-192px desktop)
     dimensionClass: "w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48",
     leftOffsetClass:
-      "-top-5 -left-5 sm:-top-7 sm:-left-7 md:-top-10 md:-left-10 lg:-top-12 lg:-left-12",
+      "-top-6 -left-6 sm:-top-8 sm:-left-8 md:-top-10 md:-left-10 lg:-top-12 lg:-left-12",
     rightOffsetClass:
-      "-top-5 -right-5 sm:-top-7 sm:-right-7 md:-top-10 md:-right-10 lg:-top-12 lg:-right-12",
+      "-top-6 -right-6 sm:-top-8 sm:-right-8 md:-top-10 md:-right-10 lg:-top-12 lg:-right-12",
     pixelDim: 192,
   },
 };

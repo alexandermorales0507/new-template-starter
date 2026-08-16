@@ -46,12 +46,12 @@ export function EntourageSection({ data }: { data: EntourageData }) {
       id="entourage"
       className="template-section section-surface-sage relative overflow-x-clip"
     >
-      {/* Decorative Parterre Trellis Pattern Background (Full Strength) */}
+      {/* Decorative Parterre Trellis Pattern Background (Readable Strength) */}
       <DecorativePattern
         src={sageDecorations.parterreTrellisPattern}
-        opacity={1}
+        opacity={0.32}
         objectPosition="center center"
-        blendMode="normal"
+        blendMode="multiply"
       />
 
       <div className="template-container relative z-10">

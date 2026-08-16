@@ -2,6 +2,7 @@
 
 import type { ExtraInfoData } from "@/platform/wedding-template-data";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import {
   Accordion,
   AccordionItem,
@@ -64,6 +65,9 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
           </div>
         </Reveal>
       </div>
+
+      {/* Boundary Threshold Divider: Extra Info -> RSVP */}
+      <SectionFloralDivider position="bottom" />
     </section>
   );
 }

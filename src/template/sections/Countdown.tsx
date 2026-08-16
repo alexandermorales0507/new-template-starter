@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { CountdownData } from "@/platform/wedding-template-data";
 import { sageDecorations } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { AnimatedNumber } from "@/template/components/interactive/AnimatedNumber";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -78,14 +79,14 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
   return (
     <section
       id="countdown"
-      className="template-section section-surface-sage template-section-compact relative overflow-hidden"
+      className="template-section section-surface-sage template-section-compact relative overflow-x-clip"
     >
-      {/* Decorative Glasshouse Grid Pattern Background (Full Strength) */}
+      {/* Decorative Glasshouse Grid Pattern Background (Readable Strength) */}
       <DecorativePattern
         src={sageDecorations.glasshouseGridPattern}
-        opacity={1}
+        opacity={0.35}
         objectPosition="center center"
-        blendMode="normal"
+        blendMode="multiply"
       />
 
       <div className="template-container-narrow text-center relative z-10">
@@ -122,6 +123,9 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
           </div>
         </Reveal>
       </div>
+
+      {/* Boundary Threshold Divider: Countdown -> Music */}
+      <SectionFloralDivider position="bottom" />
     </section>
   );
 }

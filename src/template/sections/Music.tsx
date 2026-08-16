@@ -2,7 +2,9 @@
 
 import { useEffect } from "react";
 import type { MusicData } from "@/platform/wedding-template-data";
+import { sageDecorations } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { useAudio } from "@/template/components/AudioPlayer";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { parseMusicMeta } from "@/template/utils/music-meta";
@@ -36,7 +38,15 @@ export function MusicSection({ data }: { data: MusicData }) {
       id="music_effects"
       className="template-section section-surface-primary template-section-compact text-center relative overflow-x-clip"
     >
-      <div className="template-container-narrow">
+      {/* Decorative Glasshouse Grid Pattern Background (Subtle Champagne Texture on Forest Canvas) */}
+      <DecorativePattern
+        src={sageDecorations.glasshouseGridPattern}
+        opacity={0.22}
+        objectPosition="center center"
+        blendMode="soft-light"
+      />
+
+      <div className="template-container-narrow relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="mb-6 space-y-2">
             <span className="text-role-subheading text-[var(--wedding-accent-soft)]">

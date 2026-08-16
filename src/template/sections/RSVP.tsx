@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import type { RsvpData } from "@/platform/wedding-template-data";
-import { sageDecorations } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { submitRsvp, type PublicRsvpPayload } from "@/platform/submit-rsvp";
 import { formatRsvpDeadline } from "@/template/utils/event-formatting";
@@ -412,7 +410,7 @@ export function RSVPSection(props: RsvpProps) {
   return (
     <section
       id="rsvp_form"
-      className="template-section section-surface-forest pattern-ledger-rule pattern-subtle pattern-dark relative overflow-x-clip pb-20 sm:pb-24"
+      className="template-section section-surface-forest pattern-ledger-rule pattern-subtle pattern-dark relative overflow-x-clip pb-12 sm:pb-16"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
@@ -445,20 +443,6 @@ export function RSVPSection(props: RsvpProps) {
             {/* Form Stage (Interactive Controls above florals, Sheet Paper at base) */}
             <div className="relative z-10">
               <RSVPForm {...props} />
-            </div>
-
-            {/* Grand Parterre Estate Floral Base Asset 3 in normal flow below the form */}
-            <div
-              aria-hidden="true"
-              className="relative mx-auto mt-6 sm:mt-8 w-64 sm:w-80 md:w-[460px] lg:w-[520px] pointer-events-none select-none z-10 opacity-95"
-            >
-              <Image
-                src={sageDecorations.parterreGrand}
-                alt=""
-                width={520}
-                height={390}
-                className="w-full h-auto object-contain mx-auto"
-              />
             </div>
           </div>
         </Reveal>

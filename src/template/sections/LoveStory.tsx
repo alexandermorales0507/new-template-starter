@@ -15,7 +15,7 @@ export function LoveStorySection({ data }: { data: LoveStoryData }) {
   return (
     <section
       id="story_message"
-      className="template-section section-surface-paper relative overflow-x-clip"
+      className="template-section section-surface-paper pattern-ledger-rule pattern-subtle relative overflow-x-clip"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
@@ -33,7 +33,7 @@ export function LoveStorySection({ data }: { data: LoveStoryData }) {
         </Reveal>
 
         <Reveal direction="up" distance={20} delay={0.1}>
-          <div className="max-w-2xl mx-auto space-y-6">
+          <div className="max-w-2xl mx-auto space-y-8 sm:space-y-10 md:space-y-12">
             {/* Story Photo Specimen Frame (Undecorated) */}
             {storyPhotos.length > 0 && (
               <SpecimenFrame
@@ -46,14 +46,14 @@ export function LoveStorySection({ data }: { data: LoveStoryData }) {
               />
             )}
 
-            {/* Story Description Card with Botanical Corner Framing */}
+            {/* Story Description Card with Elevated Outward Botanical Corner Framing */}
             {data.storyBody && (
               <div className="relative overflow-visible">
                 <BotanicalCornerPair
                   size="lg"
                   className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
-                  leftOffset="-top-4 -left-4 sm:-top-6 sm:-left-6 md:-top-7 md:-left-7"
-                  rightOffset="-top-4 -right-4 sm:-top-6 sm:-right-6 md:-top-7 md:-right-7"
+                  leftOffset="-top-7 -left-6 sm:-top-9 sm:-left-8 md:-top-11 md:-left-10"
+                  rightOffset="-top-7 -right-6 sm:-top-9 sm:-right-8 md:-top-11 md:-right-10"
                 />
                 <CorrespondenceSheet
                   senderLabel="ESTATE DISPATCH"

@@ -1,6 +1,7 @@
 import type { GuestbookData } from "@/platform/wedding-template-data";
 import { sageDecorations } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { formatGuestbookDate } from "@/template/utils/event-formatting";
 import { StaggerList } from "@/template/components/motion/StaggerList";
@@ -18,12 +19,12 @@ export function GuestbookSection({ data }: { data: GuestbookData }) {
       id="guestbook"
       className="template-section section-surface-sage relative overflow-x-clip"
     >
-      {/* Decorative Parterre Trellis Pattern Background (Full Strength) */}
+      {/* Decorative Parterre Trellis Pattern Background (Readable Strength) */}
       <DecorativePattern
         src={sageDecorations.parterreTrellisPattern}
-        opacity={1}
+        opacity={0.32}
         objectPosition="center 65%"
-        blendMode="normal"
+        blendMode="multiply"
       />
 
       <div className="template-container-narrow relative z-10">
@@ -84,6 +85,9 @@ export function GuestbookSection({ data }: { data: GuestbookData }) {
           </Reveal>
         )}
       </div>
+
+      {/* Boundary Threshold Divider: Guestbook -> Love Story */}
+      <SectionFloralDivider position="bottom" />
     </section>
   );
 }

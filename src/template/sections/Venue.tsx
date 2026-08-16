@@ -1,6 +1,7 @@
 import type { VenueData } from "@/platform/wedding-template-data";
 import { templateAssets } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -99,6 +100,9 @@ export function VenueSection({ data }: { data: VenueData }) {
           </div>
         </Reveal>
       </div>
+
+      {/* Boundary Threshold Divider: Venue -> Reception */}
+      <SectionFloralDivider position="bottom" />
     </section>
   );
 }
