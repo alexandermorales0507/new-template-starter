@@ -31,17 +31,17 @@ export interface SageAuroraBackgroundProps {
 /**
  * Sage Estate Botanical Aurora Background
  * Pure Sage configuration wrapper around the official React Bits GradientWaves component.
- * Features high-contrast botanical tones, visible rolling wave geometry, tuned text-safe veils,
- * and reduced-motion fallback.
+ * Exposes high-contrast wave geometry with Deep Forest Sage bodies, Luminous Ivory crests,
+ * quiet static fallback base, and localized text-safe protection.
  */
 export function SageAuroraBackground({
   className,
-  speed = 0.3,
-  amplitude = 2.4,
+  speed = 0.32,
+  amplitude = 2.5,
   waveScale = 0.6,
   waveRatio = 0.9,
-  swell = 32,
-  turbulence = 16,
+  swell = 35,
+  turbulence = 18,
   tilt = 1.11,
   zoom = 1.0,
   height = 5.5,
@@ -51,7 +51,7 @@ export function SageAuroraBackground({
   grain = true,
   grainIntensity = 0.02,
   horizonColor = "#DDE5D3", // Mist Sage Wash
-  waveColor = "#465E42", // Deep Botanical Conservatory Sage
+  waveColor = "#304438", // Deep Forest Sage Body (High Separation)
   crestColor = "#FFFDF7", // Luminous Warm Stationery White / Ivory Highlight
   detail = "medium",
   mouseInteraction = false,
@@ -77,12 +77,16 @@ export function SageAuroraBackground({
         "absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden",
         className
       )}
-      style={{
-        // Static Botanical Dawn CSS Fallback (SSR First Paint + WebGL/Reduced-Motion Safe Base)
-        background: `radial-gradient(circle at 75% 65%, rgba(101, 122, 87, 0.30) 0%, rgba(221, 229, 211, 0.45) 40%, rgba(247, 244, 234, 1) 85%), linear-gradient(135deg, #f7f4ea 0%, #dde5d3 100%)`,
-      }}
     >
-      {/* Official React Bits GradientWaves WebGL2 Engine */}
+      {/* 1. Quiet Static Fallback Base (z-0) — SSR First Paint & Reduced-Motion Safe Base */}
+      <div
+        className="absolute inset-0 w-full h-full z-0"
+        style={{
+          background: "linear-gradient(135deg, #f7f4ea 0%, #dde5d3 100%)",
+        }}
+      />
+
+      {/* 2. Official React Bits GradientWaves WebGL2 Engine (z-[1]) */}
       {!prefersReducedMotion && (
         <GradientWaves
           horizonColor={horizonColor}
@@ -109,22 +113,22 @@ export function SageAuroraBackground({
         />
       )}
 
-      {/* Deterministic Text-Safe Veil Overlays (Light & localized to preserve wave geometry visibility) */}
-      {/* Mobile / Tablet Vertical Veil (< lg): Protects centered headlines while keeping waves luminous */}
+      {/* 3. Localized Text-Safe Overlays (z-10) — Protects text without washing out center & portrait waves */}
+      {/* Mobile Top Text Veil (< lg): Protects centered top typography while leaving lower portrait area vibrant */}
       <div
         className="block lg:hidden absolute inset-0 z-10 pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, rgba(247, 244, 234, 0.55) 0%, rgba(247, 244, 234, 0.28) 40%, rgba(247, 244, 234, 0.00) 80%)",
+            "linear-gradient(180deg, rgba(247, 244, 234, 0.72) 0%, rgba(247, 244, 234, 0.50) 32%, rgba(247, 244, 234, 0.18) 58%, rgba(247, 244, 234, 0.00) 78%)",
         }}
       />
 
-      {/* Desktop Horizontal Veil (>= lg): Protects left editorial 7-col stack while leaving center & portrait waves vibrant */}
+      {/* Desktop Localized Left Text Veil (>= lg): Covers left 60% only, leaving center & right portrait field 100% unobstructed */}
       <div
-        className="hidden lg:block absolute inset-0 z-10 pointer-events-none"
+        className="hidden lg:block absolute left-0 top-0 bottom-0 w-[60%] z-10 pointer-events-none"
         style={{
           background:
-            "linear-gradient(90deg, rgba(247, 244, 234, 0.58) 0%, rgba(247, 244, 234, 0.32) 35%, rgba(247, 244, 234, 0.04) 65%, rgba(247, 244, 234, 0.00) 100%)",
+            "linear-gradient(90deg, rgba(247, 244, 234, 0.68) 0%, rgba(247, 244, 234, 0.48) 38%, rgba(247, 244, 234, 0.20) 70%, rgba(247, 244, 234, 0.00) 100%)",
         }}
       />
     </div>
