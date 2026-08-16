@@ -30,29 +30,33 @@ export interface SageAuroraBackgroundProps {
 
 /**
  * Sage Estate Botanical Aurora Background
- * Pure Sage configuration wrapper around the official React Bits GradientWaves component.
- * Features the high-contrast Estate Aurora palette (#24342C deep pine horizon, #74906A botanical sage waves,
- * #FFFDF7 luminous ivory crests) paired with a localized organic parchment reading island for flawless text contrast.
+ * FINAL ART-DIRECTION IMPLEMENTATION: "ESTATE FOREST AURORA"
+ * Translates the React Bits demo contrast structure into the Sage Estate DNA:
+ * - Deep Forest Horizon / Troughs (#304438)
+ * - Luminous Botanical Sage Wave Body (#8FA878)
+ * - Warm Cloud Ivory Crests (#FFFDF7)
+ * - Deep Estate Forest Fallback (#24342C -> #304438 -> #3F5949)
+ * - 100% Unobstructed Wave Visibility across the entire Hero
  */
 export function SageAuroraBackground({
   className,
-  speed = 0.3,
+  speed = 0.34,
   amplitude = 2.5,
   waveScale = 0.6,
   waveRatio = 0.9,
   swell = 35,
-  turbulence = 18,
+  turbulence = 20,
   tilt = 1.11,
   zoom = 1.0,
   height = 5.5,
-  fogDepth = 18,
-  brightness = 1.05,
+  fogDepth = 15,
+  brightness = 1.0,
   opacity = 1.0,
   grain = true,
-  grainIntensity = 0.02,
-  horizonColor = "#24342C", // Deep Pine Shadow Horizon (Option B: Estate Aurora)
-  waveColor = "#74906A", // Luminous Botanical Sage Wave Body
-  crestColor = "#FFFDF7", // Luminous Warm Stationery White / Ivory Crest
+  grainIntensity = 0.05,
+  horizonColor = "#304438", // Deep Forest Horizon & Troughs
+  waveColor = "#8FA878", // Luminous Botanical Sage Wave Body (High Contrast)
+  crestColor = "#FFFDF7", // Warm Cloud Ivory Crest Highlight
   detail = "medium",
   mouseInteraction = false,
   parallaxStrength = 0,
@@ -78,15 +82,15 @@ export function SageAuroraBackground({
         className
       )}
     >
-      {/* 1. Quiet Static Fallback Base (z-0) — SSR First Paint & Reduced-Motion Safe Base */}
+      {/* 1. Deep Estate Forest Static Fallback Base (z-0) — SSR First Paint & Reduced-Motion Safe Base */}
       <div
         className="absolute inset-0 w-full h-full z-0"
         style={{
-          background: "linear-gradient(135deg, #f7f4ea 0%, #dde5d3 100%)",
+          background: "linear-gradient(135deg, #24342C 0%, #304438 48%, #3F5949 100%)",
         }}
       />
 
-      {/* 2. Official React Bits GradientWaves WebGL2 Engine (z-[1]) */}
+      {/* 2. Official React Bits GradientWaves WebGL2 Engine (z-[1]) — 100% Unobstructed */}
       {!prefersReducedMotion && (
         <GradientWaves
           horizonColor={horizonColor}
@@ -112,25 +116,6 @@ export function SageAuroraBackground({
           className="absolute inset-0 w-full h-full pointer-events-none z-[1]"
         />
       )}
-
-      {/* 3. Localized Parchment Reading Zone (z-10) — Organic soft halo protecting text without washing out wave ridges */}
-      {/* Mobile Reading Halo (< lg): Organic vertical halo behind top text stack */}
-      <div
-        className="block lg:hidden absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 27%, rgba(247, 244, 234, 0.97) 0%, rgba(247, 244, 234, 0.84) 28%, rgba(247, 244, 234, 0.48) 48%, rgba(247, 244, 234, 0.10) 68%, transparent 78%)",
-        }}
-      />
-
-      {/* Desktop Localized Parchment Reading Island (>= lg): Soft organic halo centered behind left text column */}
-      <div
-        className="hidden lg:block absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at 31% 50%, rgba(247, 244, 234, 0.98) 0%, rgba(247, 244, 234, 0.92) 28%, rgba(247, 244, 234, 0.62) 46%, rgba(247, 244, 234, 0.18) 64%, rgba(247, 244, 234, 0.00) 76%)",
-        }}
-      />
     </div>
   );
 }

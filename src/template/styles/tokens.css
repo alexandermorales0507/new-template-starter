@@ -27,8 +27,16 @@
   --wedding-accent: #c9a86a; /* Antique Brass Gold (Seals, Borders, Badges) */
   --wedding-accent-soft: #ebdcc9; /* Soft Champagne Gold (Muted Brass Glyphs) */
   --wedding-on-primary: #ffffff; /* Text on Sage & Forest Actions */
-  --wedding-on-dark: #f7f8f5; /* Text on Deep Forest Surfaces */
+  --wedding-on-dark: #fffdf7; /* Warm Cloud Ivory Text on Deep Forest Surfaces & Aurora */
+  --wedding-on-dark-muted: #dde5d3; /* Mist Sage Wash Secondary Text on Dark Surfaces & Aurora */
   --wedding-focus: #657a57; /* Focus Ring Accent */
+
+  /* ESTATE GLASS TOKENS (STATIONERY & CONTROLS ON MOVING BACKGROUNDS) */
+  --wedding-glass-light-bg: rgba(255, 253, 247, 0.78);
+  --wedding-glass-light-border: rgba(255, 253, 247, 0.7);
+  --wedding-glass-sage-bg: rgba(101, 122, 87, 0.88);
+  --wedding-glass-sage-border: rgba(221, 229, 211, 0.4);
+  --wedding-glass-blur: 14px;
 
   /* COMPATIBILITY ALIASES (MAP DIRECTLY TO SEMANTIC TOKENS) */
   --surface-page: var(--wedding-bg);

@@ -142,6 +142,36 @@
   color: var(--wedding-accent-soft);
 }
 
+/* 6. Estate Forest Aurora Hero Surface (Dark Animated Botanical Glasshouse) */
+.section-surface-aurora {
+  background-color: var(--wedding-surface-dark);
+  color: var(--wedding-on-dark);
+}
+
+.section-surface-aurora h1,
+.section-surface-aurora h2,
+.section-surface-aurora .text-role-display {
+  color: var(--wedding-on-dark);
+}
+
+/* ==========================================================================
+   ESTATE GLASS UTILITIES (STATIONERY & CONTROLS ON AURORA / DARK SURFACES)
+   ========================================================================== */
+
+.estate-glass-light {
+  background-color: var(--wedding-glass-light-bg);
+  border-color: var(--wedding-glass-light-border);
+  backdrop-filter: blur(var(--wedding-glass-blur)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--wedding-glass-blur)) saturate(120%);
+}
+
+.estate-glass-sage {
+  background-color: var(--wedding-glass-sage-bg);
+  border-color: var(--wedding-glass-sage-border);
+  backdrop-filter: blur(var(--wedding-glass-blur));
+  -webkit-backdrop-filter: blur(var(--wedding-glass-blur));
+}
+
 /* ==========================================================================
    SYSTEMIC SURFACE CONTEXT RESET FOR NESTED CONTAINERS
    Guarantees that nested light cards in dark/primary sections maintain dark text.
