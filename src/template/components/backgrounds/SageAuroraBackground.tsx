@@ -31,12 +31,12 @@ export interface SageAuroraBackgroundProps {
 /**
  * Sage Estate Botanical Aurora Background
  * Pure Sage configuration wrapper around the official React Bits GradientWaves component.
- * Exposes high-contrast wave geometry with Deep Forest Sage bodies, Luminous Ivory crests,
- * quiet static fallback base, and localized text-safe protection.
+ * Features the high-contrast Estate Aurora palette (#24342C deep pine horizon, #74906A botanical sage waves,
+ * #FFFDF7 luminous ivory crests) paired with a localized organic parchment reading island for flawless text contrast.
  */
 export function SageAuroraBackground({
   className,
-  speed = 0.32,
+  speed = 0.3,
   amplitude = 2.5,
   waveScale = 0.6,
   waveRatio = 0.9,
@@ -45,14 +45,14 @@ export function SageAuroraBackground({
   tilt = 1.11,
   zoom = 1.0,
   height = 5.5,
-  fogDepth = 15,
-  brightness = 1.0,
+  fogDepth = 18,
+  brightness = 1.05,
   opacity = 1.0,
   grain = true,
   grainIntensity = 0.02,
-  horizonColor = "#DDE5D3", // Mist Sage Wash
-  waveColor = "#304438", // Deep Forest Sage Body (High Separation)
-  crestColor = "#FFFDF7", // Luminous Warm Stationery White / Ivory Highlight
+  horizonColor = "#24342C", // Deep Pine Shadow Horizon (Option B: Estate Aurora)
+  waveColor = "#74906A", // Luminous Botanical Sage Wave Body
+  crestColor = "#FFFDF7", // Luminous Warm Stationery White / Ivory Crest
   detail = "medium",
   mouseInteraction = false,
   parallaxStrength = 0,
@@ -113,22 +113,22 @@ export function SageAuroraBackground({
         />
       )}
 
-      {/* 3. Localized Text-Safe Overlays (z-10) — Protects text without washing out center & portrait waves */}
-      {/* Mobile Top Text Veil (< lg): Protects centered top typography while leaving lower portrait area vibrant */}
+      {/* 3. Localized Parchment Reading Zone (z-10) — Organic soft halo protecting text without washing out wave ridges */}
+      {/* Mobile Reading Halo (< lg): Organic vertical halo behind top text stack */}
       <div
         className="block lg:hidden absolute inset-0 z-10 pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, rgba(247, 244, 234, 0.72) 0%, rgba(247, 244, 234, 0.50) 32%, rgba(247, 244, 234, 0.18) 58%, rgba(247, 244, 234, 0.00) 78%)",
+            "radial-gradient(ellipse at 50% 27%, rgba(247, 244, 234, 0.97) 0%, rgba(247, 244, 234, 0.84) 28%, rgba(247, 244, 234, 0.48) 48%, rgba(247, 244, 234, 0.10) 68%, transparent 78%)",
         }}
       />
 
-      {/* Desktop Localized Left Text Veil (>= lg): Covers left 60% only, leaving center & right portrait field 100% unobstructed */}
+      {/* Desktop Localized Parchment Reading Island (>= lg): Soft organic halo centered behind left text column */}
       <div
-        className="hidden lg:block absolute left-0 top-0 bottom-0 w-[60%] z-10 pointer-events-none"
+        className="hidden lg:block absolute inset-0 z-10 pointer-events-none"
         style={{
           background:
-            "linear-gradient(90deg, rgba(247, 244, 234, 0.68) 0%, rgba(247, 244, 234, 0.48) 38%, rgba(247, 244, 234, 0.20) 70%, rgba(247, 244, 234, 0.00) 100%)",
+            "radial-gradient(ellipse at 31% 50%, rgba(247, 244, 234, 0.98) 0%, rgba(247, 244, 234, 0.92) 28%, rgba(247, 244, 234, 0.62) 46%, rgba(247, 244, 234, 0.18) 64%, rgba(247, 244, 234, 0.00) 76%)",
         }}
       />
     </div>
