@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { GalleryData } from "@/platform/wedding-template-data";
 import { sageDecorations } from "@/template/template-assets";
 import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { galleryPhotos, type GalleryPhotoItem } from "@/template/content/gallery";
 import { SkewCarousel } from "@/template/components/interactive/SkewCarousel";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/template/components/ui/Dialog";
@@ -38,7 +39,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
   return (
     <section
       id="gallery"
-      className="template-section !pt-10 !pb-14 sm:!pt-12 sm:!pb-16 md:!pt-14 md:!pb-18 section-surface-paper text-center relative overflow-hidden"
+      className="template-section !pt-10 !pb-14 sm:!pt-12 sm:!pb-16 md:!pt-14 md:!pb-18 section-surface-paper text-center relative overflow-x-clip"
     >
       {/* Decorative Glasshouse Grid Pattern Background (Readable Paper Atmosphere) */}
       <DecorativePattern
@@ -152,6 +153,9 @@ export function GallerySection({ data }: { data: GalleryData }) {
           </Dialog>
         )}
       </div>
+
+      {/* Boundary Threshold Divider: Gallery -> Ceremony */}
+      <SectionFloralDivider />
     </section>
   );
 }

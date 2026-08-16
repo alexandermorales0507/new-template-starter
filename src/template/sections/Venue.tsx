@@ -102,7 +102,7 @@ export function VenueSection({ data }: { data: VenueData }) {
       </div>
 
       {/* Boundary Threshold Divider: Venue -> Reception */}
-      <SectionFloralDivider position="bottom" />
+      <SectionFloralDivider />
     </section>
   );
 }

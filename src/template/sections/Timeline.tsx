@@ -1,6 +1,7 @@
 import type { TimelineData } from "@/platform/wedding-template-data";
 import { formatEventTime } from "@/template/utils/event-formatting";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { StaggerList } from "@/template/components/motion/StaggerList";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { Clock } from "lucide-react";
@@ -68,6 +69,9 @@ export function TimelineSection({ data }: { data: TimelineData }) {
           </StaggerList>
         </div>
       </div>
+
+      {/* Boundary Threshold Divider: Timeline -> Entourage */}
+      <SectionFloralDivider />
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import type { MusicData } from "@/platform/wedding-template-data";
 import { sageDecorations } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { useAudio } from "@/template/components/AudioPlayer";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -38,9 +39,9 @@ export function MusicSection({ data }: { data: MusicData }) {
       id="music_effects"
       className="template-section section-surface-primary template-section-compact text-center relative overflow-x-clip"
     >
-      {/* Decorative Glasshouse Grid Pattern Background (Subtle Champagne Texture on Forest Canvas) */}
+      {/* Decorative Parterre Trellis Pattern Background (Floral Garden on Forest Canvas) */}
       <DecorativePattern
-        src={sageDecorations.glasshouseGridPattern}
+        src={sageDecorations.parterreTrellisPattern}
         opacity={0.22}
         objectPosition="center center"
         blendMode="soft-light"
@@ -152,6 +153,9 @@ export function MusicSection({ data }: { data: MusicData }) {
           </div>
         </Reveal>
       </div>
+
+      {/* Boundary Threshold Divider: Music -> Gallery */}
+      <SectionFloralDivider />
     </section>
   );
 }

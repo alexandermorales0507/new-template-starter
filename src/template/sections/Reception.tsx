@@ -1,6 +1,7 @@
 import type { ReceptionData } from "@/platform/wedding-template-data";
 import { formatTimeRange } from "@/template/utils/event-formatting";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { Clock, MapPin, Navigation, Info } from "lucide-react";
@@ -98,6 +99,9 @@ export function ReceptionSection({ data }: ReceptionSectionProps) {
           </div>
         </Reveal>
       </div>
+
+      {/* Boundary Threshold Divider: Reception -> Timeline */}
+      <SectionFloralDivider />
     </section>
   );
 }

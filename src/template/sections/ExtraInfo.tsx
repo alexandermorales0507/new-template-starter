@@ -67,7 +67,7 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
       </div>
 
       {/* Boundary Threshold Divider: Extra Info -> RSVP */}
-      <SectionFloralDivider position="bottom" />
+      <SectionFloralDivider />
     </section>
   );
 }

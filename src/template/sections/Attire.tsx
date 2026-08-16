@@ -1,6 +1,7 @@
 import type { AttireData } from "@/platform/wedding-template-data";
 import { templateConfig } from "@/template/template.config";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { Shirt, Sparkles } from "lucide-react";
 
@@ -89,6 +90,9 @@ export function AttireSection({ data }: { data: AttireData }) {
           </div>
         </Reveal>
       </div>
+
+      {/* Boundary Threshold Divider: Attire -> Extra Info */}
+      <SectionFloralDivider />
     </section>
   );
 }

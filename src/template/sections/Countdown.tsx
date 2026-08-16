@@ -125,7 +125,7 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
       </div>
 
       {/* Boundary Threshold Divider: Countdown -> Music */}
-      <SectionFloralDivider position="bottom" />
+      <SectionFloralDivider />
     </section>
   );
 }

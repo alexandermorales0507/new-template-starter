@@ -1,6 +1,7 @@
 import type { EntourageData } from "@/platform/wedding-template-data";
 import { sageDecorations } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -101,6 +102,9 @@ export function EntourageSection({ data }: { data: EntourageData }) {
           })}
         </div>
       </div>
+
+      {/* Boundary Threshold Divider: Entourage -> Sponsors */}
+      <SectionFloralDivider />
     </section>
   );
 }

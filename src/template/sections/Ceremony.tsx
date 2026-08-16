@@ -5,6 +5,7 @@ import {
   formatRsvpDeadline,
 } from "@/template/utils/event-formatting";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
+import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { DateCalendar } from "@/template/components/interactive/DateCalendar";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -116,6 +117,9 @@ export function CeremonySection({ data }: { data: CeremonyData }) {
           </div>
         </Reveal>
       </div>
+
+      {/* Boundary Threshold Divider: Ceremony -> Venue */}
+      <SectionFloralDivider />
     </section>
   );
 }

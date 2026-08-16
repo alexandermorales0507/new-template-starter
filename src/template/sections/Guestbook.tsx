@@ -87,7 +87,7 @@ export function GuestbookSection({ data }: { data: GuestbookData }) {
       </div>
 
       {/* Boundary Threshold Divider: Guestbook -> Love Story */}
-      <SectionFloralDivider position="bottom" />
+      <SectionFloralDivider />
     </section>
   );
 }
