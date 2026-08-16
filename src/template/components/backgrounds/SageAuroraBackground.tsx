@@ -31,27 +31,28 @@ export interface SageAuroraBackgroundProps {
 /**
  * Sage Estate Botanical Aurora Background
  * Pure Sage configuration wrapper around the official React Bits GradientWaves component.
- * Manages Sage tokens, reduced-motion detection, static CSS fallback, and text-safe overlay veils.
+ * Features high-contrast botanical tones, visible rolling wave geometry, tuned text-safe veils,
+ * and reduced-motion fallback.
  */
 export function SageAuroraBackground({
   className,
-  speed = 0.28,
-  amplitude = 2.1,
+  speed = 0.3,
+  amplitude = 2.4,
   waveScale = 0.6,
   waveRatio = 0.9,
-  swell = 30,
-  turbulence = 14,
+  swell = 32,
+  turbulence = 16,
   tilt = 1.11,
   zoom = 1.0,
   height = 5.5,
   fogDepth = 15,
   brightness = 1.0,
-  opacity = 0.82,
+  opacity = 1.0,
   grain = true,
   grainIntensity = 0.02,
   horizonColor = "#DDE5D3", // Mist Sage Wash
-  waveColor = "#657A57", // Conservatory Sage
-  crestColor = "#F7F4EA", // Warm Ivory Highlight
+  waveColor = "#465E42", // Deep Botanical Conservatory Sage
+  crestColor = "#FFFDF7", // Luminous Warm Stationery White / Ivory Highlight
   detail = "medium",
   mouseInteraction = false,
   parallaxStrength = 0,
@@ -108,22 +109,22 @@ export function SageAuroraBackground({
         />
       )}
 
-      {/* Deterministic Text-Safe Veil Overlays */}
-      {/* Mobile / Tablet Vertical Veil (< lg): Protects centered headlines while keeping waves visible */}
+      {/* Deterministic Text-Safe Veil Overlays (Light & localized to preserve wave geometry visibility) */}
+      {/* Mobile / Tablet Vertical Veil (< lg): Protects centered headlines while keeping waves luminous */}
       <div
         className="block lg:hidden absolute inset-0 z-10 pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, rgba(247, 244, 234, 0.72) 0%, rgba(247, 244, 234, 0.40) 45%, rgba(247, 244, 234, 0.08) 85%, rgba(247, 244, 234, 0.00) 100%)",
+            "linear-gradient(180deg, rgba(247, 244, 234, 0.55) 0%, rgba(247, 244, 234, 0.28) 40%, rgba(247, 244, 234, 0.00) 80%)",
         }}
       />
 
-      {/* Desktop Horizontal Veil (>= lg): Protects left editorial 7-col stack while leaving right 5-col portrait aurora vibrant */}
+      {/* Desktop Horizontal Veil (>= lg): Protects left editorial 7-col stack while leaving center & portrait waves vibrant */}
       <div
         className="hidden lg:block absolute inset-0 z-10 pointer-events-none"
         style={{
           background:
-            "linear-gradient(90deg, rgba(247, 244, 234, 0.74) 0%, rgba(247, 244, 234, 0.44) 45%, rgba(247, 244, 234, 0.08) 80%, rgba(247, 244, 234, 0.00) 100%)",
+            "linear-gradient(90deg, rgba(247, 244, 234, 0.58) 0%, rgba(247, 244, 234, 0.32) 35%, rgba(247, 244, 234, 0.04) 65%, rgba(247, 244, 234, 0.00) 100%)",
         }}
       />
     </div>
