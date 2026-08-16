@@ -2,6 +2,7 @@ import type { CoupleData } from "@/platform/wedding-template-data";
 import { deriveCoupleIdentity } from "@/template/utils/couple-identity";
 import { templateAssets } from "@/template/template-assets";
 import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
+import { SageAuroraBackground } from "@/template/components/backgrounds/SageAuroraBackground";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { Magnetic } from "@/template/components/motion/Magnetic";
 import { Heart, BookOpen } from "lucide-react";
@@ -28,9 +29,12 @@ export function CoupleSection({ data, storyEnabled = true }: CoupleSectionProps)
   return (
     <section
       id="host_info"
-      className="template-section section-surface-ivory pattern-glazing-grid pattern-feature min-h-0 pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-8 lg:pb-6"
+      className="template-section section-surface-ivory relative isolate overflow-hidden min-h-0 pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-8 lg:pb-6"
     >
-      <div className="template-container">
+      {/* Botanical Dawn Animated Aurora Gradient Waves */}
+      <SageAuroraBackground />
+
+      <div className="template-container relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center lg:items-start">
           {/* Left Column: Editorial Typography & Actions */}
           <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center">
