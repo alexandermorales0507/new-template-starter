@@ -24,7 +24,7 @@ export function CorrespondenceSheet({
     >
       {/* Subtle Header Stamp */}
       {dateStamp || senderLabel ? (
-        <div className="mb-8 flex items-center justify-between border-b border-[var(--wedding-border-subtle)] pb-3 text-xs tracking-widest uppercase text-[var(--wedding-accent)] font-mono">
+        <div className="mb-8 flex items-center justify-between border-b border-[var(--wedding-border-subtle)] pb-3 text-xs tracking-widest uppercase text-[var(--wedding-accent-strong,#8f6a2c)] font-mono">
           <span>{senderLabel || "ESTATE DISPATCH"}</span>
           <span>{dateStamp || "ARCHIVE RECORD"}</span>
         </div>

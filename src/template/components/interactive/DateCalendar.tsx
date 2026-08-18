@@ -91,7 +91,9 @@ export function DateCalendar({
         <span className="font-serif text-xl font-bold text-[var(--wedding-text)] tracking-tight">
           {monthName}
         </span>
-        <span className="font-mono text-xs font-bold text-[var(--wedding-accent)]">{year}</span>
+        <span className="font-mono text-xs font-bold text-[var(--wedding-accent-strong,#8f6a2c)]">
+          {year}
+        </span>
       </div>
 
       {/* Weekday Row */}

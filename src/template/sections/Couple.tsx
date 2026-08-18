@@ -41,7 +41,7 @@ export function CoupleSection({ data, storyEnabled = true }: CoupleSectionProps)
             {/* 1. Folio Stamp */}
             <Reveal direction="down" distance={16}>
               <div className="flex items-center justify-center lg:justify-start">
-                <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[var(--wedding-accent)] estate-glass-light px-4 py-1.5 rounded-full border shadow-xs">
+                <span className="text-xs font-mono font-bold uppercase tracking-[0.18em] text-[var(--wedding-accent-strong,#8f6a2c)] estate-glass-light px-4 py-1.5 rounded-full border shadow-xs">
                   ESTATE FOLIO // 01
                 </span>
               </div>
@@ -59,7 +59,7 @@ export function CoupleSection({ data, storyEnabled = true }: CoupleSectionProps)
               <Reveal direction="up" distance={16} delay={0.15}>
                 <div className="flex justify-center lg:justify-start">
                   <div className="inline-flex items-center justify-center px-6 py-2 sm:px-7 sm:py-2.5 rounded-full estate-glass-light border shadow-xs">
-                    <span className="font-mono font-bold text-base sm:text-lg md:text-xl tracking-[0.2em] text-[var(--wedding-accent)] uppercase">
+                    <span className="font-mono font-bold text-lg sm:text-xl md:text-2xl tracking-[0.16em] text-[var(--wedding-accent-strong,#8f6a2c)] uppercase">
                       {data.hostLine}
                     </span>
                   </div>

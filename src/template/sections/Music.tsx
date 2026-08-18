@@ -102,7 +102,7 @@ export function MusicSection({ data }: { data: MusicData }) {
             </h3>
 
             {displayArtist && (
-              <p className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-[var(--wedding-accent)] mb-4">
+              <p className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-[var(--wedding-accent-strong,#8f6a2c)] mb-4">
                 {displayArtist}
               </p>
             )}

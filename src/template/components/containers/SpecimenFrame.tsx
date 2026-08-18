@@ -72,7 +72,7 @@ export function SpecimenFrame({
             </span>
           ) : null}
           {specimenNumber ? (
-            <span className="font-mono text-[10px] font-bold text-[var(--wedding-accent)] tracking-wider">
+            <span className="font-mono text-[10px] font-bold text-[var(--wedding-accent-strong,#8f6a2c)] tracking-wider">
               {specimenNumber}
             </span>
           ) : null}

@@ -45,7 +45,7 @@ export function LedgerPanel({
                 isCentered ? "items-center justify-center" : "items-center justify-between"
               )}
             >
-              <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[var(--wedding-accent)] uppercase">
+              <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[var(--wedding-accent-strong,#8f6a2c)] uppercase">
                 {indexTag}
               </span>
             </div>

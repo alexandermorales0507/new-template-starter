@@ -66,7 +66,7 @@ export function CeremonySection({ data }: { data: CeremonyData }) {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {dateFormatted && (
                         <div className="p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)] space-y-1.5">
-                          <div className="flex items-center gap-1.5 text-role-metadata text-[var(--wedding-accent)]">
+                          <div className="flex items-center gap-1.5 text-role-metadata text-[var(--wedding-accent-strong,#8f6a2c)]">
                             <Calendar className="w-3.5 h-3.5 text-[var(--wedding-primary)]" />
                             <span>Date</span>
                           </div>
@@ -78,7 +78,7 @@ export function CeremonySection({ data }: { data: CeremonyData }) {
 
                       {timeFormatted && (
                         <div className="p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)] space-y-1.5">
-                          <div className="flex items-center gap-1.5 text-role-metadata text-[var(--wedding-accent)]">
+                          <div className="flex items-center gap-1.5 text-role-metadata text-[var(--wedding-accent-strong,#8f6a2c)]">
                             <Clock className="w-3.5 h-3.5 text-[var(--wedding-primary)]" />
                             <span>Time</span>
                           </div>

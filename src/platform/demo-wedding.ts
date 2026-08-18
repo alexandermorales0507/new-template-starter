@@ -33,7 +33,7 @@ export const DEMO_WEDDING_DATA: WeddingTemplateData = {
   },
 
   music: {
-    musicLink: "https://example.com/demo-audio.mp3",
+    musicLink: "https://www.youtube.com/watch?v=2vjPBrBU-TM",
     musicTitle: "A Thousand Years (Instrumental)",
     playButtonLabel: "Play Music",
     shortNote: "Background music composed for our wedding day",

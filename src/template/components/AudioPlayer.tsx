@@ -95,6 +95,27 @@ export function AudioProvider({
     };
   }, [musicLink]);
 
+  // Listen for YouTube IFrame API ready and state delivery events
+  useEffect(() => {
+    const handleWindowMessage = (event: MessageEvent) => {
+      try {
+        const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+        if (data?.event === "onReady" || data?.event === "initialDelivery") {
+          iframeReadyRef.current = true;
+          if (pendingPlayRef.current) {
+            pendingPlayRef.current = false;
+            sendYoutubeCommand("playVideo");
+          }
+        }
+      } catch {
+        // Ignore non-JSON postMessage payloads
+      }
+    };
+
+    window.addEventListener("message", handleWindowMessage);
+    return () => window.removeEventListener("message", handleWindowMessage);
+  }, []);
+
   // Send postMessage command to YouTube iframe
   const sendYoutubeCommand = (func: string, args: unknown = "") => {
     const iframe = iframeRef.current;
@@ -127,12 +148,13 @@ export function AudioProvider({
     }
 
     if (sourceType === "youtube") {
+      setPlaybackState("playing");
       if (iframeReadyRef.current) {
         sendYoutubeCommand("playVideo");
-        setPlaybackState("playing");
       } else {
         pendingPlayRef.current = true;
-        setPlaybackState("playing");
+        // Also send initial listening handshake
+        sendYoutubeCommand("listening");
       }
       return;
     }
@@ -142,6 +164,7 @@ export function AudioProvider({
 
   const pause = useCallback(() => {
     setPlaybackState("paused");
+    pendingPlayRef.current = false;
     if (sourceType === "direct" && audioRef.current) {
       audioRef.current.pause();
     }
@@ -185,6 +208,7 @@ export function AudioProvider({
 
   const handleIframeLoad = () => {
     iframeReadyRef.current = true;
+    sendYoutubeCommand("listening");
     if (pendingPlayRef.current) {
       pendingPlayRef.current = false;
       sendYoutubeCommand("playVideo");
@@ -220,7 +244,7 @@ export function AudioProvider({
           height="1"
           src={embedUrl}
           title="Wedding Music Player"
-          allow="autoplay; encrypted-media"
+          allow="autoplay; encrypted-media; fullscreen"
           tabIndex={-1}
           onLoad={handleIframeLoad}
         />
@@ -341,7 +365,7 @@ export function FloatingMusicBubble({
                     {displayTitle}
                   </h4>
                   {displayArtist && (
-                    <p className="text-[10px] font-mono text-[var(--wedding-accent)] uppercase tracking-widest truncate">
+                    <p className="text-[10px] font-mono text-[var(--wedding-accent-strong,#8f6a2c)] uppercase tracking-widest truncate">
                       {displayArtist}
                     </p>
                   )}

@@ -96,7 +96,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
               <DialogHeader className="shrink-0 flex flex-row items-center justify-between pr-8 border-b border-[var(--wedding-border-subtle)] pb-2.5">
                 <DialogTitle className="font-serif text-lg sm:text-xl text-[var(--wedding-text)] font-semibold flex items-center gap-3">
                   <span>{selectedPhoto.caption}</span>
-                  <span className="text-xs font-mono font-bold tracking-wider uppercase text-[var(--wedding-accent)]">
+                  <span className="text-xs font-mono font-bold tracking-wider uppercase text-[var(--wedding-accent-strong,#8f6a2c)]">
                     {selectedPhoto.folioLabel}
                   </span>
                 </DialogTitle>

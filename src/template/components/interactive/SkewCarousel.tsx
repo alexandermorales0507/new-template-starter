@@ -87,7 +87,7 @@ export function SkewCarousel({
                 {item.caption}
               </p>
               {item.folioLabel || item.title ? (
-                <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--wedding-accent)] shrink-0">
+                <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--wedding-accent-strong,#8f6a2c)] shrink-0">
                   {item.folioLabel || item.title}
                 </span>
               ) : null}
@@ -279,7 +279,7 @@ export function SkewCarousel({
                       <span />
                     )}
                     {item.folioLabel || item.title ? (
-                      <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--wedding-accent)] shrink-0">
+                      <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--wedding-accent-strong,#8f6a2c)] shrink-0">
                         {item.folioLabel || item.title}
                       </span>
                     ) : null}
@@ -305,7 +305,7 @@ export function SkewCarousel({
 
         {/* Numeric Counter: CURRENT / TOTAL */}
         <div className="font-mono text-xs font-bold tracking-wider text-[var(--wedding-text-muted)] px-1">
-          <span className="text-[var(--wedding-accent)]">{currentFormatted}</span>
+          <span className="text-[var(--wedding-accent-strong,#8f6a2c)]">{currentFormatted}</span>
           <span className="mx-1 opacity-40">/</span>
           <span>{totalFormatted}</span>
         </div>
