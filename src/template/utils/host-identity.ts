@@ -1,8 +1,8 @@
-// DYNAMIC COUPLE IDENTITY.
-// Redesign freely, but derive initials/names from WeddingTemplateData.
+// DYNAMIC HOST / CELEBRANT / COUPLE IDENTITY.
+// Redesign freely, but derive initials/names from EventTemplateData.
 // Never hardcode client initials.
 
-export type CoupleIdentity = {
+export type HostIdentity = {
   groomName: string;
   brideName: string;
   groomInitial: string;
@@ -11,6 +11,8 @@ export type CoupleIdentity = {
   compactMonogram: string;
   displayName: string;
 };
+
+export type CoupleIdentity = HostIdentity;
 
 const COMMON_TITLES = new Set(["dr", "mr", "mrs", "ms", "prof", "rev", "atty", "engr", "hon"]);
 
@@ -28,11 +30,25 @@ function extractInitial(name: string): string {
   return match ? match[0].toUpperCase() : "";
 }
 
-export function deriveCoupleIdentity(
+/**
+ * Extracts a milestone number from a milestone or age string.
+ * Examples:
+ * - "30th birthday" -> "30"
+ * - "Level 10" -> "10"
+ * - "Turning 18" -> "18"
+ * - "10" -> "10"
+ */
+export function extractMilestoneNumber(milestone?: string | null): string | null {
+  if (!milestone) return null;
+  const match = String(milestone).trim().match(/(\d+)/);
+  return match ? match[1] : null;
+}
+
+export function deriveHostIdentity(
   groomName?: string,
   brideName?: string,
   coupleDisplayName?: string
-): CoupleIdentity {
+): HostIdentity {
   const groom = (groomName || "").trim();
   const bride = (brideName || "").trim();
 
@@ -95,3 +111,5 @@ export function deriveCoupleIdentity(
     displayName: defaultDisplay,
   };
 }
+
+export const deriveCoupleIdentity = deriveHostIdentity;

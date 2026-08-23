@@ -1,16 +1,16 @@
-import type { WeddingTemplateData } from "@/platform/wedding-template-data";
-import { WeddingMonogram } from "./WeddingMonogram";
+import type { EventTemplateData } from "@/platform/event-template-data";
+import { EventMonogram } from "./EventMonogram";
 import { extractEventYear } from "@/template/utils/event-formatting";
 import { Mail, Phone, User } from "lucide-react";
 import { FacebookIcon, InstagramIcon, TikTokIcon } from "./ui/BrandIcons";
 
-// DYNAMIC COUPLE IDENTITY & RESPONSIVE CLOSING SURFACE (SAGE ESTATE COLOPHON)
+// DYNAMIC HOST IDENTITY & RESPONSIVE CLOSING SURFACE (SAGE ESTATE COLOPHON)
 // Supports both FULL FOOTER MODE (when contact_socials is enabled with content)
 // and COMPACT FOOTER MODE (when disabled or empty, preventing empty visual space).
 
-export function Footer({ data }: { data: WeddingTemplateData }) {
+export function Footer({ data }: { data: EventTemplateData }) {
   const eventYear = extractEventYear(data.ceremony?.eventDate || data.eventDate);
-  const coupleName = data.coupleDisplayName || "The Couple";
+  const hostDisplayName = data.coupleDisplayName || "The Celebrant";
 
   const isContactEnabled =
     Boolean(data.enabledSectionKeys?.includes("contact_socials")) && Boolean(data.contact);
@@ -23,7 +23,9 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
   const tikTokUrl = isContactEnabled ? data.contact?.tikTokUrl?.trim() || null : null;
 
   // Derive meaningful content presence
-  const hasContactInfo = Boolean((contactPerson && contactPerson !== coupleName) || email || phone);
+  const hasContactInfo = Boolean(
+    (contactPerson && contactPerson !== hostDisplayName) || email || phone
+  );
   const hasSocials = Boolean(facebookUrl || instagramUrl || tikTokUrl);
   const hasContactContent = hasContactInfo || hasSocials;
   const showFullFooter = isContactEnabled && hasContactContent;
@@ -31,23 +33,24 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
   // COMPACT FOOTER MODE: When contact_socials is OFF or has zero content
   if (!showFullFooter) {
     return (
-      <footer className="wedding-footer pattern-glazing-grid pattern-feature pattern-dark pt-10 sm:pt-12 pb-24 sm:pb-28 px-4 bg-[var(--wedding-surface-dark)] text-[var(--wedding-accent-soft)] border-t border-[var(--wedding-surface-dark-alt)] text-xs">
+      <footer className="event-footer pattern-glazing-grid pattern-feature pattern-dark pt-10 sm:pt-12 pb-24 sm:pb-28 px-4 bg-[var(--event-surface-dark,#304438)] text-[var(--event-accent-soft,#c7cfbc)] border-t border-[var(--event-surface-dark-alt,#223322)] text-xs">
         <div className="max-w-3xl mx-auto flex flex-col items-center text-center gap-3 sm:gap-4 select-none">
           {/* Centered Identity */}
-          <WeddingMonogram
+          <EventMonogram
             groomName={data.couple?.groomName}
             brideName={data.couple?.brideName}
             coupleDisplayName={data.coupleDisplayName}
+            milestone={data.couple?.milestoneAge}
             variant="footer"
           />
 
           {/* Compact Divider */}
-          <div className="w-24 h-px bg-[var(--wedding-accent)]/30 my-1 sm:my-2" />
+          <div className="w-24 h-px bg-[var(--event-accent,#8f6a2c)]/30 my-1 sm:my-2" />
 
           {/* Legal / Attribution */}
-          <div className="text-center text-xs text-[var(--wedding-accent-soft)]/85 tracking-wider flex flex-col gap-1 font-mono">
+          <div className="text-center text-xs text-[var(--event-accent-soft,#c7cfbc)]/85 tracking-wider flex flex-col gap-1 font-mono">
             <p>
-              &copy; {eventYear} {coupleName}. Estate Archive Record.
+              &copy; {eventYear} {hostDisplayName}. Estate Archive Record.
             </p>
             <p className="text-[11px]">
               Custom RSVP by{" "}
@@ -55,7 +58,7 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
                 href="https://rsvp.webserbisyo.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--wedding-on-dark)] hover:underline font-semibold template-focus-ring"
+                className="text-[var(--event-on-dark,#f7f4ea)] hover:underline font-semibold template-focus-ring"
               >
                 WebSerbisyo
               </a>
@@ -74,7 +77,7 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
 
   // FULL FOOTER MODE: When contact_socials is ON and has content
   return (
-    <footer className="wedding-footer pattern-glazing-grid pattern-feature pattern-dark pt-14 sm:pt-16 pb-28 sm:pb-32 px-4 bg-[var(--wedding-surface-dark)] text-[var(--wedding-accent-soft)] border-t border-[var(--wedding-surface-dark-alt)] text-xs">
+    <footer className="event-footer pattern-glazing-grid pattern-feature pattern-dark pt-14 sm:pt-16 pb-28 sm:pb-32 px-4 bg-[var(--event-surface-dark,#304438)] text-[var(--event-accent-soft,#c7cfbc)] border-t border-[var(--event-surface-dark-alt,#223322)] text-xs">
       <div className="max-w-5xl mx-auto">
         {/* Upper Closing Grid */}
         <div
@@ -82,12 +85,13 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
             hasContactInfo && hasSocials ? "md:grid-cols-3" : "md:grid-cols-2"
           } gap-8 sm:gap-12 items-center text-center md:text-left`}
         >
-          {/* Column 1: Centered Couple Identity */}
+          {/* Column 1: Centered Host Identity */}
           <div className="flex flex-col items-center md:items-start gap-1">
-            <WeddingMonogram
+            <EventMonogram
               groomName={data.couple?.groomName}
               brideName={data.couple?.brideName}
               coupleDisplayName={data.coupleDisplayName}
+              milestone={data.couple?.milestoneAge}
               variant="footer"
             />
           </div>
@@ -98,21 +102,21 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
               id="contact_socials"
               className="flex flex-col items-center md:items-start gap-3 scroll-mt-20"
             >
-              <span className="text-role-metadata text-[var(--wedding-accent)] font-mono">
+              <span className="text-role-metadata text-[var(--event-accent,#8f6a2c)] font-mono">
                 Celebration Inquiries
               </span>
               {contactPerson && (
-                <div className="flex items-center gap-2.5 text-[var(--wedding-on-dark)] text-sm sm:text-base">
-                  <User className="w-4 h-4 text-[var(--wedding-accent)] shrink-0" />
+                <div className="flex items-center gap-2.5 text-[var(--event-on-dark,#f7f4ea)] text-sm sm:text-base">
+                  <User className="w-4 h-4 text-[var(--event-accent,#8f6a2c)] shrink-0" />
                   <span className="font-semibold">{contactPerson}</span>
                 </div>
               )}
               {email && (
                 <div className="flex items-center gap-2.5 text-sm sm:text-base">
-                  <Mail className="w-4 h-4 text-[var(--wedding-accent)] shrink-0" />
+                  <Mail className="w-4 h-4 text-[var(--event-accent,#8f6a2c)] shrink-0" />
                   <a
                     href={`mailto:${email}`}
-                    className="hover:text-[var(--wedding-on-dark)] transition-colors font-medium template-focus-ring text-[var(--wedding-accent-soft)]"
+                    className="hover:text-[var(--event-on-dark,#f7f4ea)] transition-colors font-medium template-focus-ring text-[var(--event-accent-soft,#c7cfbc)]"
                   >
                     {email}
                   </a>
@@ -120,10 +124,10 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
               )}
               {phone && (
                 <div className="flex items-center gap-2.5 text-sm sm:text-base">
-                  <Phone className="w-4 h-4 text-[var(--wedding-accent)] shrink-0" />
+                  <Phone className="w-4 h-4 text-[var(--event-accent,#8f6a2c)] shrink-0" />
                   <a
                     href={`tel:${phone}`}
-                    className="hover:text-[var(--wedding-on-dark)] transition-colors font-medium template-focus-ring text-[var(--wedding-accent-soft)]"
+                    className="hover:text-[var(--event-on-dark,#f7f4ea)] transition-colors font-medium template-focus-ring text-[var(--event-accent-soft,#c7cfbc)]"
                   >
                     {phone}
                   </a>
@@ -140,7 +144,7 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
                 hasContactInfo ? "md:items-end" : "md:items-start"
               } gap-3 ${!hasContactInfo ? "scroll-mt-20" : ""}`}
             >
-              <span className="text-role-metadata text-[var(--wedding-accent)] font-mono">
+              <span className="text-role-metadata text-[var(--event-accent,#8f6a2c)] font-mono">
                 Social Channels
               </span>
               <div className="flex items-center gap-3">
@@ -150,7 +154,7 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-[var(--wedding-surface-dark-alt)] rounded-full border border-[var(--wedding-accent)]/40 text-[var(--wedding-accent-soft)] hover:text-white hover:scale-105 transition-all shadow-xs template-focus-ring"
+                    className="p-3 bg-[var(--event-surface-dark-alt,#223322)] rounded-full border border-[var(--event-accent,#8f6a2c)]/40 text-[var(--event-accent-soft,#c7cfbc)] hover:text-white hover:scale-105 transition-all shadow-xs template-focus-ring"
                     aria-label={label}
                   >
                     <Icon className="w-4 h-4" />
@@ -162,11 +166,11 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
         </div>
 
         {/* Bottom Strip */}
-        <div className="w-full h-px bg-[var(--wedding-accent)]/20 my-6 sm:my-8" />
+        <div className="w-full h-px bg-[var(--event-accent,#8f6a2c)]/20 my-6 sm:my-8" />
 
-        <div className="text-center text-xs text-[var(--wedding-accent-soft)]/85 tracking-wider flex flex-col gap-1 font-mono">
+        <div className="text-center text-xs text-[var(--event-accent-soft,#c7cfbc)]/85 tracking-wider flex flex-col gap-1 font-mono">
           <p>
-            &copy; {eventYear} {coupleName}. Estate Archive Record. All rights reserved.
+            &copy; {eventYear} {hostDisplayName}. Estate Archive Record. All rights reserved.
           </p>
           <p className="text-[11px]">
             Custom RSVP by{" "}
@@ -174,7 +178,7 @@ export function Footer({ data }: { data: WeddingTemplateData }) {
               href="https://rsvp.webserbisyo.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--wedding-on-dark)] hover:underline font-semibold template-focus-ring"
+              className="text-[var(--event-on-dark,#f7f4ea)] hover:underline font-semibold template-focus-ring"
             >
               WebSerbisyo
             </a>

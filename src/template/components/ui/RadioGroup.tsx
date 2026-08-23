@@ -48,8 +48,8 @@ export function RadioGroup<T extends string = string>({
               className={cn(
                 "inline-flex items-center justify-center px-4 py-2.5 rounded-full text-xs font-semibold border transition-all cursor-pointer select-none text-center template-focus-ring",
                 isSelected
-                  ? "bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] border-[var(--wedding-primary)] shadow-xs"
-                  : "bg-[var(--wedding-surface)] text-[var(--wedding-text)] border-[var(--wedding-border)] hover:border-[var(--wedding-primary)]"
+                  ? "bg-[var(--event-primary)] text-[var(--event-on-primary)] border-[var(--event-primary)] shadow-xs"
+                  : "bg-[var(--event-surface)] text-[var(--event-text)] border-[var(--event-border)] hover:border-[var(--event-primary)]"
               )}
             >
               <input
@@ -73,8 +73,8 @@ export function RadioGroup<T extends string = string>({
             className={cn(
               "flex items-start p-4 rounded-xl border transition-all cursor-pointer select-none text-left relative",
               isSelected
-                ? "bg-[var(--wedding-surface-alt)] border-[var(--wedding-primary)] ring-1 ring-[var(--wedding-primary)] shadow-xs"
-                : "bg-[var(--wedding-surface)] border-[var(--wedding-border)] hover:border-[var(--wedding-border-subtle)] hover:bg-[var(--wedding-surface-alt)]/50"
+                ? "bg-[var(--event-surface-alt)] border-[var(--event-primary)] ring-1 ring-[var(--event-primary)] shadow-xs"
+                : "bg-[var(--event-surface)] border-[var(--event-border)] hover:border-[var(--event-border-subtle)] hover:bg-[var(--event-surface-alt)]/50"
             )}
           >
             <input
@@ -91,19 +91,19 @@ export function RadioGroup<T extends string = string>({
                 <span
                   className={cn(
                     "text-sm font-semibold",
-                    isSelected ? "text-[var(--wedding-text)]" : "text-[var(--wedding-text-muted)]"
+                    isSelected ? "text-[var(--event-text)]" : "text-[var(--event-text-muted)]"
                   )}
                 >
                   {option.label}
                 </span>
                 {option.badge ? (
-                  <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[var(--wedding-surface-alt)] text-[var(--wedding-text)] font-mono">
+                  <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[var(--event-surface-alt)] text-[var(--event-text)] font-mono">
                     {option.badge}
                   </span>
                 ) : null}
               </div>
               {option.description ? (
-                <p className="text-xs text-[var(--wedding-text-muted)] leading-relaxed font-sans">
+                <p className="text-xs text-[var(--event-text-muted)] leading-relaxed font-sans">
                   {option.description}
                 </p>
               ) : null}

@@ -3,25 +3,22 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { WeddingTemplateData } from "@/platform/wedding-template-data";
-import {
-  buildWeddingNavigation,
-  resolveWeddingHref,
-} from "@/template/navigation/wedding-navigation";
-import { WeddingMonogram } from "./WeddingMonogram";
+import type { EventTemplateData } from "@/platform/event-template-data";
+import { buildEventNavigation, resolveEventHref } from "@/template/navigation/event-navigation";
+import { EventMonogram } from "./EventMonogram";
 import { MoreDrawer } from "./MoreDrawer";
 import { Menu } from "lucide-react";
 
-// DYNAMIC COUPLE IDENTITY & CANONICAL NAVIGATION.
+// DYNAMIC HOST IDENTITY & CANONICAL NAVIGATION.
 // Generalized 3-zone balanced navbar with adaptive scroll states for Sage Estate.
 
-export function Navbar({ data }: { data: WeddingTemplateData }) {
+export function Navbar({ data }: { data: EventTemplateData }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const pathname = usePathname() || "/";
   const isHomePage = pathname === "/" || pathname === "";
 
-  const navModel = buildWeddingNavigation(data);
+  const navModel = buildEventNavigation(data);
   const isScrolled = !isHomePage || hasScrolled;
 
   useEffect(() => {
@@ -56,7 +53,7 @@ export function Navbar({ data }: { data: WeddingTemplateData }) {
     <>
       <header
         data-scrolled={isScrolled ? "true" : "false"}
-        className="wedding-nav fixed top-0 left-0 right-0 z-40 w-full transition-all duration-300"
+        className="event-nav fixed top-0 left-0 right-0 z-40 w-full transition-all duration-300"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-17 flex items-center justify-between">
           {/* Zone 1: Left Monogram */}
@@ -65,12 +62,13 @@ export function Navbar({ data }: { data: WeddingTemplateData }) {
               href="/"
               onClick={handleHomeClick}
               className="template-focus-ring rounded-md inline-flex items-center"
-              aria-label={`Home - ${data.coupleDisplayName} wedding`}
+              aria-label={`Home - ${data.coupleDisplayName} celebration`}
             >
-              <WeddingMonogram
+              <EventMonogram
                 groomName={data.couple?.groomName}
                 brideName={data.couple?.brideName}
                 coupleDisplayName={data.coupleDisplayName}
+                milestone={data.couple?.milestoneAge}
                 variant="nav"
               />
             </Link>
@@ -79,17 +77,17 @@ export function Navbar({ data }: { data: WeddingTemplateData }) {
           {/* Zone 2: Center Primary Browsing Links */}
           <nav
             aria-label="Primary browsing navigation"
-            className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-secondary)] select-none"
+            className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-secondary,#5d695f)] select-none"
           >
             {navModel.primaryNavItems.map((item) => {
-              const resolvedHref = resolveWeddingHref(item.anchor, pathname);
+              const resolvedHref = resolveEventHref(item.anchor, pathname);
 
               return (
                 <Link
                   key={item.key}
                   href={resolvedHref}
                   onClick={(e) => handleAnchorClick(e, item.anchor)}
-                  className="wedding-nav-link py-2 relative hover:text-[var(--text-primary)] transition-colors after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-bottom-right after:scale-x-0 after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100 after:bg-[var(--action-primary)] template-focus-ring rounded-xs"
+                  className="event-nav-link py-2 relative hover:text-[var(--text-primary,#24342c)] transition-colors after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-bottom-right after:scale-x-0 after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100 after:bg-[var(--action-primary,#657a57)] template-focus-ring rounded-xs"
                 >
                   {item.label}
                 </Link>
@@ -101,7 +99,7 @@ export function Navbar({ data }: { data: WeddingTemplateData }) {
           <div className="flex items-center justify-end min-w-[100px] sm:min-w-[120px]">
             <button
               onClick={() => setDrawerOpen(true)}
-              className="wedding-nav-menu inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[var(--text-primary)] hover:bg-[var(--surface-muted)] transition-all duration-200 template-focus-ring cursor-pointer"
+              className="event-nav-menu inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[var(--text-primary,#24342c)] hover:bg-[var(--surface-muted,#dde5d3)] transition-all duration-200 template-focus-ring cursor-pointer"
               aria-expanded={drawerOpen}
               aria-controls="sitemap-drawer"
               aria-label="Open complete celebration menu"

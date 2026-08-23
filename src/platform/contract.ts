@@ -4,7 +4,7 @@ import contractJson from "../../contracts/event-website-sections.v1.json";
 
 export const EVENT_WEBSITE_SECTION_CONTRACT_VERSION = 1 as const;
 
-export type WeddingSectionKey =
+export type EventSectionKey =
   | "host_info"
   | "countdown"
   | "music_effects"
@@ -26,7 +26,9 @@ export type WeddingSectionKey =
   | "debut_court"
   | "godparents";
 
-export const WEDDING_APPLICABLE_SECTION_KEYS = [
+export type WeddingSectionKey = EventSectionKey;
+
+export const EVENT_APPLICABLE_SECTION_KEYS = [
   "host_info",
   "countdown",
   "music_effects",
@@ -46,17 +48,22 @@ export const WEDDING_APPLICABLE_SECTION_KEYS = [
   "contact_socials",
 ] as const;
 
-export type WeddingApplicableSectionKey = (typeof WEDDING_APPLICABLE_SECTION_KEYS)[number];
-export const weddingApplicableSectionKeySet = new Set<string>(WEDDING_APPLICABLE_SECTION_KEYS);
+export const WEDDING_APPLICABLE_SECTION_KEYS = EVENT_APPLICABLE_SECTION_KEYS;
+
+export type EventApplicableSectionKey = (typeof EVENT_APPLICABLE_SECTION_KEYS)[number];
+export type WeddingApplicableSectionKey = EventApplicableSectionKey;
+
+export const eventApplicableSectionKeySet = new Set<string>(EVENT_APPLICABLE_SECTION_KEYS);
+export const weddingApplicableSectionKeySet = eventApplicableSectionKeySet;
 
 export type SectionContractEntry = {
-  key: WeddingSectionKey;
+  key: EventSectionKey;
   label: string;
   navigationEligible: boolean;
   visibility: "optional" | "required";
 };
 
-const canonicalKeys: WeddingSectionKey[] = [
+const canonicalKeys: EventSectionKey[] = [
   "host_info",
   "countdown",
   "music_effects",
@@ -83,9 +90,11 @@ export const eventWebsiteSectionContract = contractJson.sections as SectionContr
 export const eventWebsiteSectionKeys = canonicalKeys;
 export const eventWebsiteSectionKeySet = new Set<string>(canonicalKeys);
 
-export const requiredWeddingSections = eventWebsiteSectionContract
+export const requiredEventSections = eventWebsiteSectionContract
   .filter((entry) => entry.visibility === "required")
   .map((entry) => entry.key);
+
+export const requiredWeddingSections = requiredEventSections;
 
 export function validatePublicEventContract(event: Record<string, unknown>): boolean {
   const version = event.contractVersion;

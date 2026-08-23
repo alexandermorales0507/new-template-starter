@@ -1,14 +1,14 @@
 // PLATFORM VISIBILITY — RESPECT DASHBOARD STATE.
 
-import { eventWebsiteSectionKeySet, requiredWeddingSections, WeddingSectionKey } from "./contract";
-import type { NormalizedSection } from "./wedding-template-data";
+import { eventWebsiteSectionKeySet, requiredEventSections, EventSectionKey } from "./contract";
+import type { NormalizedSection } from "./event-template-data";
 
 export function isSectionEnabled(
   key: string,
   sections: NormalizedSection[],
   enabledKeys?: string[]
 ): boolean {
-  if (requiredWeddingSections.includes(key as WeddingSectionKey)) {
+  if (requiredEventSections.includes(key as EventSectionKey)) {
     return true;
   }
   if (enabledKeys && enabledKeys.length > 0) {

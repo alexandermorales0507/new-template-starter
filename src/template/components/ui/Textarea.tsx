@@ -17,7 +17,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {label ? (
           <label
             htmlFor={textareaId}
-            className="block text-xs font-mono font-bold uppercase tracking-wider text-[var(--wedding-text)]"
+            className="block text-xs font-mono font-bold uppercase tracking-wider text-[var(--event-text)]"
           >
             {label}
           </label>
@@ -27,7 +27,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           ref={ref}
           rows={rows}
           className={cn(
-            "flex w-full rounded-xl border border-[var(--wedding-border)] bg-[var(--wedding-surface)] px-3.5 py-2.5 text-sm text-[var(--wedding-text)] placeholder:text-[var(--wedding-text-muted)] transition-colors focus:border-[var(--wedding-primary)] focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 template-focus-ring resize-y",
+            "flex w-full rounded-xl border border-[var(--event-border)] bg-[var(--event-surface)] px-3.5 py-2.5 text-sm text-[var(--event-text)] placeholder:text-[var(--event-text-muted)] transition-colors focus:border-[var(--event-primary)] focus:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 template-focus-ring resize-y",
             error && "border-red-500 focus:border-red-600",
             className
           )}
@@ -36,7 +36,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {error ? (
           <p className="text-xs text-red-600 font-medium">{error}</p>
         ) : helperText ? (
-          <p className="text-xs text-[var(--wedding-text-muted)]">{helperText}</p>
+          <p className="text-xs text-[var(--event-text-muted)]">{helperText}</p>
         ) : null}
       </div>
     );

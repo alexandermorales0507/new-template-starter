@@ -4,13 +4,13 @@ import {
   eventWebsiteSectionContract,
   EVENT_WEBSITE_SECTION_CONTRACT_VERSION,
   eventWebsiteSectionKeySet,
-  WEDDING_APPLICABLE_SECTION_KEYS,
-  weddingApplicableSectionKeySet,
+  EVENT_APPLICABLE_SECTION_KEYS,
+  eventApplicableSectionKeySet,
 } from "../src/platform/contract.js";
 import { templateSectionRegistry } from "../src/template/section-registry.js";
-import { demoWeddingData } from "../src/platform/demo-wedding.js";
+import { demoEventData } from "../src/platform/demo-event.js";
 import { normalizeEventData } from "../src/platform/normalize-event.js";
-import { deriveCoupleIdentity } from "../src/template/utils/couple-identity.js";
+import { deriveHostIdentity, extractMilestoneNumber } from "../src/template/utils/host-identity.js";
 import {
   formatEventDateLong,
   formatEventTime,
@@ -18,10 +18,10 @@ import {
   formatRsvpDeadline,
 } from "../src/template/utils/event-formatting.js";
 import {
-  buildWeddingNavigation,
-  resolveWeddingHref,
+  buildEventNavigation,
+  resolveEventHref,
   hasMeaningfulContactContent,
-} from "../src/template/navigation/wedding-navigation.js";
+} from "../src/template/navigation/event-navigation.js";
 
 type CheckResult = {
   passed: boolean;
@@ -29,7 +29,7 @@ type CheckResult = {
   warnings: string[];
 };
 
-console.log("WebSerbisyo Wedding Template Contract Check");
+console.log("WebSerbisyo Event Template Contract Check");
 console.log("──────────────────────────────────────────");
 
 const result: CheckResult = {
@@ -52,14 +52,14 @@ if (EVENT_WEBSITE_SECTION_CONTRACT_VERSION === 1) {
   console.log(`✗ Contract version: ${EVENT_WEBSITE_SECTION_CONTRACT_VERSION}`);
 }
 
-// 2. SECTION REGISTRY & WEDDING SCOPE VALIDATION
-console.log("\n[2] WEDDING SECTION REGISTRY SCOPE VALIDATION");
+// 2. SECTION REGISTRY & EVENT SCOPE VALIDATION
+console.log("\n[2] EVENT SECTION REGISTRY SCOPE VALIDATION");
 const globalKeys = eventWebsiteSectionContract.map((entry) => entry.key);
-const weddingKeys = WEDDING_APPLICABLE_SECTION_KEYS;
+const applicableKeys = EVENT_APPLICABLE_SECTION_KEYS;
 const registeredKeys = Object.keys(templateSectionRegistry);
 
 console.log(`Global contract sections: ${globalKeys.length}`);
-console.log(`Wedding applicable sections: ${weddingKeys.length}`);
+console.log(`Applicable event sections: ${applicableKeys.length}`);
 console.log(`Registered template section components: ${registeredKeys.length}`);
 
 if (globalKeys.length !== 20) {
@@ -67,10 +67,10 @@ if (globalKeys.length !== 20) {
   result.failures.push(`Global contract count mismatch. Expected 20, got ${globalKeys.length}`);
 }
 
-if (weddingKeys.length !== 17) {
+if (applicableKeys.length !== 17) {
   result.passed = false;
   result.failures.push(
-    `Wedding applicable section count mismatch. Expected 17, got ${weddingKeys.length}`
+    `Applicable section count mismatch. Expected 17, got ${applicableKeys.length}`
   );
 }
 
@@ -82,35 +82,33 @@ if (registeredKeys.length !== 17) {
 }
 
 let missingCount = 0;
-for (const key of weddingKeys) {
+for (const key of applicableKeys) {
   if (templateSectionRegistry[key]) {
-    console.log(`  ✓ Registered Wedding Renderer: ${key}`);
+    console.log(`  ✓ Registered Event Renderer: ${key}`);
   } else {
     missingCount++;
-    result.failures.push(`Missing template renderer for wedding key: '${key}'`);
-    console.log(`  ✗ MISSING WEDDING RENDERER: ${key}`);
+    result.failures.push(`Missing template renderer for key: '${key}'`);
+    console.log(`  ✗ MISSING EVENT RENDERER: ${key}`);
   }
 }
 
-const forbiddenWeddingKeys = ["eighteen_roses_candles", "debut_court", "godparents"];
-for (const key of forbiddenWeddingKeys) {
+const forbiddenKeys = ["eighteen_roses_candles", "debut_court", "godparents"];
+for (const key of forbiddenKeys) {
   if (templateSectionRegistry[key]) {
-    result.failures.push(`Forbidden non-wedding section renderer registered: '${key}'`);
+    result.failures.push(`Forbidden section renderer registered: '${key}'`);
     console.log(`  ✗ FORBIDDEN RENDERER REGISTERED: ${key}`);
   }
 }
 
 for (const regKey of registeredKeys) {
-  if (!weddingApplicableSectionKeySet.has(regKey)) {
-    result.failures.push(
-      `Unknown or non-wedding section key registered in templateSectionRegistry: '${regKey}'`
-    );
-    console.log(`  ✗ UNKNOWN/NON-WEDDING KEY REGISTERED: ${regKey}`);
+  if (!eventApplicableSectionKeySet.has(regKey)) {
+    result.failures.push(`Unknown section key registered in templateSectionRegistry: '${regKey}'`);
+    console.log(`  ✗ UNKNOWN KEY REGISTERED: ${regKey}`);
   }
 }
 
 if (missingCount === 0 && registeredKeys.length === 17) {
-  console.log(`✓ Template section registry correctly contains exactly 17 Wedding renderers.`);
+  console.log(`✓ Template section registry correctly contains exactly 17 Event renderers.`);
 } else {
   result.passed = false;
 }
@@ -118,33 +116,31 @@ if (missingCount === 0 && registeredKeys.length === 17) {
 // 3. DEMO DATA VALIDATION
 console.log("\n[3] DEMO DATA VALIDATION");
 if (
-  demoWeddingData &&
-  demoWeddingData.eventSlug &&
-  Array.isArray(demoWeddingData.enabledSectionKeys) &&
-  demoWeddingData.couple &&
-  demoWeddingData.ceremony &&
-  demoWeddingData.venue &&
-  demoWeddingData.rsvp &&
-  demoWeddingData.gifts
+  demoEventData &&
+  demoEventData.eventSlug &&
+  Array.isArray(demoEventData.enabledSectionKeys) &&
+  demoEventData.couple &&
+  demoEventData.ceremony &&
+  demoEventData.venue &&
+  demoEventData.rsvp &&
+  demoEventData.gifts
 ) {
-  console.log(`✓ Demo wedding dataset ('${demoWeddingData.eventSlug}') is valid and complete.`);
+  console.log(`✓ Demo event dataset ('${demoEventData.eventSlug}') is valid and complete.`);
 } else {
   result.passed = false;
-  result.failures.push(
-    "src/platform/demo-wedding.ts is missing required WeddingTemplateData fields."
-  );
-  console.log("✗ Demo wedding dataset failed validation.");
+  result.failures.push("src/platform/demo-event.ts is missing required EventTemplateData fields.");
+  console.log("✗ Demo event dataset failed validation.");
 }
 
 // Verify gift options in demo data
-if (demoWeddingData.gifts?.options) {
-  if (demoWeddingData.gifts.options.length > 2) {
+if (demoEventData.gifts?.options) {
+  if (demoEventData.gifts.options.length > 2) {
     result.passed = false;
     result.failures.push(
-      `Demo gift options exceed maximum limit of 2 (found ${demoWeddingData.gifts.options.length}).`
+      `Demo gift options exceed maximum limit of 2 (found ${demoEventData.gifts.options.length}).`
     );
   }
-  for (const opt of demoWeddingData.gifts.options as Record<string, unknown>[]) {
+  for (const opt of demoEventData.gifts.options as Record<string, unknown>[]) {
     if (opt.accountName || opt.accountNumber) {
       result.passed = false;
       result.failures.push(
@@ -154,11 +150,11 @@ if (demoWeddingData.gifts?.options) {
   }
 }
 
-// Verify non-wedding sections absent from demo section list
-for (const secKey of forbiddenWeddingKeys) {
-  if (demoWeddingData.enabledSectionKeys?.includes(secKey)) {
+// Verify non-applicable sections absent from demo section list
+for (const secKey of forbiddenKeys) {
+  if (demoEventData.enabledSectionKeys?.includes(secKey)) {
     result.passed = false;
-    result.failures.push(`Forbidden non-wedding section enabled in demo data: '${secKey}'`);
+    result.failures.push(`Forbidden section enabled in demo data: '${secKey}'`);
   }
 }
 
@@ -170,9 +166,9 @@ const requiredPlatformFiles = [
   "src/platform/submit-rsvp.ts",
   "src/platform/preview-context.ts",
   "src/platform/section-visibility.ts",
-  "src/platform/wedding-template-data.ts",
+  "src/platform/event-template-data.ts",
   "src/platform/contract.ts",
-  "src/platform/demo-wedding.ts",
+  "src/platform/demo-event.ts",
 ];
 
 for (const relPath of requiredPlatformFiles) {
@@ -218,19 +214,28 @@ function scanDirForForbiddenCode(dir: string) {
 }
 scanDirForForbiddenCode(path.resolve(process.cwd(), "src/template"));
 
-// 6. DYNAMIC COUPLE IDENTITY & EVENT FORMATTING GUARD
-console.log("\n[6] DYNAMIC COUPLE IDENTITY & EVENT FORMATTING GUARD");
-const derivedTest = deriveCoupleIdentity("Alex Rivera", "Jamie Cruz");
+// 6. DYNAMIC HOST IDENTITY & EVENT FORMATTING GUARD
+console.log("\n[6] DYNAMIC HOST IDENTITY & EVENT FORMATTING GUARD");
+const derivedTest = deriveHostIdentity("Alex Rivera", "Jamie Cruz");
 if (derivedTest.monogram === "A & J" && derivedTest.compactMonogram === "AJ") {
   console.log(
-    "  ✓ Couple identity derivation verified: 'Alex Rivera' + 'Jamie Cruz' -> 'A & J' / 'AJ'"
+    "  ✓ Host identity derivation verified: 'Alex Rivera' + 'Jamie Cruz' -> 'A & J' / 'AJ'"
   );
 } else {
   result.passed = false;
   result.failures.push(
-    `Couple identity derivation test failed. Got monogram '${derivedTest.monogram}'`
+    `Host identity derivation test failed. Got monogram '${derivedTest.monogram}'`
   );
   console.log(`  ✗ IDENTITY DERIVATION TEST FAILED: ${JSON.stringify(derivedTest)}`);
+}
+
+const milestoneTest = extractMilestoneNumber("10th birthday");
+if (milestoneTest === "10") {
+  console.log("  ✓ Milestone extraction helper verified: '10th birthday' -> '10'");
+} else {
+  result.passed = false;
+  result.failures.push(`Milestone extraction failed. Expected '10', got '${milestoneTest}'`);
+  console.log(`  ✗ MILESTONE EXTRACTION FAILED: ${milestoneTest}`);
 }
 
 const formattedDateTest = formatEventDateLong("2027-04-19");
@@ -251,11 +256,11 @@ if (
 
 // 7. CANONICAL NAVIGATION MODEL GUARD
 console.log("\n[7] CANONICAL NAVIGATION MODEL GUARD");
-const navTest = buildWeddingNavigation(demoWeddingData);
-const homeResolvedOnRoot = resolveWeddingHref("/", "/");
-const homeResolvedOnSub = resolveWeddingHref("/", "/rsvp");
-const sectionResolvedOnRoot = resolveWeddingHref("#timeline_program", "/");
-const sectionResolvedOnSub = resolveWeddingHref("#timeline_program", "/rsvp");
+const navTest = buildEventNavigation(demoEventData);
+const homeResolvedOnRoot = resolveEventHref("/", "/");
+const homeResolvedOnSub = resolveEventHref("/", "/rsvp");
+const sectionResolvedOnRoot = resolveEventHref("#timeline_program", "/");
+const sectionResolvedOnSub = resolveEventHref("#timeline_program", "/rsvp");
 
 if (
   navTest.primaryNavItems.length > 0 &&
@@ -334,8 +339,8 @@ scanForResidueAndAliases(path.resolve(process.cwd(), "src"));
 console.log("\n[9] REAL 17-SECTION FIELD-LEVEL SENTINEL CONNECTION VERIFICATION");
 
 const sentinelPublicDto = {
-  eventSlug: "sentinel-wedding-slug",
-  slug: "sentinel-wedding-slug",
+  eventSlug: "sentinel-event-slug",
+  slug: "sentinel-event-slug",
   eventDate: "2027-09-19",
   eventTime: "15:30",
   venueName: "SENTINEL_ROOT_VENUE_NAME",
@@ -873,8 +878,8 @@ console.log("\n[10] CONTACT_SOCIALS FOOTER PLACEMENT & TOGGLE GUARD");
 
 // 10.1 Verify meaningful content detection helper
 const fullContactTest = hasMeaningfulContactContent({
-  contactPerson: "Alex & Jamie",
-  email: "alex@example.com",
+  contactPerson: "Michael Santos",
+  email: "mikey@example.com",
 });
 const emptyContactTest = hasMeaningfulContactContent({
   contactPerson: "   ",
@@ -892,18 +897,18 @@ if (fullContactTest && !emptyContactTest && !nullContactTest) {
 }
 
 // 10.2 Verify navigation filtering with disabled contact_socials
-const disabledContactNavTest = buildWeddingNavigation({
-  ...demoWeddingData,
-  enabledSectionKeys: demoWeddingData.enabledSectionKeys.filter((k) => k !== "contact_socials"),
+const disabledContactNavTest = buildEventNavigation({
+  ...demoEventData,
+  enabledSectionKeys: demoEventData.enabledSectionKeys.filter((k) => k !== "contact_socials"),
 });
 const hasContactWhenDisabled = disabledContactNavTest.allEnabledItems.some(
   (item) => item.key === "contact_socials"
 );
 
 // 10.3 Verify navigation filtering with empty contact data
-const emptyContactNavTest = buildWeddingNavigation({
-  ...demoWeddingData,
-  enabledSectionKeys: [...demoWeddingData.enabledSectionKeys, "contact_socials"],
+const emptyContactNavTest = buildEventNavigation({
+  ...demoEventData,
+  enabledSectionKeys: [...demoEventData.enabledSectionKeys, "contact_socials"],
   contact: {
     contactPerson: "",
     contactNumber: "",

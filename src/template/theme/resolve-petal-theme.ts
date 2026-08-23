@@ -79,14 +79,14 @@ export function resolvePetalTheme(element: HTMLElement | null): PetalTheme {
   const target = element.closest("[data-wedding-theme]") ?? document.documentElement;
   const styles = window.getComputedStyle(target);
 
-  const canvasShadow = styles.getPropertyValue("--wedding-petal-canvas-shadow").trim();
+  const canvasShadow = styles.getPropertyValue("--event-petal-canvas-shadow").trim();
 
   return {
-    light: readTuple(styles, "--wedding-petal-light", DEFAULT_SAGE_PETAL_THEME.light),
-    secondary: readTuple(styles, "--wedding-petal-secondary", DEFAULT_SAGE_PETAL_THEME.secondary),
-    primary: readTuple(styles, "--wedding-petal-primary", DEFAULT_SAGE_PETAL_THEME.primary),
-    metallic: readTuple(styles, "--wedding-petal-metallic", DEFAULT_SAGE_PETAL_THEME.metallic),
-    botanical: readTuple(styles, "--wedding-petal-botanical", DEFAULT_SAGE_PETAL_THEME.botanical),
+    light: readTuple(styles, "--event-petal-light", DEFAULT_SAGE_PETAL_THEME.light),
+    secondary: readTuple(styles, "--event-petal-secondary", DEFAULT_SAGE_PETAL_THEME.secondary),
+    primary: readTuple(styles, "--event-petal-primary", DEFAULT_SAGE_PETAL_THEME.primary),
+    metallic: readTuple(styles, "--event-petal-metallic", DEFAULT_SAGE_PETAL_THEME.metallic),
+    botanical: readTuple(styles, "--event-petal-botanical", DEFAULT_SAGE_PETAL_THEME.botanical),
     canvasShadow: canvasShadow || DEFAULT_SAGE_PETAL_THEME.canvasShadow,
   };
 }

@@ -63,9 +63,9 @@ export function SkewCarousel({
       <div className={cn("mx-auto p-4 font-sans flex justify-center", className)}>
         <div
           onClick={() => onItemClick?.(item, 0)}
-          className="relative inline-flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl border-2 border-[var(--wedding-border)] bg-[var(--wedding-surface)] shadow-card cursor-pointer transition-transform hover:scale-[1.02]"
+          className="relative inline-flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl border-2 border-[var(--event-border)] bg-[var(--event-surface)] shadow-card cursor-pointer transition-transform hover:scale-[1.02]"
         >
-          <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-[var(--wedding-surface-alt)]/20 w-[min(84vw,330px)] sm:w-[440px] md:w-[500px] h-[280px] sm:h-[340px] md:h-[380px]">
+          <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-[var(--event-surface-alt)]/20 w-[min(84vw,330px)] sm:w-[440px] md:w-[500px] h-[280px] sm:h-[340px] md:h-[380px]">
             {item.src ? (
               <Image
                 src={item.src}
@@ -75,18 +75,18 @@ export function SkewCarousel({
                 className="object-cover rounded-2xl select-none pointer-events-none transition-transform duration-500 hover:scale-105"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-[var(--wedding-text-muted)] bg-[var(--wedding-surface-alt)]/40 rounded-2xl">
+              <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-[var(--event-text-muted)] bg-[var(--event-surface-alt)]/40 rounded-2xl">
                 [ PHOTO MEMORY ]
               </div>
             )}
           </div>
           {item.caption ? (
             <div className="w-full mt-2.5 px-1 flex items-center justify-between gap-4 text-left">
-              <p className="text-xs font-medium text-[var(--wedding-text)] font-sans truncate">
+              <p className="text-xs font-medium text-[var(--event-text)] font-sans truncate">
                 {item.caption}
               </p>
               {item.folioLabel || item.title ? (
-                <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--wedding-accent-strong,#8f6a2c)] shrink-0">
+                <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--event-accent-strong,#8f6a2c)] shrink-0">
                   {item.folioLabel || item.title}
                 </span>
               ) : null}
@@ -234,10 +234,10 @@ export function SkewCarousel({
                       "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease",
                   }}
                   className={cn(
-                    "relative inline-flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-2xl bg-[var(--wedding-surface)] border-2 transition-all duration-300 select-none shadow-card",
+                    "relative inline-flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-2xl bg-[var(--event-surface)] border-2 transition-all duration-300 select-none shadow-card",
                     isCurrentlyActive
-                      ? "border-[var(--wedding-primary)] ring-2 ring-[var(--wedding-accent)]/70 shadow-xl cursor-pointer"
-                      : "border-[var(--wedding-border)] hover:border-[var(--wedding-primary)]/50 cursor-pointer"
+                      ? "border-[var(--event-primary)] ring-2 ring-[var(--event-accent)]/70 shadow-xl cursor-pointer"
+                      : "border-[var(--event-border)] hover:border-[var(--event-primary)]/50 cursor-pointer"
                   )}
                   onClick={() => {
                     if (isCurrentlyActive) {
@@ -251,7 +251,7 @@ export function SkewCarousel({
                   }
                 >
                   {/* Photo Frame Auto-Fitting the Rendered Photography */}
-                  <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-[var(--wedding-surface-alt)]/20 w-[240px] sm:w-[280px] md:w-[320px] h-[300px] sm:h-[350px] md:h-[390px]">
+                  <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-[var(--event-surface-alt)]/20 w-[240px] sm:w-[280px] md:w-[320px] h-[300px] sm:h-[350px] md:h-[390px]">
                     {item.src ? (
                       <Image
                         src={item.src}
@@ -261,7 +261,7 @@ export function SkewCarousel({
                         className="object-cover rounded-2xl select-none pointer-events-none transition-transform duration-500 hover:scale-105"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-[var(--wedding-text-muted)] bg-[var(--wedding-surface-alt)]/40 rounded-2xl">
+                      <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-[var(--event-text-muted)] bg-[var(--event-surface-alt)]/40 rounded-2xl">
                         [ PHOTO #{String(idx + 1).padStart(2, "0")} ]
                       </div>
                     )}
@@ -270,14 +270,14 @@ export function SkewCarousel({
                   {/* Archival Glasshouse Caption Strip */}
                   <div className="w-full mt-2 sm:mt-2.5 px-1 flex items-center justify-between gap-3 text-left shrink-0 h-6">
                     {item.caption ? (
-                      <p className="text-xs font-medium text-[var(--wedding-text)] font-sans truncate max-w-[68%]">
+                      <p className="text-xs font-medium text-[var(--event-text)] font-sans truncate max-w-[68%]">
                         {item.caption}
                       </p>
                     ) : (
                       <span />
                     )}
                     {item.folioLabel || item.title ? (
-                      <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--wedding-accent-strong,#8f6a2c)] shrink-0">
+                      <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--event-accent-strong,#8f6a2c)] shrink-0">
                         {item.folioLabel || item.title}
                       </span>
                     ) : null}
@@ -295,15 +295,15 @@ export function SkewCarousel({
         <button
           type="button"
           onClick={() => swiperRef.current?.slidePrev()}
-          className="w-9 h-9 rounded-full bg-[var(--wedding-surface)] text-[var(--wedding-text)] border border-[var(--wedding-border)] shadow-xs flex items-center justify-center hover:bg-[var(--wedding-surface-alt)] hover:scale-105 active:scale-95 transition-all template-focus-ring cursor-pointer"
+          className="w-9 h-9 rounded-full bg-[var(--event-surface)] text-[var(--event-text)] border border-[var(--event-border)] shadow-xs flex items-center justify-center hover:bg-[var(--event-surface-alt)] hover:scale-105 active:scale-95 transition-all template-focus-ring cursor-pointer"
           aria-label="Previous photograph"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
 
         {/* Numeric Counter: CURRENT / TOTAL */}
-        <div className="font-mono text-xs font-bold tracking-wider text-[var(--wedding-text-muted)] px-1">
-          <span className="text-[var(--wedding-accent-strong,#8f6a2c)]">{currentFormatted}</span>
+        <div className="font-mono text-xs font-bold tracking-wider text-[var(--event-text-muted)] px-1">
+          <span className="text-[var(--event-accent-strong,#8f6a2c)]">{currentFormatted}</span>
           <span className="mx-1 opacity-40">/</span>
           <span>{totalFormatted}</span>
         </div>
@@ -328,8 +328,8 @@ export function SkewCarousel({
                 className={cn(
                   "h-1.5 rounded-full transition-all duration-300 cursor-pointer template-focus-ring",
                   isSegActive
-                    ? "w-7 sm:w-9 bg-[var(--wedding-primary)] shadow-xs"
-                    : "w-2.5 sm:w-3.5 bg-[var(--wedding-border)] hover:bg-[var(--wedding-primary)]/50 opacity-80"
+                    ? "w-7 sm:w-9 bg-[var(--event-primary)] shadow-xs"
+                    : "w-2.5 sm:w-3.5 bg-[var(--event-border)] hover:bg-[var(--event-primary)]/50 opacity-80"
                 )}
               />
             );
@@ -340,7 +340,7 @@ export function SkewCarousel({
         <button
           type="button"
           onClick={() => swiperRef.current?.slideNext()}
-          className="w-9 h-9 rounded-full bg-[var(--wedding-surface)] text-[var(--wedding-text)] border border-[var(--wedding-border)] shadow-xs flex items-center justify-center hover:bg-[var(--wedding-surface-alt)] hover:scale-105 active:scale-95 transition-all template-focus-ring cursor-pointer"
+          className="w-9 h-9 rounded-full bg-[var(--event-surface)] text-[var(--event-text)] border border-[var(--event-border)] shadow-xs flex items-center justify-center hover:bg-[var(--event-surface-alt)] hover:scale-105 active:scale-95 transition-all template-focus-ring cursor-pointer"
           aria-label="Next photograph"
         >
           <ChevronRight className="w-4 h-4" />

@@ -4,11 +4,11 @@ import { getPublicEnv, type PublicEnv } from "./env";
 import { getPreviewContext, appendPrivateAccessToken, type PreviewQuery } from "./preview-context";
 import { normalizeEvent } from "./normalize-event";
 import { validatePublicEventContract } from "./contract";
-import { DEMO_WEDDING_DATA } from "./demo-wedding";
-import type { WeddingTemplateData } from "./wedding-template-data";
+import { DEMO_EVENT_DATA } from "./demo-event";
+import type { EventTemplateData } from "./event-template-data";
 
 export type EventLoadResult =
-  | { status: "available"; data: WeddingTemplateData; env: PublicEnv }
+  | { status: "available"; data: EventTemplateData; env: PublicEnv }
   | { status: "unavailable"; code?: string; message: string; env: PublicEnv }
   | { status: "setup_error"; message: string; env: PublicEnv }
   | { status: "network_error"; message: string; env: PublicEnv }
@@ -22,7 +22,7 @@ export async function loadEvent(query?: PreviewQuery): Promise<EventLoadResult> 
   if (env.designMode) {
     return {
       status: "available",
-      data: DEMO_WEDDING_DATA,
+      data: DEMO_EVENT_DATA,
       env,
     };
   }
@@ -81,7 +81,7 @@ export async function loadEvent(query?: PreviewQuery): Promise<EventLoadResult> 
       return {
         status: "unavailable",
         code: err?.code,
-        message: err?.message ?? "This wedding website is currently unavailable.",
+        message: err?.message ?? "This event website is currently unavailable.",
         env,
       };
     }

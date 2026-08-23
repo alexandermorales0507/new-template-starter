@@ -342,7 +342,7 @@ export function FloatingMusicBubble({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 16 }}
             transition={{ type: "spring", stiffness: 350, damping: 26 }}
-            className={`mb-3 w-72 max-w-[calc(100vw-2rem)] rounded-2xl bg-[var(--wedding-surface)]/95 backdrop-blur-md border border-[var(--wedding-border)] p-4 shadow-2xl text-[var(--wedding-text)] select-none ${
+            className={`mb-3 w-72 max-w-[calc(100vw-2rem)] rounded-2xl bg-[var(--event-surface)]/95 backdrop-blur-md border border-[var(--event-border)] p-4 shadow-2xl text-[var(--event-text)] select-none ${
               isInline ? "absolute bottom-full right-0" : ""
             }`}
           >
@@ -350,22 +350,22 @@ export function FloatingMusicBubble({
               <div className="flex gap-3 items-center min-w-0">
                 {/* Mini spinning vinyl disc indicator */}
                 <div
-                  className={`w-9 h-9 rounded-full bg-[var(--wedding-surface-dark)] flex items-center justify-center text-[var(--wedding-accent-soft)] shrink-0 shadow-inner ${
+                  className={`w-9 h-9 rounded-full bg-[var(--event-surface-dark)] flex items-center justify-center text-[var(--event-accent-soft)] shrink-0 shadow-inner ${
                     isPlaying ? "animate-spin" : ""
                   }`}
                   style={{ animationDuration: "6s" }}
                 >
-                  <Music4 className="w-4 h-4 text-[var(--wedding-accent-soft)]" />
+                  <Music4 className="w-4 h-4 text-[var(--event-accent-soft)]" />
                 </div>
                 <div className="min-w-0">
                   <h4
-                    className="font-serif text-sm font-semibold text-[var(--wedding-text)] truncate leading-tight"
+                    className="font-serif text-sm font-semibold text-[var(--event-text)] truncate leading-tight"
                     title={displayTitle}
                   >
                     {displayTitle}
                   </h4>
                   {displayArtist && (
-                    <p className="text-[10px] font-mono text-[var(--wedding-accent-strong,#8f6a2c)] uppercase tracking-widest truncate">
+                    <p className="text-[10px] font-mono text-[var(--event-accent-strong,#8f6a2c)] uppercase tracking-widest truncate">
                       {displayArtist}
                     </p>
                   )}
@@ -374,21 +374,21 @@ export function FloatingMusicBubble({
               <button
                 type="button"
                 onClick={() => setIsExpanded(false)}
-                className="text-[var(--wedding-text-muted)] hover:text-[var(--wedding-text)] p-1 rounded-full hover:bg-[var(--wedding-surface-alt)] transition template-focus-ring cursor-pointer"
+                className="text-[var(--event-text-muted)] hover:text-[var(--event-text)] p-1 rounded-full hover:bg-[var(--event-surface-alt)] transition template-focus-ring cursor-pointer"
                 aria-label="Minimize player"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="h-px bg-gradient-to-r from-[var(--wedding-border)]/50 to-transparent mb-3" />
+            <div className="h-px bg-gradient-to-r from-[var(--event-border)]/50 to-transparent mb-3" />
 
             <div className="flex gap-2 justify-center">
               {isPlaying ? (
                 <button
                   type="button"
                   onClick={pause}
-                  className="py-1.5 px-3 bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-[var(--wedding-primary-hover)] transition cursor-pointer shadow-xs"
+                  className="py-1.5 px-3 bg-[var(--event-primary)] text-[var(--event-on-primary)] rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-[var(--event-primary-hover)] transition cursor-pointer shadow-xs"
                 >
                   <Pause className="w-3.5 h-3.5 fill-current" />
                   <span>Pause</span>
@@ -397,7 +397,7 @@ export function FloatingMusicBubble({
                 <button
                   type="button"
                   onClick={play}
-                  className="py-1.5 px-3 bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-[var(--wedding-primary-hover)] transition cursor-pointer shadow-xs"
+                  className="py-1.5 px-3 bg-[var(--event-primary)] text-[var(--event-on-primary)] rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-[var(--event-primary-hover)] transition cursor-pointer shadow-xs"
                 >
                   <Play className="w-3.5 h-3.5 fill-current" />
                   <span>Resume</span>
@@ -409,7 +409,7 @@ export function FloatingMusicBubble({
                   stop();
                   setIsExpanded(false);
                 }}
-                className="py-1.5 px-3 bg-[var(--wedding-surface-alt)] text-[var(--wedding-text)] rounded-lg text-xs font-medium flex items-center gap-1.5 hover:bg-[var(--wedding-border)] transition cursor-pointer border border-[var(--wedding-border-subtle)]"
+                className="py-1.5 px-3 bg-[var(--event-surface-alt)] text-[var(--event-text)] rounded-lg text-xs font-medium flex items-center gap-1.5 hover:bg-[var(--event-border)] transition cursor-pointer border border-[var(--event-border-subtle)]"
               >
                 <Square className="w-3.5 h-3.5 fill-current" />
                 <span>Stop</span>
@@ -423,7 +423,7 @@ export function FloatingMusicBubble({
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
-        className={`rounded-full bg-[var(--wedding-surface-dark)] text-[var(--wedding-on-dark)] shadow-2xl border-2 border-[var(--wedding-accent)]/50 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none template-focus-ring shrink-0 relative group ${
+        className={`rounded-full bg-[var(--event-surface-dark)] text-[var(--event-on-dark)] shadow-2xl border-2 border-[var(--event-accent)]/50 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none template-focus-ring shrink-0 relative group ${
           compact ? "w-12 h-12" : "w-14 h-14"
         }`}
         aria-label="Wedding song controls"
@@ -440,8 +440,8 @@ export function FloatingMusicBubble({
               className="relative flex items-center justify-center"
             >
               {/* Pulsating border rings when playing */}
-              <div className="absolute inset-0 -m-1.5 rounded-full border border-[var(--wedding-accent)] opacity-60 animate-ping pointer-events-none" />
-              <Music4 className="w-6 h-6 text-[var(--wedding-accent)] animate-pulse" />
+              <div className="absolute inset-0 -m-1.5 rounded-full border border-[var(--event-accent)] opacity-60 animate-ping pointer-events-none" />
+              <Music4 className="w-6 h-6 text-[var(--event-accent)] animate-pulse" />
             </motion.div>
           ) : (
             <motion.div
@@ -452,7 +452,7 @@ export function FloatingMusicBubble({
               transition={{ duration: 0.3 }}
               className="flex items-center justify-center"
             >
-              <Music4 className="w-6 h-6 text-[var(--wedding-accent-soft)] opacity-80" />
+              <Music4 className="w-6 h-6 text-[var(--event-accent-soft)] opacity-80" />
             </motion.div>
           )}
         </AnimatePresence>

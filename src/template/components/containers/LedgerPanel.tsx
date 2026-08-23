@@ -25,7 +25,7 @@ export function LedgerPanel({
     <div
       data-surface="light"
       className={cn(
-        "ledger-panel relative rounded-2xl border border-[var(--wedding-border)] bg-[var(--wedding-surface)] text-[var(--wedding-text)] p-6 sm:p-8 shadow-xs text-left transition-all",
+        "ledger-panel relative rounded-2xl border border-[var(--event-border)] bg-[var(--event-surface)] text-[var(--event-text)] p-6 sm:p-8 shadow-xs text-left transition-all",
         className
       )}
       {...props}
@@ -34,7 +34,7 @@ export function LedgerPanel({
       {indexTag || title ? (
         <div
           className={cn(
-            "mb-6 border-b border-[var(--wedding-border-subtle)] pb-4",
+            "mb-6 border-b border-[var(--event-border-subtle)] pb-4",
             isCentered ? "text-center" : "text-left"
           )}
         >
@@ -45,18 +45,18 @@ export function LedgerPanel({
                 isCentered ? "items-center justify-center" : "items-center justify-between"
               )}
             >
-              <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[var(--wedding-accent-strong,#8f6a2c)] uppercase">
+              <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[var(--event-accent-strong,#8f6a2c)] uppercase">
                 {indexTag}
               </span>
             </div>
           ) : null}
           {title ? (
-            <h3 className="mt-1 font-serif text-xl font-bold tracking-tight text-[var(--wedding-text)]">
+            <h3 className="mt-1 font-serif text-xl font-bold tracking-tight text-[var(--event-text)]">
               {title}
             </h3>
           ) : null}
           {subtitle ? (
-            <p className="mt-0.5 text-xs text-[var(--wedding-text-muted)] font-sans">{subtitle}</p>
+            <p className="mt-0.5 text-xs text-[var(--event-text-muted)] font-sans">{subtitle}</p>
           ) : null}
         </div>
       ) : null}
@@ -66,7 +66,7 @@ export function LedgerPanel({
 
       {/* Optional Footer Strip */}
       {footer ? (
-        <div className="mt-6 border-t border-[var(--wedding-border-subtle)] pt-4 text-xs text-[var(--wedding-text-muted)]">
+        <div className="mt-6 border-t border-[var(--event-border-subtle)] pt-4 text-xs text-[var(--event-text-muted)]">
           {footer}
         </div>
       ) : null}

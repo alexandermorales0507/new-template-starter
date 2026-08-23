@@ -1,6 +1,6 @@
 "use client";
 
-import type { ExtraInfoData } from "@/platform/wedding-template-data";
+import type { ExtraInfoData } from "@/platform/event-template-data";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import {
@@ -28,7 +28,7 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
             <span className="text-role-subheading">
               FOLIO // 10 &bull; GUEST GUIDANCE &amp; FAQ
             </span>
-            <h2 className="text-role-heading text-[var(--wedding-text)] tracking-tight">
+            <h2 className="text-role-heading text-[var(--event-text)] tracking-tight">
               {data.sectionTitle || "Frequently Asked Questions"}
             </h2>
             {data.sectionIntro && (
@@ -44,18 +44,18 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
             {/* Botanical Corner Pair on FAQ Container */}
             <BotanicalCornerPair size="md" />
 
-            <div className="bg-[var(--wedding-surface)] rounded-2xl border border-[var(--wedding-border)] p-6 sm:p-8 shadow-card relative z-10">
+            <div className="bg-[var(--event-surface)] rounded-2xl border border-[var(--event-border)] p-6 sm:p-8 shadow-card relative z-10">
               <Accordion type="single" collapsible className="w-full space-y-2">
                 {data.items.map((item, idx) => (
                   <AccordionItem
                     key={item.id || idx}
                     value={`item-${idx + 1}`}
-                    className="border-b border-[var(--wedding-border-subtle)] last:border-0"
+                    className="border-b border-[var(--event-border-subtle)] last:border-0"
                   >
-                    <AccordionTrigger className="font-serif text-base sm:text-lg font-bold text-[var(--wedding-text)] hover:text-[var(--wedding-primary)] py-4 text-left">
+                    <AccordionTrigger className="font-serif text-base sm:text-lg font-bold text-[var(--event-text)] hover:text-[var(--event-primary)] py-4 text-left">
                       {item.title}
                     </AccordionTrigger>
-                    <AccordionContent className="text-sm sm:text-base text-[var(--wedding-text)] font-sans leading-relaxed pt-1 pb-4">
+                    <AccordionContent className="text-sm sm:text-base text-[var(--event-text)] font-sans leading-relaxed pt-1 pb-4">
                       {item.details}
                     </AccordionContent>
                   </AccordionItem>

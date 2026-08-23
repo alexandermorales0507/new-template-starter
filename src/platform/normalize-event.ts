@@ -1,13 +1,13 @@
 // PLATFORM DATA — KEEP DYNAMIC.
-// Normalizes raw WebSerbisyo API response or local snapshot into canonical WeddingTemplateData (Contract V1).
+// Normalizes raw WebSerbisyo API response or local snapshot into canonical EventTemplateData (Contract V1).
 
 import {
   EVENT_WEBSITE_SECTION_CONTRACT_VERSION,
   eventWebsiteSectionKeySet,
-  requiredWeddingSections,
+  requiredEventSections,
 } from "./contract";
 import type {
-  WeddingTemplateData,
+  EventTemplateData,
   NormalizedSection,
   PublicMediaAsset,
   GuestbookMessage,
@@ -16,7 +16,7 @@ import type {
   ExtraInfoItem,
   GiftOption,
   RsvpData,
-} from "./wedding-template-data";
+} from "./event-template-data";
 import { isSectionEnabled } from "./section-visibility";
 
 function record(val: unknown): Record<string, unknown> {
@@ -61,7 +61,7 @@ export type NormalizeEventOptions = {
 export function normalizeEventData(
   rawInput: unknown,
   options: NormalizeEventOptions = {}
-): WeddingTemplateData {
+): EventTemplateData {
   const raw = record(rawInput);
   const source = options.source ?? (raw.source as "demo" | "snapshot" | "live") ?? "snapshot";
   const previewMode = options.previewMode ?? (raw.previewMode as "dashboard") ?? undefined;
@@ -202,7 +202,7 @@ export function normalizeEventData(
   }
 
   // Ensure all required sections are present
-  for (const req of requiredWeddingSections) {
+  for (const req of requiredEventSections) {
     if (!enabledSectionKeys.includes(req)) {
       enabledSectionKeys.push(req);
     }
@@ -218,7 +218,11 @@ export function normalizeEventData(
     rawEventType === "birthday" ||
     stringValue(hostContent.kind) === "birthday" ||
     Boolean(
-      raw.celebrant || raw.celebrantInfo || hostContent.celebrantName || hostContent.milestoneAge
+      raw.celebrant ||
+      raw.celebrantInfo ||
+      hostContent.celebrantName ||
+      hostContent.milestoneAge ||
+      hostContent.milestone
     );
   const eventType = isBirthday ? "birthday" : rawEventType || "wedding";
 
@@ -232,10 +236,13 @@ export function normalizeEventData(
   );
   const milestoneAge = stringValue(
     hostContent.milestoneAge ??
+      hostContent.milestone ??
       hostContent.age ??
       rawCelebrant.milestoneAge ??
+      rawCelebrant.milestone ??
       rawCelebrant.age ??
-      raw.milestoneAge
+      raw.milestoneAge ??
+      raw.milestone
   );
   const nickname = stringValue(hostContent.nickname ?? rawCelebrant.nickname ?? raw.nickname);
 
@@ -250,7 +257,7 @@ export function normalizeEventData(
     groomName = celebrantName || groomName || "Celebrant";
     brideName = brideName || "";
     if (!hostLine) {
-      hostLine = milestoneAge ? `TURNING ${milestoneAge}` : "Celebration of Life & Joy";
+      hostLine = milestoneAge ? `TURNING ${milestoneAge}` : "A Special Celebration";
     }
     if (!displayAs) {
       displayAs = celebrantName || groomName;
@@ -583,10 +590,7 @@ export function normalizeEventData(
   };
 }
 
-export function normalizeEvent(
-  input: unknown,
-  options?: NormalizeEventOptions
-): WeddingTemplateData {
+export function normalizeEvent(input: unknown, options?: NormalizeEventOptions): EventTemplateData {
   if (input && typeof input === "object" && "raw" in input) {
     const wrapper = input as {
       raw: unknown;

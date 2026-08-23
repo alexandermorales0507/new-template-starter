@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Image from "next/image";
-import type { GalleryData } from "@/platform/wedding-template-data";
+import type { GalleryData } from "@/platform/event-template-data";
 import { sageDecorations } from "@/template/template-assets";
 import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
@@ -59,7 +59,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
         <Reveal direction="up" distance={16}>
           <div className="mb-5 sm:mb-7 space-y-2">
             <span className="text-role-subheading">PHOTO FOLIO // 04</span>
-            <h2 className="text-role-heading-major text-[var(--wedding-text)] tracking-tight">
+            <h2 className="text-role-heading-major text-[var(--event-text)] tracking-tight">
               {data.sectionTitle || "Gallery"}
             </h2>
             {data.sectionIntro && (
@@ -82,8 +82,8 @@ export function GallerySection({ data }: { data: GalleryData }) {
             </div>
           </Reveal>
         ) : (
-          <div className="bg-[var(--wedding-surface-alt)]/60 p-10 rounded-2xl border border-dashed border-[var(--wedding-border)] max-w-xl mx-auto text-center shadow-xs">
-            <p className="text-xs font-mono text-[var(--wedding-text-muted)] uppercase tracking-wider">
+          <div className="bg-[var(--event-surface-alt)]/60 p-10 rounded-2xl border border-dashed border-[var(--event-border)] max-w-xl mx-auto text-center shadow-xs">
+            <p className="text-xs font-mono text-[var(--event-text-muted)] uppercase tracking-wider">
               [ Official celebration photos will be mounted in the estate ledger here ]
             </p>
           </div>
@@ -97,19 +97,19 @@ export function GallerySection({ data }: { data: GalleryData }) {
               if (!open) setSelectedPhotoIndex(null);
             }}
           >
-            <DialogContent className="w-full max-w-5xl h-[88dvh] sm:h-[90dvh] max-h-[calc(100dvh-2rem)] p-4 sm:p-5 flex flex-col overflow-hidden bg-[var(--wedding-surface)] border-2 border-[var(--wedding-border)] text-[var(--wedding-text)] shadow-2xl rounded-2xl">
+            <DialogContent className="w-full max-w-5xl h-[88dvh] sm:h-[90dvh] max-h-[calc(100dvh-2rem)] p-4 sm:p-5 flex flex-col overflow-hidden bg-[var(--event-surface)] border-2 border-[var(--event-border)] text-[var(--event-text)] shadow-2xl rounded-2xl">
               {/* Modal Header: shrink-0 */}
-              <DialogHeader className="shrink-0 flex flex-row items-center justify-between pr-8 border-b border-[var(--wedding-border-subtle)] pb-2.5">
-                <DialogTitle className="font-serif text-lg sm:text-xl text-[var(--wedding-text)] font-semibold flex items-center gap-3">
+              <DialogHeader className="shrink-0 flex flex-row items-center justify-between pr-8 border-b border-[var(--event-border-subtle)] pb-2.5">
+                <DialogTitle className="font-serif text-lg sm:text-xl text-[var(--event-text)] font-semibold flex items-center gap-3">
                   <span>{selectedPhoto.caption}</span>
-                  <span className="text-xs font-mono font-bold tracking-wider uppercase text-[var(--wedding-accent-strong,#8f6a2c)]">
+                  <span className="text-xs font-mono font-bold tracking-wider uppercase text-[var(--event-accent-strong,#8f6a2c)]">
                     {selectedPhoto.folioLabel}
                   </span>
                 </DialogTitle>
               </DialogHeader>
 
               {/* Modal Media Stage: flex-1 min-h-0 dynamically fits remaining viewport */}
-              <div className="relative flex-1 min-h-0 w-full flex items-center justify-center p-1 sm:p-2 my-2 bg-[var(--wedding-surface-alt)]/20 rounded-xl overflow-hidden">
+              <div className="relative flex-1 min-h-0 w-full flex items-center justify-center p-1 sm:p-2 my-2 bg-[var(--event-surface-alt)]/20 rounded-xl overflow-hidden">
                 {selectedPhoto.src ? (
                   <Image
                     src={selectedPhoto.src}
@@ -121,7 +121,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
                     priority
                   />
                 ) : (
-                  <div className="flex h-64 w-80 items-center justify-center text-xs font-mono text-[var(--wedding-text-muted)] bg-[var(--wedding-surface-alt)]/40 rounded-xl">
+                  <div className="flex h-64 w-80 items-center justify-center text-xs font-mono text-[var(--event-text-muted)] bg-[var(--event-surface-alt)]/40 rounded-xl">
                     [ PHOTO MEMORY ]
                   </div>
                 )}
@@ -135,7 +135,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
                         e.stopPropagation();
                         handlePrevPhoto();
                       }}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[var(--wedding-surface)]/90 hover:bg-[var(--wedding-surface)] text-[var(--wedding-text)] border border-[var(--wedding-border)] shadow-md flex items-center justify-center cursor-pointer transition-all hover:scale-105 active:scale-95 template-focus-ring z-20"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[var(--event-surface)]/90 hover:bg-[var(--event-surface)] text-[var(--event-text)] border border-[var(--event-border)] shadow-md flex items-center justify-center cursor-pointer transition-all hover:scale-105 active:scale-95 template-focus-ring z-20"
                       aria-label="Previous photo"
                     >
                       <ChevronLeft className="w-5 h-5" />
@@ -146,7 +146,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
                         e.stopPropagation();
                         handleNextPhoto();
                       }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[var(--wedding-surface)]/90 hover:bg-[var(--wedding-surface)] text-[var(--wedding-text)] border border-[var(--wedding-border)] shadow-md flex items-center justify-center cursor-pointer transition-all hover:scale-105 active:scale-95 template-focus-ring z-20"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-[var(--event-surface)]/90 hover:bg-[var(--event-surface)] text-[var(--event-text)] border border-[var(--event-border)] shadow-md flex items-center justify-center cursor-pointer transition-all hover:scale-105 active:scale-95 template-focus-ring z-20"
                       aria-label="Next photo"
                     >
                       <ChevronRight className="w-5 h-5" />
@@ -157,7 +157,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
 
               {/* Modal Footer: shrink-0 */}
               <div className="shrink-0 text-center pt-1">
-                <p className="text-xs text-[var(--wedding-text-muted)] italic font-serif">
+                <p className="text-xs text-[var(--event-text-muted)] italic font-serif">
                   {selectedPhoto.alt}
                 </p>
               </div>

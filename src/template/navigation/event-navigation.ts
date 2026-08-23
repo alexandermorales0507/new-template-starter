@@ -1,19 +1,16 @@
-// CANONICAL WEDDING NAVIGATION MODEL — SINGLE SOURCE OF TRUTH.
+// CANONICAL EVENT NAVIGATION MODEL — SINGLE SOURCE OF TRUTH.
 // Derives primary navigation, floating quick dock, and overflow sitemap drawer
-// from connected WeddingTemplateData (enabled sections + section order).
+// from connected EventTemplateData (enabled sections + section order).
 // Protects against dead links and desynchronized nav surfaces.
 
-import type { WeddingTemplateData } from "@/platform/wedding-template-data";
-import {
-  WEDDING_APPLICABLE_SECTION_KEYS,
-  type WeddingApplicableSectionKey,
-} from "@/platform/contract";
+import type { EventTemplateData } from "@/platform/event-template-data";
+import { EVENT_APPLICABLE_SECTION_KEYS, type EventApplicableSectionKey } from "@/platform/contract";
 
 export type NavigationGroup =
-  "Celebration" | "Event Essentials" | "Wedding Party" | "Guest Info & Actions";
+  "Celebration" | "Event Essentials" | "Event Party" | "Guest Info & Actions";
 
-export type WeddingNavItem = {
-  key: WeddingApplicableSectionKey;
+export type EventNavItem = {
+  key: EventApplicableSectionKey;
   label: string;
   anchor: string;
   group: NavigationGroup;
@@ -24,9 +21,11 @@ export type WeddingNavItem = {
   isPrimaryAction?: boolean;
 };
 
-export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
-  WeddingApplicableSectionKey,
-  Omit<WeddingNavItem, "key">
+export type WeddingNavItem = EventNavItem;
+
+export const EVENT_SECTION_NAV_DEFINITIONS: Record<
+  EventApplicableSectionKey,
+  Omit<EventNavItem, "key">
 > = {
   host_info: {
     label: "Home",
@@ -103,7 +102,7 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
   entourage: {
     label: "Entourage",
     anchor: "#entourage",
-    group: "Wedding Party",
+    group: "Event Party",
     iconName: "Users",
     isPrimaryTopNav: false,
     isDockEligible: false,
@@ -112,7 +111,7 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
   principal_sponsors: {
     label: "Sponsors",
     anchor: "#principal_sponsors",
-    group: "Wedding Party",
+    group: "Event Party",
     iconName: "Award",
     isPrimaryTopNav: false,
     isDockEligible: false,
@@ -184,8 +183,10 @@ export const WEDDING_SECTION_NAV_DEFINITIONS: Record<
   },
 };
 
+export const WEDDING_SECTION_NAV_DEFINITIONS = EVENT_SECTION_NAV_DEFINITIONS;
+
 // Curated browsing links priority for TopNav center
-const TOP_NAV_ORDER_PREFERENCE: WeddingApplicableSectionKey[] = [
+const TOP_NAV_ORDER_PREFERENCE: EventApplicableSectionKey[] = [
   "countdown",
   "gallery",
   "timeline_program",
@@ -194,7 +195,7 @@ const TOP_NAV_ORDER_PREFERENCE: WeddingApplicableSectionKey[] = [
   "story_message",
 ];
 
-const DOCK_PREFERENCE_ORDER: WeddingApplicableSectionKey[] = [
+const DOCK_PREFERENCE_ORDER: EventApplicableSectionKey[] = [
   "main_event",
   "venue",
   "rsvp_form",
@@ -205,22 +206,24 @@ const DOCK_PREFERENCE_ORDER: WeddingApplicableSectionKey[] = [
 const NAVIGATION_GROUP_ORDER: NavigationGroup[] = [
   "Celebration",
   "Event Essentials",
-  "Wedding Party",
+  "Event Party",
   "Guest Info & Actions",
 ];
 
 export type MoreDrawerGroup = {
   title: NavigationGroup;
-  items: WeddingNavItem[];
+  items: EventNavItem[];
 };
 
-export type CanonicalWeddingNavigation = {
-  enabledKeys: WeddingApplicableSectionKey[];
-  primaryNavItems: WeddingNavItem[];
-  dockItems: WeddingNavItem[];
+export type CanonicalEventNavigation = {
+  enabledKeys: EventApplicableSectionKey[];
+  primaryNavItems: EventNavItem[];
+  dockItems: EventNavItem[];
   moreGroups: MoreDrawerGroup[];
-  allEnabledItems: WeddingNavItem[];
+  allEnabledItems: EventNavItem[];
 };
+
+export type CanonicalWeddingNavigation = CanonicalEventNavigation;
 
 /**
  * Resolves a destination anchor or route based on the current pathname.
@@ -229,7 +232,7 @@ export type CanonicalWeddingNavigation = {
  * - If on a subroute (e.g. "/rsvp") and anchor starts with "#", returns "/#anchor"
  * - If anchor is a subroute path (e.g. "/rsvp"), returns "/rsvp"
  */
-export function resolveWeddingHref(anchor: string, currentPathname: string = "/"): string {
+export function resolveEventHref(anchor: string, currentPathname: string = "/"): string {
   const isRoot = currentPathname === "/" || currentPathname === "";
 
   if (anchor === "#host_info" || anchor === "/") {
@@ -243,10 +246,12 @@ export function resolveWeddingHref(anchor: string, currentPathname: string = "/"
   return anchor;
 }
 
+export const resolveWeddingHref = resolveEventHref;
+
 /**
  * Checks whether contact_socials contains any meaningful non-empty fields.
  */
-export function hasMeaningfulContactContent(contact?: WeddingTemplateData["contact"]): boolean {
+export function hasMeaningfulContactContent(contact?: EventTemplateData["contact"]): boolean {
   if (!contact) return false;
   return Boolean(
     contact.contactPerson?.trim() ||
@@ -259,22 +264,24 @@ export function hasMeaningfulContactContent(contact?: WeddingTemplateData["conta
 }
 
 /**
- * Builds the unified navigation model for a wedding template.
+ * Builds the unified navigation model for an event template.
  */
-export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWeddingNavigation {
-  const enabledSet = new Set((data.enabledSectionKeys || []) as WeddingApplicableSectionKey[]);
+export function buildEventNavigation(data: EventTemplateData): CanonicalEventNavigation {
+  const enabledSet = new Set((data.enabledSectionKeys || []) as EventApplicableSectionKey[]);
 
   // Detect birthday event type
   const isBirthday =
     data.eventType === "birthday" || data.couple?.kind === "birthday" || !data.couple?.brideName;
 
-  const getAdaptedLabel = (key: WeddingApplicableSectionKey, defaultLabel: string): string => {
+  const getAdaptedLabel = (key: EventApplicableSectionKey, defaultLabel: string): string => {
     if (isBirthday) {
       if (key === "main_event") return "PARTY";
       if (key === "secondary_event") return "DINNER";
       if (key === "story_message") return "STORY";
       if (key === "principal_sponsors") return "VIP GUESTS";
       if (key === "entourage") return "COURT & HOSTS";
+      if (key === "attire_motif") return "COSTUME";
+      if (key === "extra_info") return "REMINDERS";
     }
     return defaultLabel;
   };
@@ -285,10 +292,10 @@ export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWedd
   }
 
   // Filter all enabled items according to template data
-  const allEnabledItems: WeddingNavItem[] = WEDDING_APPLICABLE_SECTION_KEYS.filter((key) =>
+  const allEnabledItems: EventNavItem[] = EVENT_APPLICABLE_SECTION_KEYS.filter((key) =>
     enabledSet.has(key)
   ).map((key) => {
-    const base = WEDDING_SECTION_NAV_DEFINITIONS[key];
+    const base = EVENT_SECTION_NAV_DEFINITIONS[key];
     return {
       key,
       ...base,
@@ -297,10 +304,10 @@ export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWedd
   });
 
   // Primary TopNav: Curated browsing sections (up to 5-6 items when enabled)
-  const primaryNavItems: WeddingNavItem[] = TOP_NAV_ORDER_PREFERENCE.filter((key) =>
+  const primaryNavItems: EventNavItem[] = TOP_NAV_ORDER_PREFERENCE.filter((key) =>
     enabledSet.has(key)
   ).map((key) => {
-    const base = WEDDING_SECTION_NAV_DEFINITIONS[key];
+    const base = EVENT_SECTION_NAV_DEFINITIONS[key];
     return {
       key,
       ...base,
@@ -309,16 +316,16 @@ export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWedd
   });
 
   // Quick Dock items: Filtered essential shortcuts (up to 5 items)
-  const dockItems: WeddingNavItem[] = DOCK_PREFERENCE_ORDER.filter((key) =>
-    enabledSet.has(key)
-  ).map((key) => {
-    const base = WEDDING_SECTION_NAV_DEFINITIONS[key];
-    return {
-      key,
-      ...base,
-      label: getAdaptedLabel(key, base.label),
-    };
-  });
+  const dockItems: EventNavItem[] = DOCK_PREFERENCE_ORDER.filter((key) => enabledSet.has(key)).map(
+    (key) => {
+      const base = EVENT_SECTION_NAV_DEFINITIONS[key];
+      return {
+        key,
+        ...base,
+        label: getAdaptedLabel(key, base.label),
+      };
+    }
+  );
 
   // More Drawer items: Grouped by category containing ALL enabled items
   const moreGroups: MoreDrawerGroup[] = NAVIGATION_GROUP_ORDER.map((group) => ({
@@ -334,3 +341,5 @@ export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWedd
     allEnabledItems,
   };
 }
+
+export const buildWeddingNavigation = buildEventNavigation;

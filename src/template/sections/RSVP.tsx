@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { RsvpData } from "@/platform/wedding-template-data";
+import type { RsvpData } from "@/platform/event-template-data";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { submitRsvp, type PublicRsvpPayload } from "@/platform/submit-rsvp";
 import { formatRsvpDeadline } from "@/template/utils/event-formatting";
@@ -135,11 +135,11 @@ export function RSVPForm({
     >
       {success ? (
         <div className="text-center py-10 space-y-3">
-          <CheckCircle2 className="w-14 h-14 text-[var(--wedding-primary)] mx-auto" />
-          <h3 className="text-2xl font-serif font-bold text-[var(--wedding-text)]">
+          <CheckCircle2 className="w-14 h-14 text-[var(--event-primary)] mx-auto" />
+          <h3 className="text-2xl font-serif font-bold text-[var(--event-text)]">
             Response Recorded
           </h3>
-          <p className="text-base text-[var(--wedding-text)] max-w-md mx-auto leading-relaxed font-sans">
+          <p className="text-base text-[var(--event-text)] max-w-md mx-auto leading-relaxed font-sans">
             Your formal RSVP response has been registered in the estate ledger. We look forward to
             celebrating together!
           </p>
@@ -157,7 +157,7 @@ export function RSVPForm({
           <div>
             <label
               htmlFor="guestName"
-              className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
+              className="block text-sm font-semibold text-[var(--event-text)] mb-2"
             >
               Full Name <span className="text-red-500">*</span>
             </label>
@@ -168,13 +168,13 @@ export function RSVPForm({
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
               placeholder="Your First and Last Name"
-              className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] transition-colors min-h-[46px]"
+              className="w-full px-4 py-3.5 border border-[var(--event-border)] rounded-xl text-base text-[var(--event-text)] focus:outline-none focus:ring-2 focus:ring-[var(--event-primary)] bg-[var(--event-surface)] transition-colors min-h-[46px]"
             />
           </div>
 
           {/* Attendance Choice */}
           <div>
-            <label className="block text-sm font-semibold text-[var(--wedding-text)] mb-2">
+            <label className="block text-sm font-semibold text-[var(--event-text)] mb-2">
               Will you attend? <span className="text-red-500">*</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -183,8 +183,8 @@ export function RSVPForm({
                 onClick={() => setAttendanceStatus("attending")}
                 className={`py-3.5 px-4 rounded-xl text-sm font-semibold border text-center transition-all cursor-pointer flex items-center justify-center gap-2 min-h-[46px] ${
                   attendanceStatus === "attending"
-                    ? "bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] border-[var(--wedding-primary)] shadow-sm"
-                    : "bg-[var(--wedding-surface)] text-[var(--wedding-text)] border-[var(--wedding-border)] hover:bg-[var(--wedding-surface-alt)]"
+                    ? "bg-[var(--event-primary)] text-[var(--event-on-primary)] border-[var(--event-primary)] shadow-sm"
+                    : "bg-[var(--event-surface)] text-[var(--event-text)] border-[var(--event-border)] hover:bg-[var(--event-surface-alt)]"
                 }`}
               >
                 <Heart
@@ -197,8 +197,8 @@ export function RSVPForm({
                 onClick={() => setAttendanceStatus("not_attending")}
                 className={`py-3.5 px-4 rounded-xl text-sm font-semibold border text-center transition-all cursor-pointer min-h-[46px] ${
                   attendanceStatus === "not_attending"
-                    ? "bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] border-[var(--wedding-primary)] shadow-sm"
-                    : "bg-[var(--wedding-surface)] text-[var(--wedding-text)] border-[var(--wedding-border)] hover:bg-[var(--wedding-surface-alt)]"
+                    ? "bg-[var(--event-primary)] text-[var(--event-on-primary)] border-[var(--event-primary)] shadow-sm"
+                    : "bg-[var(--event-surface)] text-[var(--event-text)] border-[var(--event-border)] hover:bg-[var(--event-surface-alt)]"
                 }`}
               >
                 Regretfully Decline
@@ -213,7 +213,7 @@ export function RSVPForm({
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
+                    className="block text-sm font-semibold text-[var(--event-text)] mb-2"
                   >
                     Email Address {data.emailRequired && <span className="text-red-500">*</span>}
                   </label>
@@ -224,7 +224,7 @@ export function RSVPForm({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@example.com"
-                    className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[46px]"
+                    className="w-full px-4 py-3.5 border border-[var(--event-border)] rounded-xl text-base text-[var(--event-text)] focus:outline-none focus:ring-2 focus:ring-[var(--event-primary)] bg-[var(--event-surface)] min-h-[46px]"
                   />
                 </div>
               )}
@@ -232,7 +232,7 @@ export function RSVPForm({
                 <div>
                   <label
                     htmlFor="phone"
-                    className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
+                    className="block text-sm font-semibold text-[var(--event-text)] mb-2"
                   >
                     Mobile Phone {data.phoneRequired && <span className="text-red-500">*</span>}
                   </label>
@@ -243,7 +243,7 @@ export function RSVPForm({
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="09170000000"
-                    className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[46px]"
+                    className="w-full px-4 py-3.5 border border-[var(--event-border)] rounded-xl text-base text-[var(--event-text)] focus:outline-none focus:ring-2 focus:ring-[var(--event-primary)] bg-[var(--event-surface)] min-h-[46px]"
                   />
                 </div>
               )}
@@ -252,10 +252,10 @@ export function RSVPForm({
 
           {/* Additional Companions */}
           {data.plusOneEnabled && maxCompanions > 0 && attendanceStatus === "attending" && (
-            <div className="pt-3 border-t border-[var(--wedding-border-subtle)] space-y-3">
+            <div className="pt-3 border-t border-[var(--event-border-subtle)] space-y-3">
               <label
                 htmlFor="companionCount"
-                className="block text-sm font-semibold text-[var(--wedding-text)] mb-1"
+                className="block text-sm font-semibold text-[var(--event-text)] mb-1"
               >
                 Additional Companions
               </label>
@@ -267,11 +267,11 @@ export function RSVPForm({
                     onClick={() => handleCompanionCountChange(0)}
                     className={`py-3 px-4 rounded-xl text-sm font-medium border flex items-center justify-center gap-2 cursor-pointer min-h-[44px] transition-all ${
                       companionCount === 0
-                        ? "bg-[var(--wedding-surface-alt)] border-[var(--wedding-primary)] font-semibold text-[var(--wedding-text)] shadow-xs"
-                        : "bg-[var(--wedding-surface)] border-[var(--wedding-border)] text-[var(--wedding-text-muted)]"
+                        ? "bg-[var(--event-surface-alt)] border-[var(--event-primary)] font-semibold text-[var(--event-text)] shadow-xs"
+                        : "bg-[var(--event-surface)] border-[var(--event-border)] text-[var(--event-text-muted)]"
                     }`}
                   >
-                    <User className="w-4 h-4 text-[var(--wedding-primary)]" />
+                    <User className="w-4 h-4 text-[var(--event-primary)]" />
                     <span>Solo Guest</span>
                   </button>
                   <button
@@ -279,11 +279,11 @@ export function RSVPForm({
                     onClick={() => handleCompanionCountChange(1)}
                     className={`py-3 px-4 rounded-xl text-sm font-medium border flex items-center justify-center gap-2 cursor-pointer min-h-[44px] transition-all ${
                       companionCount === 1
-                        ? "bg-[var(--wedding-surface-alt)] border-[var(--wedding-primary)] font-semibold text-[var(--wedding-text)] shadow-xs"
-                        : "bg-[var(--wedding-surface)] border-[var(--wedding-border)] text-[var(--wedding-text-muted)]"
+                        ? "bg-[var(--event-surface-alt)] border-[var(--event-primary)] font-semibold text-[var(--event-text)] shadow-xs"
+                        : "bg-[var(--event-surface)] border-[var(--event-border)] text-[var(--event-text-muted)]"
                     }`}
                   >
-                    <UserPlus className="w-4 h-4 text-[var(--wedding-primary)]" />
+                    <UserPlus className="w-4 h-4 text-[var(--event-primary)]" />
                     <span>+1 Companion</span>
                   </button>
                 </div>
@@ -292,7 +292,7 @@ export function RSVPForm({
                   id="companionCount"
                   value={companionCount}
                   onChange={(e) => handleCompanionCountChange(Number(e.target.value))}
-                  className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[46px]"
+                  className="w-full px-4 py-3.5 border border-[var(--event-border)] rounded-xl text-base text-[var(--event-text)] focus:outline-none focus:ring-2 focus:ring-[var(--event-primary)] bg-[var(--event-surface)] min-h-[46px]"
                 >
                   <option value={0}>0 (Solo Guest)</option>
                   {Array.from({ length: maxCompanions }, (_, i) => i + 1).map((num) => (
@@ -313,14 +313,14 @@ export function RSVPForm({
                           value={comp.fullName}
                           onChange={(e) => updateCompanion(idx, "fullName", e.target.value)}
                           placeholder={`Companion #${idx + 1} Full Name`}
-                          className="flex-1 px-3.5 py-3 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] bg-[var(--wedding-surface)] min-h-[44px]"
+                          className="flex-1 px-3.5 py-3 border border-[var(--event-border)] rounded-xl text-base text-[var(--event-text)] bg-[var(--event-surface)] min-h-[44px]"
                         />
                       )}
                       {data.companionAgeEnabled && (
                         <select
                           value={comp.ageLabel}
                           onChange={(e) => updateCompanion(idx, "ageLabel", e.target.value)}
-                          className="w-32 px-3 py-3 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] bg-[var(--wedding-surface)] min-h-[44px]"
+                          className="w-32 px-3 py-3 border border-[var(--event-border)] rounded-xl text-base text-[var(--event-text)] bg-[var(--event-surface)] min-h-[44px]"
                         >
                           <option value="Adult">Adult</option>
                           <option value="Child">Child</option>
@@ -339,7 +339,7 @@ export function RSVPForm({
             <div>
               <label
                 htmlFor="dietaryNotes"
-                className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
+                className="block text-sm font-semibold text-[var(--event-text)] mb-2"
               >
                 Dietary Restrictions / Food Allergies
               </label>
@@ -349,7 +349,7 @@ export function RSVPForm({
                 value={dietaryNotes}
                 onChange={(e) => setDietaryNotes(e.target.value)}
                 placeholder="e.g. Vegetarian, Peanut allergy, Halal"
-                className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[46px]"
+                className="w-full px-4 py-3.5 border border-[var(--event-border)] rounded-xl text-base text-[var(--event-text)] focus:outline-none focus:ring-2 focus:ring-[var(--event-primary)] bg-[var(--event-surface)] min-h-[46px]"
               />
             </div>
           )}
@@ -359,7 +359,7 @@ export function RSVPForm({
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
+                className="block text-sm font-semibold text-[var(--event-text)] mb-2"
               >
                 Warm Wishes &amp; Note
               </label>
@@ -369,7 +369,7 @@ export function RSVPForm({
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Write your wishes or thoughts..."
-                className="w-full px-4 py-3.5 border border-[var(--wedding-border)] rounded-xl text-base text-[var(--wedding-text)] focus:outline-none focus:ring-2 focus:ring-[var(--wedding-primary)] bg-[var(--wedding-surface)] min-h-[80px]"
+                className="w-full px-4 py-3.5 border border-[var(--event-border)] rounded-xl text-base text-[var(--event-text)] focus:outline-none focus:ring-2 focus:ring-[var(--event-primary)] bg-[var(--event-surface)] min-h-[80px]"
               />
             </div>
           )}
@@ -380,7 +380,7 @@ export function RSVPForm({
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-4 px-6 bg-[var(--wedding-primary)] hover:bg-[var(--wedding-primary-hover)] text-[var(--wedding-on-primary)] font-semibold text-base rounded-xl transition-all flex items-center justify-center gap-2.5 focus:outline-none template-focus-ring disabled:opacity-50 cursor-pointer shadow-md active:scale-98 min-h-[48px]"
+                className="w-full py-4 px-6 bg-[var(--event-primary)] hover:bg-[var(--event-primary-hover)] text-[var(--event-on-primary)] font-semibold text-base rounded-xl transition-all flex items-center justify-center gap-2.5 focus:outline-none template-focus-ring disabled:opacity-50 cursor-pointer shadow-md active:scale-98 min-h-[48px]"
               >
                 {submitting ? (
                   <>
@@ -416,20 +416,20 @@ export function RSVPSection(props: RsvpProps) {
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-10 space-y-2">
-            <span className="text-role-subheading text-[var(--wedding-accent-soft)]">
+            <span className="text-role-subheading text-[var(--event-accent-soft)]">
               FOLIO // 11 &bull; RSVP CONFIRMATION
             </span>
-            <h2 className="text-role-heading-major text-[var(--wedding-on-dark)] tracking-tight">
+            <h2 className="text-role-heading-major text-[var(--event-on-dark)] tracking-tight">
               RSVP
             </h2>
             {formattedDeadline && (
-              <p className="text-base text-[var(--wedding-accent-soft)] mt-1 font-sans">
+              <p className="text-base text-[var(--event-accent-soft)] mt-1 font-sans">
                 Kindly respond on or before{" "}
                 <strong className="font-semibold text-white">{formattedDeadline}</strong>
               </p>
             )}
             {props.isDemoMode && (
-              <div className="inline-block mt-2 px-3 py-1 bg-[var(--wedding-accent-soft)]/20 border border-[var(--wedding-accent)]/50 text-[var(--wedding-on-dark)] text-xs font-mono rounded-full">
+              <div className="inline-block mt-2 px-3 py-1 bg-[var(--event-accent-soft)]/20 border border-[var(--event-accent)]/50 text-[var(--event-on-dark)] text-xs font-mono rounded-full">
                 Demo Mode RSVP (Simulated Submission)
               </div>
             )}

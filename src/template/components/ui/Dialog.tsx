@@ -34,13 +34,13 @@ export const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-[var(--wedding-border)] bg-[var(--wedding-surface)] p-6 shadow-2xl duration-200 rounded-2xl max-h-[90vh] overflow-y-auto font-sans",
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-[var(--event-border)] bg-[var(--event-surface)] p-6 shadow-2xl duration-200 rounded-2xl max-h-[90vh] overflow-y-auto font-sans",
         className
       )}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-full p-1.5 text-[var(--wedding-text-muted)] hover:bg-[var(--wedding-surface-alt)] hover:text-[var(--wedding-text)] transition-colors template-focus-ring cursor-pointer">
+      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-full p-1.5 text-[var(--event-text-muted)] hover:bg-[var(--event-surface-alt)] hover:text-[var(--event-text)] transition-colors template-focus-ring cursor-pointer">
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
@@ -61,7 +61,7 @@ export const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      "font-serif text-lg font-bold leading-none tracking-tight text-[var(--wedding-text)]",
+      "font-serif text-lg font-bold leading-none tracking-tight text-[var(--event-text)]",
       className
     )}
     {...props}
@@ -75,7 +75,7 @@ export const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-[var(--wedding-text-muted)] font-sans", className)}
+    className={cn("text-sm text-[var(--event-text-muted)] font-sans", className)}
     {...props}
   />
 ));

@@ -18,8 +18,8 @@
   body {
     overflow-x: hidden;
     width: 100%;
-    background-color: var(--wedding-bg);
-    color: var(--wedding-text);
+    background-color: var(--event-bg);
+    color: var(--event-text);
   }
 }
 

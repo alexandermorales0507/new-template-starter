@@ -1,4 +1,4 @@
-import type { VenueData } from "@/platform/wedding-template-data";
+import type { VenueData } from "@/platform/event-template-data";
 import { templateAssets } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
@@ -22,9 +22,7 @@ export function VenueSection({ data }: { data: VenueData }) {
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-12 space-y-2">
             <span className="text-role-subheading">FOLIO // 03 &bull; THE GROUNDS</span>
-            <h2 className="text-role-heading text-[var(--wedding-text)] tracking-tight">
-              The Venue
-            </h2>
+            <h2 className="text-role-heading text-[var(--event-text)] tracking-tight">The Venue</h2>
           </div>
         </Reveal>
 
@@ -38,7 +36,7 @@ export function VenueSection({ data }: { data: VenueData }) {
                 caption={data.venueName ? `Estate Grounds: ${data.venueName}` : "Estate Grounds"}
                 specimenNumber="ESTATE VIEW // 03"
                 aspectRatio="landscape"
-                className="shadow-soft bg-[var(--wedding-surface)]"
+                className="shadow-soft bg-[var(--event-surface)]"
               />
             </div>
 
@@ -49,17 +47,17 @@ export function VenueSection({ data }: { data: VenueData }) {
                 <LedgerPanel
                   title={data.venueName || "Estate Location"}
                   indexTag="VENUE // RECORD"
-                  className="bg-[var(--wedding-surface)] relative z-10"
+                  className="bg-[var(--event-surface)] relative z-10"
                 >
                   <div className="space-y-4 pt-1 font-sans">
                     {data.address && (
-                      <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)]">
-                        <MapPin className="w-5 h-5 text-[var(--wedding-primary)] shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[var(--event-surface-alt)] border border-[var(--event-border-subtle)]">
+                        <MapPin className="w-5 h-5 text-[var(--event-primary)] shrink-0 mt-0.5" />
                         <div>
-                          <span className="text-role-metadata text-[var(--wedding-text-muted)] block mb-0.5">
+                          <span className="text-role-metadata text-[var(--event-text-muted)] block mb-0.5">
                             Official Address
                           </span>
-                          <p className="text-base font-medium text-[var(--wedding-text)] leading-relaxed font-sans">
+                          <p className="text-base font-medium text-[var(--event-text)] leading-relaxed font-sans">
                             {data.address}
                           </p>
                         </div>
@@ -67,10 +65,10 @@ export function VenueSection({ data }: { data: VenueData }) {
                     )}
 
                     {data.arrivalNote && (
-                      <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)] text-sm text-[var(--wedding-text)]">
-                        <Info className="w-5 h-5 text-[var(--wedding-primary)] shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[var(--event-surface-alt)] border border-[var(--event-border-subtle)] text-sm text-[var(--event-text)]">
+                        <Info className="w-5 h-5 text-[var(--event-primary)] shrink-0 mt-0.5" />
                         <div>
-                          <span className="text-role-metadata text-[var(--wedding-text-muted)] block mb-0.5">
+                          <span className="text-role-metadata text-[var(--event-text-muted)] block mb-0.5">
                             Arrival Guidance
                           </span>
                           <p className="leading-relaxed font-sans text-sm sm:text-base">
@@ -86,7 +84,7 @@ export function VenueSection({ data }: { data: VenueData }) {
                           href={data.mapsLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2.5 py-3 px-6 bg-[var(--wedding-primary)] hover:bg-[var(--wedding-primary-hover)] text-[var(--wedding-on-primary)] text-sm font-semibold rounded-xl transition-all shadow-xs template-focus-ring cursor-pointer min-h-[44px]"
+                          className="inline-flex items-center gap-2.5 py-3 px-6 bg-[var(--event-primary)] hover:bg-[var(--event-primary-hover)] text-[var(--event-on-primary)] text-sm font-semibold rounded-xl transition-all shadow-xs template-focus-ring cursor-pointer min-h-[44px]"
                         >
                           <Navigation className="w-4 h-4" />
                           <span>Get Driving Directions</span>

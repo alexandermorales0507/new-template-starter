@@ -17,12 +17,12 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
 
     const variantStyles = {
       primary:
-        "bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] hover:bg-[var(--wedding-primary-hover)] active:scale-95 shadow-soft",
+        "bg-[var(--event-primary)] text-[var(--event-on-primary)] hover:bg-[var(--event-primary-hover)] active:scale-95 shadow-soft",
       secondary:
-        "bg-[var(--wedding-surface)] text-[var(--wedding-text)] hover:bg-[var(--wedding-surface-alt)] active:scale-95 border border-[var(--wedding-border)]",
-      ghost: "text-[var(--wedding-text)] hover:bg-[var(--wedding-surface-alt)] active:scale-95",
+        "bg-[var(--event-surface)] text-[var(--event-text)] hover:bg-[var(--event-surface-alt)] active:scale-95 border border-[var(--event-border)]",
+      ghost: "text-[var(--event-text)] hover:bg-[var(--event-surface-alt)] active:scale-95",
       outline:
-        "border border-[var(--wedding-border)] text-[var(--wedding-text)] hover:bg-[var(--wedding-surface-alt)] active:scale-95",
+        "border border-[var(--event-border)] text-[var(--event-text)] hover:bg-[var(--event-surface-alt)] active:scale-95",
     };
 
     const sizeStyles = {

@@ -1,16 +1,16 @@
 "use client";
 
-import type { WeddingTemplateData } from "@/platform/wedding-template-data";
+import type { EventTemplateData } from "@/platform/event-template-data";
 import { templateSectionRegistry } from "./section-registry";
 import { Navbar } from "./components/Navbar";
 import { FallingPetals } from "./components/decorations/FallingPetals";
 import { Footer } from "./components/Footer";
 import { FloatingControls } from "./components/FloatingControls";
 import { AudioProvider } from "./components/AudioPlayer";
-import { buildWeddingNavigation } from "./navigation/wedding-navigation";
+import { buildEventNavigation } from "./navigation/event-navigation";
 
 export type TemplateRendererProps = {
-  data: WeddingTemplateData;
+  data: EventTemplateData;
   apiBaseUrl?: string;
   accessToken?: string | null;
   isDemoMode?: boolean;
@@ -22,7 +22,7 @@ export function TemplateRenderer({
   accessToken,
   isDemoMode,
 }: TemplateRendererProps) {
-  const navModel = buildWeddingNavigation(data);
+  const navModel = buildEventNavigation(data);
 
   return (
     <AudioProvider

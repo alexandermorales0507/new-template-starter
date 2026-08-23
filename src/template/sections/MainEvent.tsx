@@ -1,4 +1,4 @@
-import type { CeremonyData } from "@/platform/wedding-template-data";
+import type { MainEventData } from "@/platform/event-template-data";
 import {
   formatEventDateLong,
   formatTimeRange,
@@ -12,11 +12,17 @@ import { Reveal } from "@/template/components/motion/Reveal";
 import { Calendar, Clock, AlertCircle, Bookmark } from "lucide-react";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// SAGE ESTATE CEREMONY (THE GLASSHOUSE LEDGER SIGNATURE PEAK)
-// Strictly uses connected ceremony fields only (no venue/address borrowing).
+// SAGE ESTATE MAIN EVENT (THE GLASSHOUSE LEDGER SIGNATURE PEAK)
+// Strictly uses connected ceremony / main_event fields only (no venue/address borrowing).
 
-export function CeremonySection({ data }: { data: CeremonyData }) {
-  const eventLabel = data.eventLabel || "The Ceremony";
+export type MainEventSectionProps = {
+  data: MainEventData;
+};
+
+export type CeremonySectionProps = MainEventSectionProps;
+
+export function MainEventSection({ data }: MainEventSectionProps) {
+  const eventLabel = data.eventLabel || "The Celebration";
   const dateFormatted = formatEventDateLong(data.eventDate);
   const timeFormatted = formatTimeRange(data.eventTime, data.endTime);
   const deadlineFormatted = formatRsvpDeadline(data.rsvpDeadline);
@@ -29,8 +35,8 @@ export function CeremonySection({ data }: { data: CeremonyData }) {
       <div className="template-container">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-12 space-y-2">
-            <span className="text-role-subheading">FOLIO // 02 &bull; CEREMONY</span>
-            <h2 className="text-role-heading-major text-[var(--wedding-text)] tracking-tight">
+            <span className="text-role-subheading">FOLIO // 02 &bull; MAIN EVENT</span>
+            <h2 className="text-role-heading-major text-[var(--event-text,#24342c)] tracking-tight">
               {eventLabel}
             </h2>
           </div>
@@ -40,12 +46,12 @@ export function CeremonySection({ data }: { data: CeremonyData }) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
             {/* Left Column: Interactive Month Calendar */}
             <div className="lg:col-span-5 flex flex-col justify-center">
-              <div className="relative overflow-visible bg-[var(--wedding-surface)] rounded-2xl p-5 sm:p-6 border border-[var(--wedding-border)] shadow-xs">
+              <div className="relative overflow-visible bg-[var(--event-surface,#fffdf7)] rounded-2xl p-5 sm:p-6 border border-[var(--event-border,#c7cfbc)] shadow-xs">
                 <BotanicalCornerPair size="md" />
                 <div className="relative z-10">
                   <DateCalendar
                     date={data.eventDate || undefined}
-                    highlightLabel={data.eventLabel || "The Ceremony"}
+                    highlightLabel={data.eventLabel || "The Celebration"}
                     className="w-full"
                   />
                 </div>
@@ -57,32 +63,32 @@ export function CeremonySection({ data }: { data: CeremonyData }) {
               <div className="relative overflow-visible h-full">
                 <BotanicalCornerPair size="md" />
                 <LedgerPanel
-                  title="Official Ceremony Record"
+                  title="Official Event Record"
                   indexTag="RECORD // 01"
-                  className="h-full bg-[var(--wedding-surface)] flex flex-col justify-between relative z-10"
+                  className="h-full bg-[var(--event-surface,#fffdf7)] flex flex-col justify-between relative z-10"
                 >
                   <div className="space-y-5 pt-2 font-sans">
                     {/* Date & Time Highlights */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {dateFormatted && (
-                        <div className="p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)] space-y-1.5">
-                          <div className="flex items-center gap-1.5 text-role-metadata text-[var(--wedding-accent-strong,#8f6a2c)]">
-                            <Calendar className="w-3.5 h-3.5 text-[var(--wedding-primary)]" />
+                        <div className="p-4 rounded-xl bg-[var(--event-surface-alt,#dde5d3)] border border-[var(--event-border-subtle,#e1e7d9)] space-y-1.5">
+                          <div className="flex items-center gap-1.5 text-role-metadata text-[var(--event-accent-strong,#8f6a2c)]">
+                            <Calendar className="w-3.5 h-3.5 text-[var(--event-primary,#657a57)]" />
                             <span>Date</span>
                           </div>
-                          <p className="text-base sm:text-lg font-bold text-[var(--wedding-text)] font-serif">
+                          <p className="text-base sm:text-lg font-bold text-[var(--event-text,#24342c)] font-serif">
                             {dateFormatted}
                           </p>
                         </div>
                       )}
 
                       {timeFormatted && (
-                        <div className="p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)] space-y-1.5">
-                          <div className="flex items-center gap-1.5 text-role-metadata text-[var(--wedding-accent-strong,#8f6a2c)]">
-                            <Clock className="w-3.5 h-3.5 text-[var(--wedding-primary)]" />
+                        <div className="p-4 rounded-xl bg-[var(--event-surface-alt,#dde5d3)] border border-[var(--event-border-subtle,#e1e7d9)] space-y-1.5">
+                          <div className="flex items-center gap-1.5 text-role-metadata text-[var(--event-accent-strong,#8f6a2c)]">
+                            <Clock className="w-3.5 h-3.5 text-[var(--event-primary,#657a57)]" />
                             <span>Time</span>
                           </div>
-                          <p className="text-base sm:text-lg font-bold text-[var(--wedding-text)] font-serif">
+                          <p className="text-base sm:text-lg font-bold text-[var(--event-text,#24342c)] font-serif">
                             {timeFormatted}
                           </p>
                         </div>
@@ -91,13 +97,13 @@ export function CeremonySection({ data }: { data: CeremonyData }) {
 
                     {/* RSVP Deadline */}
                     {deadlineFormatted && (
-                      <div className="flex items-start gap-3 p-4 rounded-xl bg-[var(--wedding-accent-soft)]/40 border border-[var(--wedding-accent)]/50 text-sm">
-                        <Bookmark className="w-4 h-4 text-[var(--wedding-accent)] shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-3 p-4 rounded-xl bg-[var(--event-accent-soft,#c7cfbc)]/40 border border-[var(--event-accent,#8f6a2c)]/50 text-sm">
+                        <Bookmark className="w-4 h-4 text-[var(--event-accent,#8f6a2c)] shrink-0 mt-0.5" />
                         <div>
-                          <span className="font-bold text-[var(--wedding-text)] font-mono uppercase tracking-wider text-[11px] block">
+                          <span className="font-bold text-[var(--event-text,#24342c)] font-mono uppercase tracking-wider text-[11px] block">
                             Response Requested
                           </span>
-                          <span className="text-[var(--wedding-text)] font-medium">
+                          <span className="text-[var(--event-text,#24342c)] font-medium">
                             Kindly respond by {deadlineFormatted}
                           </span>
                         </div>
@@ -105,8 +111,8 @@ export function CeremonySection({ data }: { data: CeremonyData }) {
                     )}
 
                     {data.scheduleNote && (
-                      <div className="flex items-start gap-3 p-4 rounded-xl bg-[var(--wedding-surface-alt)] border border-[var(--wedding-border-subtle)] text-sm text-[var(--wedding-text)]">
-                        <AlertCircle className="w-4 h-4 text-[var(--wedding-primary)] shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-3 p-4 rounded-xl bg-[var(--event-surface-alt,#dde5d3)] border border-[var(--event-border-subtle,#e1e7d9)] text-sm text-[var(--event-text,#24342c)]">
+                        <AlertCircle className="w-4 h-4 text-[var(--event-primary,#657a57)] shrink-0 mt-0.5" />
                         <p className="leading-relaxed font-sans">{data.scheduleNote}</p>
                       </div>
                     )}
@@ -118,8 +124,10 @@ export function CeremonySection({ data }: { data: CeremonyData }) {
         </Reveal>
       </div>
 
-      {/* Boundary Threshold Divider: Ceremony -> Venue */}
+      {/* Boundary Threshold Divider: Main Event -> Venue */}
       <SectionFloralDivider />
     </section>
   );
 }
+
+export const CeremonySection = MainEventSection;

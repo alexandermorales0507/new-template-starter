@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { GiftsData } from "@/platform/wedding-template-data";
+import type { GiftsData } from "@/platform/event-template-data";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
@@ -28,7 +28,7 @@ export function GiftsSection({ data }: { data: GiftsData }) {
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-10 space-y-2">
             <span className="text-role-subheading">FOLIO // 12 &bull; GIFT REGISTRY</span>
-            <h2 className="text-role-heading-quiet text-[var(--wedding-text)] tracking-tight">
+            <h2 className="text-role-heading-quiet text-[var(--event-text)] tracking-tight">
               Gift Details
             </h2>
             {data.sectionIntro && (
@@ -48,17 +48,17 @@ export function GiftsSection({ data }: { data: GiftsData }) {
               title="Registry Guidance"
               indexTag="GIFTS // FOLIO"
               headerAlign="center"
-              className="max-w-2xl mx-auto bg-[var(--wedding-surface)] shadow-card space-y-6 relative z-10"
+              className="max-w-2xl mx-auto bg-[var(--event-surface)] shadow-card space-y-6 relative z-10"
             >
               {data.giftNote && (
-                <p className="text-base sm:text-lg text-[var(--wedding-text)] leading-relaxed text-center italic font-serif max-w-md mx-auto">
+                <p className="text-base sm:text-lg text-[var(--event-text)] leading-relaxed text-center italic font-serif max-w-md mx-auto">
                   &ldquo;{data.giftNote}&rdquo;
                 </p>
               )}
 
               {options.length > 0 && (
-                <div className="border-t border-[var(--wedding-border-subtle)] pt-5 font-sans">
-                  <span className="text-role-metadata text-[var(--wedding-accent)] block mb-4 text-center">
+                <div className="border-t border-[var(--event-border-subtle)] pt-5 font-sans">
+                  <span className="text-role-metadata text-[var(--event-accent)] block mb-4 text-center">
                     Available Contribution Channels
                   </span>
                   <div
@@ -69,14 +69,14 @@ export function GiftsSection({ data }: { data: GiftsData }) {
                     {options.map((opt) => (
                       <div
                         key={opt.id}
-                        className="p-5 rounded-2xl border border-[var(--wedding-border)] bg-[var(--wedding-surface-alt)] text-center shadow-xs space-y-3"
+                        className="p-5 rounded-2xl border border-[var(--event-border)] bg-[var(--event-surface-alt)] text-center shadow-xs space-y-3"
                       >
-                        <span className="font-serif font-bold text-[var(--wedding-text)] block text-lg">
+                        <span className="font-serif font-bold text-[var(--event-text)] block text-lg">
                           {opt.title}
                         </span>
                         {opt.image?.url && (
                           <div
-                            className="mt-2 inline-block p-3 bg-[var(--wedding-surface)] rounded-2xl border border-[var(--wedding-border)] shadow-xs cursor-pointer group hover:border-[var(--wedding-primary)] transition-all"
+                            className="mt-2 inline-block p-3 bg-[var(--event-surface)] rounded-2xl border border-[var(--event-border)] shadow-xs cursor-pointer group hover:border-[var(--event-primary)] transition-all"
                             onClick={() => {
                               if (opt.image?.url) {
                                 setZoomImage({
@@ -92,7 +92,7 @@ export function GiftsSection({ data }: { data: GiftsData }) {
                               alt={opt.image.alt || `${opt.title} QR`}
                               className="w-40 h-40 object-contain mx-auto rounded-lg group-hover:scale-105 transition-transform"
                             />
-                            <div className="flex items-center justify-center gap-1.5 mt-2 text-[11px] font-mono text-[var(--wedding-text-muted)] group-hover:text-[var(--wedding-primary)]">
+                            <div className="flex items-center justify-center gap-1.5 mt-2 text-[11px] font-mono text-[var(--event-text-muted)] group-hover:text-[var(--event-primary)]">
                               <QrCode className="w-3.5 h-3.5" />
                               <span>Tap to enlarge</span>
                             </div>
@@ -110,20 +110,20 @@ export function GiftsSection({ data }: { data: GiftsData }) {
         {/* QR Zoom Lightbox Dialog */}
         {zoomImage && (
           <Dialog open={Boolean(zoomImage)} onOpenChange={() => setZoomImage(null)}>
-            <DialogContent className="max-w-sm p-6 bg-[var(--wedding-surface)] border-[var(--wedding-border)] text-center">
+            <DialogContent className="max-w-sm p-6 bg-[var(--event-surface)] border-[var(--event-border)] text-center">
               <DialogHeader>
-                <DialogTitle className="font-serif text-xl text-[var(--wedding-text)]">
+                <DialogTitle className="font-serif text-xl text-[var(--event-text)]">
                   {zoomImage.title}
                 </DialogTitle>
               </DialogHeader>
-              <div className="p-4 bg-white rounded-2xl border border-[var(--wedding-border)] mt-3 inline-block">
+              <div className="p-4 bg-white rounded-2xl border border-[var(--event-border)] mt-3 inline-block">
                 <img
                   src={zoomImage.url}
                   alt={zoomImage.title}
                   className="w-64 h-64 object-contain mx-auto rounded"
                 />
               </div>
-              <p className="text-xs text-[var(--wedding-text-muted)] font-mono mt-3">
+              <p className="text-xs text-[var(--event-text-muted)] font-mono mt-3">
                 Scan using your banking or e-wallet application
               </p>
             </DialogContent>

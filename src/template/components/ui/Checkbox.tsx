@@ -32,17 +32,17 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             className="peer sr-only"
             {...props}
           />
-          <div className="w-5 h-5 rounded-md border border-[var(--wedding-border)] bg-[var(--wedding-surface)] transition-all peer-checked:bg-[var(--wedding-primary)] peer-checked:border-[var(--wedding-primary)] peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--wedding-primary)] peer-focus-visible:ring-offset-2 flex items-center justify-center">
-            <Check className="w-3.5 h-3.5 text-[var(--wedding-on-primary)] opacity-0 peer-checked:opacity-100 transition-opacity stroke-[3]" />
+          <div className="w-5 h-5 rounded-md border border-[var(--event-border)] bg-[var(--event-surface)] transition-all peer-checked:bg-[var(--event-primary)] peer-checked:border-[var(--event-primary)] peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--event-primary)] peer-focus-visible:ring-offset-2 flex items-center justify-center">
+            <Check className="w-3.5 h-3.5 text-[var(--event-on-primary)] opacity-0 peer-checked:opacity-100 transition-opacity stroke-[3]" />
           </div>
         </div>
         {label || description ? (
           <div className="space-y-0.5">
             {label ? (
-              <span className="block text-sm font-medium text-[var(--wedding-text)]">{label}</span>
+              <span className="block text-sm font-medium text-[var(--event-text)]">{label}</span>
             ) : null}
             {description ? (
-              <span className="block text-xs text-[var(--wedding-text-muted)]">{description}</span>
+              <span className="block text-xs text-[var(--event-text-muted)]">{description}</span>
             ) : null}
           </div>
         ) : null}

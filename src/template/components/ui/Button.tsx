@@ -17,12 +17,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles = {
       primary:
-        "bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] hover:bg-[var(--wedding-primary-hover)] active:scale-[0.98] shadow-soft",
+        "bg-[var(--event-primary)] text-[var(--event-on-primary)] hover:bg-[var(--event-primary-hover)] active:scale-[0.98] shadow-soft",
       secondary:
-        "bg-[var(--wedding-surface)] text-[var(--wedding-text)] hover:bg-[var(--wedding-surface-alt)] active:scale-[0.98] border border-[var(--wedding-border)]",
-      ghost: "text-[var(--wedding-text)] hover:bg-[var(--wedding-surface-alt)]",
+        "bg-[var(--event-surface)] text-[var(--event-text)] hover:bg-[var(--event-surface-alt)] active:scale-[0.98] border border-[var(--event-border)]",
+      ghost: "text-[var(--event-text)] hover:bg-[var(--event-surface-alt)]",
       outline:
-        "border border-[var(--wedding-border)] text-[var(--wedding-text)] hover:bg-[var(--wedding-surface-alt)] active:scale-[0.98]",
+        "border border-[var(--event-border)] text-[var(--event-text)] hover:bg-[var(--event-surface-alt)] active:scale-[0.98]",
     };
 
     const sizeStyles = {

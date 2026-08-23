@@ -82,22 +82,22 @@ export function DateCalendar({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-[var(--wedding-border)] bg-[var(--wedding-surface)] p-6 shadow-xs max-w-sm mx-auto text-center select-none",
+        "rounded-2xl border border-[var(--event-border)] bg-[var(--event-surface)] p-6 shadow-xs max-w-sm mx-auto text-center select-none",
         className
       )}
     >
       {/* Month & Year Header */}
-      <div className="mb-4 flex items-center justify-between border-b border-[var(--wedding-border-subtle)] pb-3">
-        <span className="font-serif text-xl font-bold text-[var(--wedding-text)] tracking-tight">
+      <div className="mb-4 flex items-center justify-between border-b border-[var(--event-border-subtle)] pb-3">
+        <span className="font-serif text-xl font-bold text-[var(--event-text)] tracking-tight">
           {monthName}
         </span>
-        <span className="font-mono text-xs font-bold text-[var(--wedding-accent-strong,#8f6a2c)]">
+        <span className="font-mono text-xs font-bold text-[var(--event-accent-strong,#8f6a2c)]">
           {year}
         </span>
       </div>
 
       {/* Weekday Row */}
-      <div className="grid grid-cols-7 gap-1 text-[11px] font-bold text-[var(--wedding-text-muted)] uppercase tracking-wider mb-2 font-mono">
+      <div className="grid grid-cols-7 gap-1 text-[11px] font-bold text-[var(--event-text-muted)] uppercase tracking-wider mb-2 font-mono">
         {weekdays.map((w) => (
           <div key={w} className="h-6 flex items-center justify-center">
             {w}
@@ -112,12 +112,12 @@ export function DateCalendar({
             key={idx}
             className={cn(
               "h-8 w-8 mx-auto flex items-center justify-center rounded-full font-medium transition-all font-sans",
-              !cell.isCurrentMonth && "text-[var(--wedding-border)]",
+              !cell.isCurrentMonth && "text-[var(--event-border)]",
               cell.isCurrentMonth &&
                 !cell.isTarget &&
-                "text-[var(--wedding-text)] hover:bg-[var(--wedding-surface-alt)]",
+                "text-[var(--event-text)] hover:bg-[var(--event-surface-alt)]",
               cell.isTarget &&
-                "bg-[var(--wedding-primary)] text-[var(--wedding-on-primary)] font-bold shadow-xs scale-105"
+                "bg-[var(--event-primary)] text-[var(--event-on-primary)] font-bold shadow-xs scale-105"
             )}
           >
             {cell.day}
@@ -127,8 +127,8 @@ export function DateCalendar({
 
       {/* Highlight Tag */}
       {highlightLabel && targetDate ? (
-        <div className="mt-4 pt-3 border-t border-[var(--wedding-border-subtle)] text-[11px] font-semibold text-[var(--wedding-text)] flex items-center justify-center gap-1.5 font-sans">
-          <span className="w-2 h-2 rounded-full bg-[var(--wedding-primary)]" />
+        <div className="mt-4 pt-3 border-t border-[var(--event-border-subtle)] text-[11px] font-semibold text-[var(--event-text)] flex items-center justify-center gap-1.5 font-sans">
+          <span className="w-2 h-2 rounded-full bg-[var(--event-primary)]" />
           <span>{highlightLabel}</span>
         </div>
       ) : null}

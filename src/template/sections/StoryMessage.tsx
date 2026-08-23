@@ -1,4 +1,4 @@
-import type { LoveStoryData } from "@/platform/wedding-template-data";
+import type { StoryMessageData } from "@/platform/event-template-data";
 import { templateAssets } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
@@ -6,9 +6,15 @@ import { CorrespondenceSheet } from "@/template/components/containers/Correspond
 import { Reveal } from "@/template/components/motion/Reveal";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// SAGE ESTATE LOVE STORY JOURNAL (THE GLASSHOUSE LEDGER)
+// SAGE ESTATE STORY MESSAGE JOURNAL (THE GLASSHOUSE LEDGER)
 
-export function LoveStorySection({ data }: { data: LoveStoryData }) {
+export type StoryMessageSectionProps = {
+  data: StoryMessageData;
+};
+
+export type LoveStorySectionProps = StoryMessageSectionProps;
+
+export function StoryMessageSection({ data }: StoryMessageSectionProps) {
   if (!data.storyBody && !data.storyTitle) return null;
   const storyPhotos = templateAssets.photos.story || [];
 
@@ -20,8 +26,8 @@ export function LoveStorySection({ data }: { data: LoveStoryData }) {
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-12 space-y-2">
-            <span className="text-role-subheading">FOLIO // 14 &bull; OUR STORY</span>
-            <h2 className="text-role-heading-major text-[var(--wedding-text)] tracking-tight">
+            <span className="text-role-subheading">FOLIO // 14 &bull; THE STORY</span>
+            <h2 className="text-role-heading-major text-[var(--event-text,#24342c)] tracking-tight">
               {data.storyTitle || "Our Story"}
             </h2>
             {data.sectionIntro && (
@@ -38,11 +44,11 @@ export function LoveStorySection({ data }: { data: LoveStoryData }) {
             {storyPhotos.length > 0 && (
               <SpecimenFrame
                 src={storyPhotos[0]}
-                alt="Our Story Photo"
+                alt="Story Photo"
                 caption="Archival Journal Memory"
                 specimenNumber="MEMORY // 14"
                 aspectRatio="landscape"
-                className="shadow-soft bg-[var(--wedding-surface)]"
+                className="shadow-soft bg-[var(--event-surface,#fffdf7)]"
               />
             )}
 
@@ -57,10 +63,10 @@ export function LoveStorySection({ data }: { data: LoveStoryData }) {
                 />
                 <CorrespondenceSheet
                   senderLabel="ESTATE DISPATCH"
-                  dateStamp="OUR CHRONICLE"
-                  className="bg-[var(--wedding-surface)] relative z-10"
+                  dateStamp="CHRONICLE"
+                  className="bg-[var(--event-surface,#fffdf7)] relative z-10"
                 >
-                  <p className="text-base sm:text-lg text-[var(--wedding-text)] leading-relaxed font-sans text-left pt-1">
+                  <p className="text-base sm:text-lg text-[var(--event-text,#24342c)] leading-relaxed font-sans text-left pt-1">
                     &ldquo;{data.storyBody}&rdquo;
                   </p>
                 </CorrespondenceSheet>
@@ -72,3 +78,5 @@ export function LoveStorySection({ data }: { data: LoveStoryData }) {
     </section>
   );
 }
+
+export const LoveStorySection = StoryMessageSection;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { CountdownData } from "@/platform/wedding-template-data";
+import type { CountdownData } from "@/platform/event-template-data";
 import { sageDecorations } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
@@ -93,7 +93,7 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
         <Reveal direction="up" distance={16}>
           <div className="mb-6 sm:mb-8 space-y-2">
             <span className="text-role-subheading">COUNTDOWN RECORD</span>
-            <h2 className="text-role-heading text-[var(--wedding-text)]">
+            <h2 className="text-role-heading text-[var(--event-text)]">
               {data.title || "Counting Down To Our Big Day"}
             </h2>
             {data.shortNote && (
@@ -107,15 +107,15 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
             {units.map((unit) => (
               <div
                 key={unit.label}
-                className="relative flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border border-[var(--wedding-border)] bg-[var(--wedding-surface)] shadow-xs hover:border-[var(--wedding-accent)]/50 transition-colors overflow-visible"
+                className="relative flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border border-[var(--event-border)] bg-[var(--event-surface)] shadow-xs hover:border-[var(--event-accent)]/50 transition-colors overflow-visible"
               >
                 {/* Micro Botanical Corner Pair on each Number Card */}
                 <BotanicalCornerPair size="xs" />
 
-                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold font-mono tracking-tight text-[var(--wedding-text)] tabular-nums relative z-10">
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold font-mono tracking-tight text-[var(--event-text)] tabular-nums relative z-10">
                   <AnimatedNumber value={unit.value} format={{ minimumIntegerDigits: 2 }} />
                 </span>
-                <span className="mt-1.5 text-xs font-mono font-bold tracking-[0.2em] text-[var(--wedding-text-muted)] uppercase relative z-10">
+                <span className="mt-1.5 text-xs font-mono font-bold tracking-[0.2em] text-[var(--event-text-muted)] uppercase relative z-10">
                   {unit.label}
                 </span>
               </div>

@@ -33,7 +33,7 @@ export function SpecimenFrame({
     <div
       data-surface="light"
       className={cn(
-        "specimen-frame group relative rounded-2xl border-2 border-[var(--wedding-border)] bg-[var(--wedding-surface)] text-[var(--wedding-text)] p-3 shadow-xs transition-all hover:shadow-soft",
+        "specimen-frame group relative rounded-2xl border-2 border-[var(--event-border)] bg-[var(--event-surface)] text-[var(--event-text)] p-3 shadow-xs transition-all hover:shadow-soft",
         className
       )}
       {...props}
@@ -41,7 +41,7 @@ export function SpecimenFrame({
       {/* Visual Inner Frame */}
       <div
         className={cn(
-          "relative w-full overflow-hidden rounded-xl bg-[var(--wedding-surface-alt)]",
+          "relative w-full overflow-hidden rounded-xl bg-[var(--event-surface-alt)]",
           aspectClasses[aspectRatio]
         )}
       >
@@ -56,7 +56,7 @@ export function SpecimenFrame({
           />
         ) : (
           children || (
-            <div className="flex h-full w-full items-center justify-center text-xs text-[var(--wedding-text-muted)] font-mono">
+            <div className="flex h-full w-full items-center justify-center text-xs text-[var(--event-text-muted)] font-mono">
               [ SPECIMEN FRAME ]
             </div>
           )
@@ -67,12 +67,12 @@ export function SpecimenFrame({
       {caption || specimenNumber ? (
         <div className="mt-3 flex items-center justify-between px-1 text-[11px]">
           {caption ? (
-            <span className="font-medium text-[var(--wedding-text)] font-sans truncate max-w-[80%]">
+            <span className="font-medium text-[var(--event-text)] font-sans truncate max-w-[80%]">
               {caption}
             </span>
           ) : null}
           {specimenNumber ? (
-            <span className="font-mono text-[10px] font-bold text-[var(--wedding-accent-strong,#8f6a2c)] tracking-wider">
+            <span className="font-mono text-[10px] font-bold text-[var(--event-accent-strong,#8f6a2c)] tracking-wider">
               {specimenNumber}
             </span>
           ) : null}

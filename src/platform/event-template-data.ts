@@ -25,8 +25,8 @@ export type NormalizedSection = {
   content: Record<string, unknown>;
 };
 
-// host_info (Couple / Celebrant)
-export type CoupleData = {
+// host_info (Celebrant / Couple / Host)
+export type HostInfoData = {
   kind: "wedding" | "birthday" | "debut" | "anniversary" | string;
   groomName: string;
   brideName: string;
@@ -37,6 +37,7 @@ export type CoupleData = {
   hostLine: string;
   shortHostMessage: string;
 };
+export type CoupleData = HostInfoData;
 
 // countdown
 export type CountdownData = {
@@ -52,8 +53,8 @@ export type MusicData = {
   shortNote?: string;
 };
 
-// main_event (Ceremony)
-export type CeremonyData = {
+// main_event (Ceremony / Party / Main Celebration)
+export type MainEventData = {
   eventLabel?: string;
   eventDate?: string;
   eventTime?: string;
@@ -61,6 +62,7 @@ export type CeremonyData = {
   rsvpDeadline?: string;
   scheduleNote?: string;
 };
+export type CeremonyData = MainEventData;
 
 // venue (Location)
 export type VenueData = {
@@ -70,8 +72,8 @@ export type VenueData = {
   arrivalNote?: string;
 };
 
-// secondary_event (Reception)
-export type ReceptionData = {
+// secondary_event (Reception / Dinner / After-Party)
+export type SecondaryEventData = {
   title?: string;
   venueName?: string;
   address?: string;
@@ -80,6 +82,7 @@ export type ReceptionData = {
   mapsLink?: string;
   note?: string;
 };
+export type ReceptionData = SecondaryEventData;
 
 // timeline_program
 export type TimelineItem = {
@@ -176,11 +179,12 @@ export type GuestbookData = {
 };
 
 // story_message (Scalar narrative)
-export type LoveStoryData = {
+export type StoryMessageData = {
   storyTitle?: string;
   sectionIntro?: string;
   storyBody?: string;
 };
+export type LoveStoryData = StoryMessageData;
 
 // contact_socials
 export type ContactData = {
@@ -198,15 +202,15 @@ export type GalleryData = {
   sectionIntro?: string;
 };
 
-// TOP-LEVEL WEDDING / CELEBRATION TEMPLATE DATA
-export type WeddingTemplateData = {
+// TOP-LEVEL EVENT TEMPLATE DATA
+export type EventTemplateData = {
   contractVersion: number;
   source: "demo" | "snapshot" | "live";
   previewMode?: "dashboard";
   eventType?: "wedding" | "birthday" | "debut" | "anniversary" | string;
   eventSlug: string;
   title: string;
-  coupleDisplayName: string; // Derived display representation via deriveCoupleIdentity()
+  coupleDisplayName: string; // Derived display representation via deriveHostIdentity()
   eventDate?: string | null;
   eventDateLabel?: string | null;
   eventTimeLabel?: string | null;
@@ -215,12 +219,12 @@ export type WeddingTemplateData = {
   timezone?: string | null;
   publicUrl?: string | null;
 
-  couple: CoupleData;
+  couple: HostInfoData;
   countdown: CountdownData;
   music: MusicData;
-  ceremony: CeremonyData;
+  ceremony: MainEventData;
   venue: VenueData;
-  reception: ReceptionData;
+  reception: SecondaryEventData;
   timeline: TimelineData;
   entourage: EntourageData;
   sponsors: SponsorsData;
@@ -229,7 +233,7 @@ export type WeddingTemplateData = {
   rsvp: RsvpData;
   gifts: GiftsData;
   guestbook: GuestbookData;
-  story: LoveStoryData;
+  story: StoryMessageData;
   contact: ContactData;
   gallery: GalleryData;
 

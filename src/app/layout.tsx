@@ -4,26 +4,26 @@ import "./globals.css";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-wedding-display",
+  variable: "--font-event-display",
   display: "swap",
 });
 
 const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-wedding-body",
+  variable: "--font-event-body",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Wedding Website | WebSerbisyo",
-  description: "Custom Wedding Template — Sage Estate: The Glasshouse Ledger",
+  title: "Event Website | WebSerbisyo",
+  description: "Custom Event Template — Sage Estate: The Glasshouse Ledger",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning={process.env.NODE_ENV === "development"}>
       <body
-        className={`${playfair.variable} ${manrope.variable} bg-[var(--wedding-bg)] text-[var(--wedding-text)] antialiased font-sans`}
+        className={`${playfair.variable} ${manrope.variable} bg-[var(--event-bg)] text-[var(--event-text)] antialiased font-sans`}
       >
         {children}
       </body>

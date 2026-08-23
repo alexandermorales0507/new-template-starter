@@ -1,4 +1,4 @@
-import type { EntourageData } from "@/platform/wedding-template-data";
+import type { EntourageData } from "@/platform/event-template-data";
 import { sageDecorations } from "@/template/template-assets";
 import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
@@ -59,7 +59,7 @@ export function EntourageSection({ data }: { data: EntourageData }) {
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-10 sm:mb-14 space-y-2">
             <span className="text-role-subheading">FOLIO // 07 &bull; THE ENTOURAGE</span>
-            <h2 className="text-role-heading-quiet text-[var(--wedding-text)] tracking-tight">
+            <h2 className="text-role-heading-quiet text-[var(--event-text)] tracking-tight">
               The Entourage
             </h2>
             {data.introLine && (
@@ -83,13 +83,13 @@ export function EntourageSection({ data }: { data: EntourageData }) {
                   <LedgerPanel
                     title={group.groupTitle || "Wedding Party"}
                     indexTag={`ROLE // 0${gIdx + 1}`}
-                    className="h-full bg-[var(--wedding-surface)] hover:border-[var(--wedding-accent)]/50 transition-colors shadow-xs text-center relative z-10"
+                    className="h-full bg-[var(--event-surface)] hover:border-[var(--event-accent)]/50 transition-colors shadow-xs text-center relative z-10"
                   >
                     <ul className="space-y-2.5 pt-1 font-sans">
                       {names.map((name, nIdx) => (
                         <li
                           key={nIdx}
-                          className="text-base font-semibold text-[var(--wedding-text)] font-serif border-b border-[var(--wedding-border-subtle)] pb-2 last:border-0 last:pb-0"
+                          className="text-base font-semibold text-[var(--event-text)] font-serif border-b border-[var(--event-border-subtle)] pb-2 last:border-0 last:pb-0"
                         >
                           {name}
                         </li>
