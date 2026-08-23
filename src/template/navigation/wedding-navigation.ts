@@ -264,6 +264,21 @@ export function hasMeaningfulContactContent(contact?: WeddingTemplateData["conta
 export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWeddingNavigation {
   const enabledSet = new Set((data.enabledSectionKeys || []) as WeddingApplicableSectionKey[]);
 
+  // Detect birthday event type
+  const isBirthday =
+    data.eventType === "birthday" || data.couple?.kind === "birthday" || !data.couple?.brideName;
+
+  const getAdaptedLabel = (key: WeddingApplicableSectionKey, defaultLabel: string): string => {
+    if (isBirthday) {
+      if (key === "main_event") return "PARTY";
+      if (key === "secondary_event") return "DINNER";
+      if (key === "story_message") return "STORY";
+      if (key === "principal_sponsors") return "VIP GUESTS";
+      if (key === "entourage") return "COURT & HOSTS";
+    }
+    return defaultLabel;
+  };
+
   // If contact_socials is enabled but has zero actual content, exclude it from navigation to avoid dead links
   if (enabledSet.has("contact_socials") && !hasMeaningfulContactContent(data.contact)) {
     enabledSet.delete("contact_socials");
@@ -272,26 +287,38 @@ export function buildWeddingNavigation(data: WeddingTemplateData): CanonicalWedd
   // Filter all enabled items according to template data
   const allEnabledItems: WeddingNavItem[] = WEDDING_APPLICABLE_SECTION_KEYS.filter((key) =>
     enabledSet.has(key)
-  ).map((key) => ({
-    key,
-    ...WEDDING_SECTION_NAV_DEFINITIONS[key],
-  }));
+  ).map((key) => {
+    const base = WEDDING_SECTION_NAV_DEFINITIONS[key];
+    return {
+      key,
+      ...base,
+      label: getAdaptedLabel(key, base.label),
+    };
+  });
 
   // Primary TopNav: Curated browsing sections (up to 5-6 items when enabled)
   const primaryNavItems: WeddingNavItem[] = TOP_NAV_ORDER_PREFERENCE.filter((key) =>
     enabledSet.has(key)
-  ).map((key) => ({
-    key,
-    ...WEDDING_SECTION_NAV_DEFINITIONS[key],
-  }));
+  ).map((key) => {
+    const base = WEDDING_SECTION_NAV_DEFINITIONS[key];
+    return {
+      key,
+      ...base,
+      label: getAdaptedLabel(key, base.label),
+    };
+  });
 
   // Quick Dock items: Filtered essential shortcuts (up to 5 items)
   const dockItems: WeddingNavItem[] = DOCK_PREFERENCE_ORDER.filter((key) =>
     enabledSet.has(key)
-  ).map((key) => ({
-    key,
-    ...WEDDING_SECTION_NAV_DEFINITIONS[key],
-  }));
+  ).map((key) => {
+    const base = WEDDING_SECTION_NAV_DEFINITIONS[key];
+    return {
+      key,
+      ...base,
+      label: getAdaptedLabel(key, base.label),
+    };
+  });
 
   // More Drawer items: Grouped by category containing ALL enabled items
   const moreGroups: MoreDrawerGroup[] = NAVIGATION_GROUP_ORDER.map((group) => ({

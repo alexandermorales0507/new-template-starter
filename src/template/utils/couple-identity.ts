@@ -36,8 +36,12 @@ export function deriveCoupleIdentity(
   const groom = (groomName || "").trim();
   const bride = (brideName || "").trim();
 
+  // If brideName is numeric (e.g. "10" for 10th birthday) or matches groomName, treat as single host
+  const isBrideNumeric = /^\d+$/.test(bride);
+  const isSingleHost = !bride || isBrideNumeric || groom.toLowerCase() === bride.toLowerCase();
+
   const groomInitial = groom ? extractInitial(groom) : "";
-  const brideInitial = bride ? extractInitial(bride) : "";
+  const brideInitial = !isSingleHost && bride ? extractInitial(bride) : "";
 
   let monogram = "";
   let compactMonogram = "";
@@ -79,15 +83,15 @@ export function deriveCoupleIdentity(
 
   const defaultDisplay =
     coupleDisplayName?.trim() ||
-    (groom && bride ? `${groom} & ${bride}` : groom || bride || "The Couple");
+    (!isSingleHost && groom && bride ? `${groom} & ${bride}` : groom || bride || "The Celebrant");
 
   return {
     groomName: groom,
-    brideName: bride,
+    brideName: isSingleHost ? "" : bride,
     groomInitial,
     brideInitial,
-    monogram: monogram || "C & C",
-    compactMonogram: compactMonogram || "CC",
+    monogram: monogram || "M",
+    compactMonogram: compactMonogram || "M",
     displayName: defaultDisplay,
   };
 }

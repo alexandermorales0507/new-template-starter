@@ -25,11 +25,14 @@ export type NormalizedSection = {
   content: Record<string, unknown>;
 };
 
-// host_info (Couple)
+// host_info (Couple / Celebrant)
 export type CoupleData = {
-  kind: "wedding";
+  kind: "wedding" | "birthday" | "debut" | "anniversary" | string;
   groomName: string;
   brideName: string;
+  celebrantName?: string;
+  milestoneAge?: string | number;
+  nickname?: string;
   displayAs: string;
   hostLine: string;
   shortHostMessage: string;
@@ -195,11 +198,12 @@ export type GalleryData = {
   sectionIntro?: string;
 };
 
-// TOP-LEVEL WEDDING TEMPLATE DATA
+// TOP-LEVEL WEDDING / CELEBRATION TEMPLATE DATA
 export type WeddingTemplateData = {
   contractVersion: number;
   source: "demo" | "snapshot" | "live";
   previewMode?: "dashboard";
+  eventType?: "wedding" | "birthday" | "debut" | "anniversary" | string;
   eventSlug: string;
   title: string;
   coupleDisplayName: string; // Derived display representation via deriveCoupleIdentity()

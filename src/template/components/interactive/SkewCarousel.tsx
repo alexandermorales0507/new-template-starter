@@ -65,18 +65,17 @@ export function SkewCarousel({
           onClick={() => onItemClick?.(item, 0)}
           className="relative inline-flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl border-2 border-[var(--wedding-border)] bg-[var(--wedding-surface)] shadow-card cursor-pointer transition-transform hover:scale-[1.02]"
         >
-          <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-[var(--wedding-surface-alt)]/20">
+          <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-[var(--wedding-surface-alt)]/20 w-[min(84vw,330px)] sm:w-[440px] md:w-[500px] h-[280px] sm:h-[340px] md:h-[380px]">
             {item.src ? (
               <Image
                 src={item.src}
                 alt={item.alt || "Gallery preview"}
-                width={item.width || 2752}
-                height={item.height || 1536}
-                className="block w-auto h-auto max-w-[min(84vw,330px)] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[560px] max-h-[300px] sm:max-h-[360px] md:max-h-[410px] lg:max-h-[440px] object-contain rounded-lg select-none pointer-events-none"
-                sizes="(max-width: 640px) 84vw, 560px"
+                fill
+                sizes="(max-width: 640px) 84vw, 500px"
+                className="object-cover rounded-2xl select-none pointer-events-none transition-transform duration-500 hover:scale-105"
               />
             ) : (
-              <div className="flex h-48 w-64 items-center justify-center text-xs font-mono text-[var(--wedding-text-muted)]">
+              <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-[var(--wedding-text-muted)] bg-[var(--wedding-surface-alt)]/40 rounded-2xl">
                 [ PHOTO MEMORY ]
               </div>
             )}
@@ -252,18 +251,17 @@ export function SkewCarousel({
                   }
                 >
                   {/* Photo Frame Auto-Fitting the Rendered Photography */}
-                  <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-[var(--wedding-surface-alt)]/20">
+                  <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-[var(--wedding-surface-alt)]/20 w-[240px] sm:w-[280px] md:w-[320px] h-[300px] sm:h-[350px] md:h-[390px]">
                     {item.src ? (
                       <Image
                         src={item.src}
                         alt={item.alt || `Photo ${idx + 1}`}
-                        width={item.width || 2752}
-                        height={item.height || 1536}
-                        sizes="(max-width: 640px) 84vw, (max-width: 1024px) 60vw, 560px"
-                        className="block w-auto h-auto max-w-[min(84vw,330px)] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[560px] max-h-[300px] sm:max-h-[360px] md:max-h-[410px] lg:max-h-[440px] object-contain rounded-lg select-none pointer-events-none"
+                        fill
+                        sizes="(max-width: 640px) 240px, (max-width: 1024px) 280px, 320px"
+                        className="object-cover rounded-2xl select-none pointer-events-none transition-transform duration-500 hover:scale-105"
                       />
                     ) : (
-                      <div className="flex h-44 w-60 items-center justify-center p-6 text-center text-xs font-mono text-[var(--wedding-text-muted)]">
+                      <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-[var(--wedding-text-muted)] bg-[var(--wedding-surface-alt)]/40 rounded-2xl">
                         [ PHOTO #{String(idx + 1).padStart(2, "0")} ]
                       </div>
                     )}

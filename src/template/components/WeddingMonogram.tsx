@@ -36,11 +36,15 @@ export function WeddingMonogram({
         {...props}
       >
         <span className="font-serif text-xl sm:text-2xl font-bold tracking-widest text-[var(--wedding-text)] flex items-center">
-          <span>{identity.groomInitial}</span>
-          <span className="text-[var(--wedding-accent)] font-serif italic font-normal mx-1.5 text-lg sm:text-xl">
-            &amp;
-          </span>
-          <span>{identity.brideInitial}</span>
+          <span>{identity.groomInitial || identity.monogram}</span>
+          {identity.brideInitial ? (
+            <>
+              <span className="text-[var(--wedding-accent)] font-serif italic font-normal mx-1.5 text-lg sm:text-xl">
+                &amp;
+              </span>
+              <span>{identity.brideInitial}</span>
+            </>
+          ) : null}
         </span>
       </div>
     );
@@ -52,11 +56,15 @@ export function WeddingMonogram({
         className={`inline-flex items-center justify-center gap-2 font-serif text-2xl md:text-3xl font-bold tracking-wider text-[var(--wedding-text)] ${className}`}
         {...props}
       >
-        <span>{identity.groomInitial}</span>
-        <span className="text-[var(--wedding-accent)] font-serif italic font-normal mx-1">
-          &amp;
-        </span>
-        <span>{identity.brideInitial}</span>
+        <span>{identity.groomInitial || identity.monogram}</span>
+        {identity.brideInitial ? (
+          <>
+            <span className="text-[var(--wedding-accent)] font-serif italic font-normal mx-1">
+              &amp;
+            </span>
+            <span>{identity.brideInitial}</span>
+          </>
+        ) : null}
       </span>
     );
   }
@@ -68,11 +76,15 @@ export function WeddingMonogram({
         {...props}
       >
         <span className="inline-flex items-center gap-1.5 font-serif text-2xl sm:text-3xl font-bold tracking-widest text-[var(--wedding-on-dark)]">
-          <span>{identity.groomInitial}</span>
-          <span className="text-[var(--wedding-accent)] font-serif italic font-normal mx-1 text-xl sm:text-2xl">
-            &amp;
-          </span>
-          <span>{identity.brideInitial}</span>
+          <span>{identity.groomInitial || identity.monogram}</span>
+          {identity.brideInitial ? (
+            <>
+              <span className="text-[var(--wedding-accent)] font-serif italic font-normal mx-1 text-xl sm:text-2xl">
+                &amp;
+              </span>
+              <span>{identity.brideInitial}</span>
+            </>
+          ) : null}
         </span>
         <span className="text-xs tracking-wider uppercase text-[var(--wedding-accent-soft)] font-mono">
           {identity.displayName}
@@ -81,18 +93,22 @@ export function WeddingMonogram({
     );
   }
 
-  // Default nav variant: Minimal, elegant dynamic text glyphs ONLY (e.g. "J & A")
+  // Default nav variant: Minimal, elegant dynamic text glyphs ONLY (e.g. "J & A" or "M")
   return (
     <span
       className={`wedding-nav-monogram font-serif text-lg md:text-xl font-bold tracking-widest text-[var(--wedding-text)] hover:opacity-80 transition-opacity select-none ${className}`}
       {...props}
     >
       <span className="wedding-monogram-glyphs flex items-center">
-        <span>{identity.groomInitial}</span>
-        <span className="text-[var(--wedding-accent)] font-serif italic font-normal mx-1 text-base">
-          &amp;
-        </span>
-        <span>{identity.brideInitial}</span>
+        <span>{identity.groomInitial || identity.monogram}</span>
+        {identity.brideInitial ? (
+          <>
+            <span className="text-[var(--wedding-accent)] font-serif italic font-normal mx-1 text-base">
+              &amp;
+            </span>
+            <span>{identity.brideInitial}</span>
+          </>
+        ) : null}
       </span>
     </span>
   );

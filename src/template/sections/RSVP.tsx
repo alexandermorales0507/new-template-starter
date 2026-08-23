@@ -361,7 +361,7 @@ export function RSVPForm({
                 htmlFor="message"
                 className="block text-sm font-semibold text-[var(--wedding-text)] mb-2"
               >
-                Warm Note for the Couple
+                Warm Wishes &amp; Note
               </label>
               <textarea
                 id="message"

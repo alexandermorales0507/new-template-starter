@@ -19,22 +19,28 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export function GallerySection({ data }: { data: GalleryData }) {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
 
+  const displayPhotos: GalleryPhotoItem[] =
+    Array.isArray((data as unknown as { images?: GalleryPhotoItem[] }).images) &&
+    (data as unknown as { images?: GalleryPhotoItem[] }).images!.length > 0
+      ? (data as unknown as { images?: GalleryPhotoItem[] }).images!
+      : galleryPhotos;
+
   const selectedPhoto: GalleryPhotoItem | null =
-    selectedPhotoIndex !== null && galleryPhotos[selectedPhotoIndex]
-      ? galleryPhotos[selectedPhotoIndex]
+    selectedPhotoIndex !== null && displayPhotos[selectedPhotoIndex]
+      ? displayPhotos[selectedPhotoIndex]
       : null;
 
   const handleNextPhoto = useCallback(() => {
     if (selectedPhotoIndex === null) return;
-    setSelectedPhotoIndex((prev) => (prev !== null ? (prev + 1) % galleryPhotos.length : 0));
-  }, [selectedPhotoIndex]);
+    setSelectedPhotoIndex((prev) => (prev !== null ? (prev + 1) % displayPhotos.length : 0));
+  }, [selectedPhotoIndex, displayPhotos.length]);
 
   const handlePrevPhoto = useCallback(() => {
     if (selectedPhotoIndex === null) return;
     setSelectedPhotoIndex((prev) =>
-      prev !== null ? (prev - 1 + galleryPhotos.length) % galleryPhotos.length : 0
+      prev !== null ? (prev - 1 + displayPhotos.length) % displayPhotos.length : 0
     );
-  }, [selectedPhotoIndex]);
+  }, [selectedPhotoIndex, displayPhotos.length]);
 
   return (
     <section
@@ -64,11 +70,11 @@ export function GallerySection({ data }: { data: GalleryData }) {
           </div>
         </Reveal>
 
-        {galleryPhotos.length > 0 ? (
+        {displayPhotos.length > 0 ? (
           <Reveal direction="up" distance={24} delay={0.1}>
             <div className="w-full">
               <SkewCarousel
-                items={galleryPhotos}
+                items={displayPhotos}
                 isLightboxOpen={Boolean(selectedPhoto)}
                 onItemClick={(_item, idx) => setSelectedPhotoIndex(idx)}
                 onActiveIndexChange={() => {}}
@@ -78,7 +84,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
         ) : (
           <div className="bg-[var(--wedding-surface-alt)]/60 p-10 rounded-2xl border border-dashed border-[var(--wedding-border)] max-w-xl mx-auto text-center shadow-xs">
             <p className="text-xs font-mono text-[var(--wedding-text-muted)] uppercase tracking-wider">
-              [ Official wedding photos will be mounted in the estate ledger here ]
+              [ Official celebration photos will be mounted in the estate ledger here ]
             </p>
           </div>
         )}
@@ -104,18 +110,24 @@ export function GallerySection({ data }: { data: GalleryData }) {
 
               {/* Modal Media Stage: flex-1 min-h-0 dynamically fits remaining viewport */}
               <div className="relative flex-1 min-h-0 w-full flex items-center justify-center p-1 sm:p-2 my-2 bg-[var(--wedding-surface-alt)]/20 rounded-xl overflow-hidden">
-                <Image
-                  src={selectedPhoto.src}
-                  alt={selectedPhoto.alt}
-                  width={selectedPhoto.width}
-                  height={selectedPhoto.height}
-                  className="w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-md select-none block"
-                  sizes="(max-width: 1024px) 95vw, 1100px"
-                  priority
-                />
+                {selectedPhoto.src ? (
+                  <Image
+                    src={selectedPhoto.src}
+                    alt={selectedPhoto.alt || "Expanded photo"}
+                    width={selectedPhoto.width || 1600}
+                    height={selectedPhoto.height || 1200}
+                    className="w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-md select-none block"
+                    sizes="(max-width: 1024px) 95vw, 1100px"
+                    priority
+                  />
+                ) : (
+                  <div className="flex h-64 w-80 items-center justify-center text-xs font-mono text-[var(--wedding-text-muted)] bg-[var(--wedding-surface-alt)]/40 rounded-xl">
+                    [ PHOTO MEMORY ]
+                  </div>
+                )}
 
                 {/* Lightbox Navigation Chevrons pinned to Media Box */}
-                {galleryPhotos.length > 1 && (
+                {displayPhotos.length > 1 && (
                   <>
                     <button
                       type="button"

@@ -211,18 +211,66 @@ export function normalizeEventData(
     }
   }
 
-  // 1. host_info (Couple)
+  // Detect event type
+  const rawEventType = stringValue(raw.eventType ?? raw.eventKind ?? raw.kind ?? raw.type);
   const hostContent = getSectionContent("host_info");
-  const groomName = stringValue(hostContent.groomName) || "Groom";
-  const brideName = stringValue(hostContent.brideName) || "Bride";
-  const displayAs = stringValue(hostContent.displayAs) || "";
+  const isBirthday =
+    rawEventType === "birthday" ||
+    stringValue(hostContent.kind) === "birthday" ||
+    Boolean(
+      raw.celebrant || raw.celebrantInfo || hostContent.celebrantName || hostContent.milestoneAge
+    );
+  const eventType = isBirthday ? "birthday" : rawEventType || "wedding";
+
+  // 1. host_info (Couple / Celebrant)
+  const rawCelebrant = record(raw.celebrant ?? raw.celebrantInfo);
+  const celebrantName = stringValue(
+    hostContent.celebrantName ??
+      rawCelebrant.name ??
+      rawCelebrant.celebrantName ??
+      raw.celebrantName
+  );
+  const milestoneAge = stringValue(
+    hostContent.milestoneAge ??
+      hostContent.age ??
+      rawCelebrant.milestoneAge ??
+      rawCelebrant.age ??
+      raw.milestoneAge
+  );
+  const nickname = stringValue(hostContent.nickname ?? rawCelebrant.nickname ?? raw.nickname);
+
+  let groomName = stringValue(hostContent.groomName);
+  let brideName = stringValue(hostContent.brideName);
+  let displayAs = stringValue(hostContent.displayAs) || "";
+  let hostLine = stringValue(hostContent.hostLine);
+  let shortHostMessage =
+    stringValue(hostContent.shortHostMessage) || stringValue(hostContent.invitationNote) || "";
+
+  if (isBirthday || celebrantName) {
+    groomName = celebrantName || groomName || "Celebrant";
+    brideName = brideName || "";
+    if (!hostLine) {
+      hostLine = milestoneAge ? `TURNING ${milestoneAge}` : "Celebration of Life & Joy";
+    }
+    if (!displayAs) {
+      displayAs = celebrantName || groomName;
+    }
+  } else {
+    groomName = groomName || "Groom";
+    brideName = brideName || "Bride";
+    hostLine = hostLine || "Together with their families";
+  }
+
   const coupleData = {
-    kind: "wedding" as const,
+    kind: isBirthday ? "birthday" : stringValue(hostContent.kind) || "wedding",
     groomName,
     brideName,
+    celebrantName,
+    milestoneAge,
+    nickname,
     displayAs,
-    hostLine: stringValue(hostContent.hostLine) || "Together with their families",
-    shortHostMessage: stringValue(hostContent.shortHostMessage) || "",
+    hostLine,
+    shortHostMessage,
   };
 
   // 2. countdown
@@ -248,12 +296,14 @@ export function normalizeEventData(
     sectionIntro: stringValue(galleryContent.sectionIntro),
   };
 
-  // 5. main_event (Ceremony)
+  // 5. main_event (Ceremony / Party)
   const ceremonyContent = getSectionContent("main_event");
+  const defaultEventLabel = isBirthday ? "The Celebration" : "The Holy Ceremony";
   const ceremonyData = {
-    eventLabel: stringValue(ceremonyContent.eventLabel) || "The Holy Ceremony",
+    eventLabel:
+      stringValue(ceremonyContent.eventLabel ?? ceremonyContent.partyLabel) || defaultEventLabel,
     eventDate: stringValue(ceremonyContent.eventDate ?? raw.eventDate),
-    eventTime: stringValue(ceremonyContent.eventTime ?? raw.eventTime),
+    eventTime: stringValue(ceremonyContent.eventTime ?? ceremonyContent.startTime ?? raw.eventTime),
     endTime: stringValue(ceremonyContent.endTime),
     rsvpDeadline: stringValue(ceremonyContent.rsvpDeadline),
     scheduleNote: stringValue(ceremonyContent.scheduleNote),
@@ -262,16 +312,17 @@ export function normalizeEventData(
   // 6. venue (Location)
   const venueContent = getSectionContent("venue");
   const venueData = {
-    venueName: stringValue(venueContent.venueName ?? raw.venueName) || "Wedding Venue",
+    venueName: stringValue(venueContent.venueName ?? raw.venueName) || "Event Venue",
     address: stringValue(venueContent.address ?? raw.venueAddress) || "Venue Address",
     mapsLink: stringValue(venueContent.mapsLink),
     arrivalNote: stringValue(venueContent.arrivalNote),
   };
 
-  // 7. secondary_event (Reception)
+  // 7. secondary_event (Reception / Dinner)
   const receptionContent = getSectionContent("secondary_event");
+  const defaultReceptionTitle = isBirthday ? "Dinner & Party Celebration" : "Dinner & Celebration";
   const receptionData = {
-    title: stringValue(receptionContent.title) || "Dinner & Celebration",
+    title: stringValue(receptionContent.title) || defaultReceptionTitle,
     venueName: stringValue(receptionContent.venueName),
     address: stringValue(receptionContent.address),
     startTime: stringValue(receptionContent.startTime),
@@ -418,20 +469,24 @@ export function normalizeEventData(
     messages: guestbookMessages,
   };
 
-  // 16. story_message (Scalar narrative)
+  // 16. story_message (Scalar narrative / Celebrant Bio)
   const storyContent = getSectionContent("story_message");
+  const defaultStoryTitle = isBirthday ? "Celebrant's Story" : "Our Journey";
   const storyData = {
-    storyTitle: stringValue(storyContent.storyTitle) || "Our Journey",
-    sectionIntro: stringValue(storyContent.sectionIntro),
-    storyBody: stringValue(storyContent.storyBody),
+    storyTitle: stringValue(storyContent.storyTitle ?? storyContent.title) || defaultStoryTitle,
+    sectionIntro: stringValue(storyContent.sectionIntro ?? storyContent.subtitle),
+    storyBody: stringValue(
+      storyContent.storyBody ?? storyContent.message ?? storyContent.celebrantMessage
+    ),
   };
 
   // 17. contact_socials
   const contactContent = getSectionContent("contact_socials");
+  const defaultContactPerson =
+    stringValue(contactContent.contactPerson) ||
+    (groomName && brideName ? `${groomName} & ${brideName}` : groomName || "");
   const contactData = {
-    contactPerson:
-      stringValue(contactContent.contactPerson) ||
-      (groomName && brideName ? `${groomName} & ${brideName}` : ""),
+    contactPerson: defaultContactPerson,
     contactNumber: stringValue(contactContent.contactNumber),
     email: stringValue(contactContent.email),
     facebookUrl: stringValue(contactContent.facebookUrl),
@@ -471,17 +526,21 @@ export function normalizeEventData(
     }
   }
 
-  const title = stringValue(raw.title ?? raw.eventTitle) || `${groomName} & ${brideName} Wedding`;
+  const defaultTitle = isBirthday
+    ? milestoneAge
+      ? `${groomName}'s ${milestoneAge}th Birthday`
+      : `${groomName}'s Birthday Celebration`
+    : `${groomName} & ${brideName} Wedding`;
+  const title = stringValue(raw.title ?? raw.eventTitle) || defaultTitle;
   const coupleDisplayName =
     displayAs ||
-    (groomName && brideName
-      ? `${groomName} & ${brideName}`
-      : groomName || brideName || "The Couple");
+    (isBirthday || !brideName ? groomName || "Celebrant" : `${groomName} & ${brideName}`);
 
   return {
     contractVersion: (raw.contractVersion as number) || EVENT_WEBSITE_SECTION_CONTRACT_VERSION,
     source,
     previewMode,
+    eventType,
     eventSlug,
     title,
     coupleDisplayName,
