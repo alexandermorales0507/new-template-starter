@@ -55,6 +55,11 @@ export function AudioProvider({
   const [shortNote, setShortNote] = useState(initialShortNote || "");
   const [playbackState, setPlaybackState] = useState<AudioPlaybackState>("idle");
   const [isMuted, setIsMuted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
@@ -215,9 +220,9 @@ export function AudioProvider({
     }
   };
 
-  // Render hidden YouTube iframe player if YouTube ID is detected
+  // Render hidden YouTube iframe player if YouTube ID is detected and mounted on client
   const renderHiddenYoutubePlayer = () => {
-    if (sourceType !== "youtube" || !youtubeId) return null;
+    if (!isMounted || sourceType !== "youtube" || !youtubeId) return null;
 
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const params = new URLSearchParams({
