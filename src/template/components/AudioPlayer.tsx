@@ -219,6 +219,7 @@ export function AudioProvider({
   const renderHiddenYoutubePlayer = () => {
     if (sourceType !== "youtube" || !youtubeId) return null;
 
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
     const params = new URLSearchParams({
       enablejsapi: "1",
       autoplay: "0",
@@ -227,23 +228,22 @@ export function AudioProvider({
       playsinline: "1",
       playlist: youtubeId,
       loop: "1",
+      ...(origin ? { origin } : {}),
     });
 
     const embedUrl = `https://www.youtube.com/embed/${youtubeId}?${params.toString()}`;
 
     return (
       <div
-        className="fixed pointer-events-none opacity-0 w-0 h-0 overflow-hidden"
-        style={{ left: "-9999px", top: "-9999px" }}
+        className="fixed bottom-0 right-0 w-8 h-8 opacity-[0.01] pointer-events-none overflow-hidden z-[-1]"
         aria-hidden="true"
       >
         <iframe
           ref={iframeRef}
           id="youtube-ambient-player"
-          width="1"
-          height="1"
+          className="w-full h-full"
           src={embedUrl}
-          title="Wedding Music Player"
+          title="Event Ambient Audio Player"
           allow="autoplay; encrypted-media; fullscreen"
           tabIndex={-1}
           onLoad={handleIframeLoad}
@@ -426,7 +426,7 @@ export function FloatingMusicBubble({
         className={`rounded-full bg-[var(--event-surface-dark)] text-[var(--event-on-dark)] shadow-2xl border-2 border-[var(--event-accent)]/50 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none template-focus-ring shrink-0 relative group ${
           compact ? "w-12 h-12" : "w-14 h-14"
         }`}
-        aria-label="Wedding song controls"
+        aria-label="Audio playback controls"
         title={isPlaying ? "Pause music" : "Play music"}
       >
         <AnimatePresence mode="wait">

@@ -14,7 +14,7 @@ export function parseMusicMeta(title?: string): {
   displayTitle: string;
   displayArtist: string;
 } {
-  const fallbackTitle = "Our Wedding Song";
+  const fallbackTitle = "Celebration Soundtrack";
 
   if (!title || !title.trim()) {
     return { displayTitle: fallbackTitle, displayArtist: "" };

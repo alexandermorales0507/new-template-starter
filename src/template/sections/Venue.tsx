@@ -32,7 +32,7 @@ export function VenueSection({ data }: { data: VenueData }) {
             <div className="lg:col-span-6">
               <SpecimenFrame
                 src={venuePhoto}
-                alt={data.venueName || "Wedding Venue"}
+                alt={data.venueName || "Event Venue"}
                 caption={data.venueName ? `Estate Grounds: ${data.venueName}` : "Estate Grounds"}
                 specimenNumber="ESTATE VIEW // 03"
                 aspectRatio="landscape"

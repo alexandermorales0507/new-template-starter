@@ -18,6 +18,7 @@ import type {
   RsvpData,
 } from "./event-template-data";
 import { isSectionEnabled } from "./section-visibility";
+import { extractMilestoneNumber } from "@/template/utils/host-identity";
 
 function record(val: unknown): Record<string, unknown> {
   return val && typeof val === "object" && !Array.isArray(val)
@@ -299,7 +300,8 @@ export function normalizeEventData(
   // 4. gallery
   const galleryContent = getSectionContent("gallery");
   const galleryData = {
-    sectionTitle: stringValue(galleryContent.sectionTitle) || "Our Moments",
+    sectionTitle:
+      stringValue(galleryContent.sectionTitle) || (isBirthday ? "Photo Gallery" : "Our Moments"),
     sectionIntro: stringValue(galleryContent.sectionIntro),
   };
 
@@ -533,10 +535,13 @@ export function normalizeEventData(
     }
   }
 
+  const milestoneNumber = extractMilestoneNumber(milestoneAge);
   const defaultTitle = isBirthday
-    ? milestoneAge
-      ? `${groomName}'s ${milestoneAge}th Birthday`
-      : `${groomName}'s Birthday Celebration`
+    ? milestoneNumber
+      ? `${groomName}'s ${milestoneNumber}th Birthday`
+      : milestoneAge
+        ? `${groomName}'s ${milestoneAge}`
+        : `${groomName}'s Birthday Celebration`
     : `${groomName} & ${brideName} Wedding`;
   const title = stringValue(raw.title ?? raw.eventTitle) || defaultTitle;
   const coupleDisplayName =

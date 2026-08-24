@@ -81,7 +81,7 @@ export function EntourageSection({ data }: { data: EntourageData }) {
                   <BotanicalCornerPair size="sm" />
 
                   <LedgerPanel
-                    title={group.groupTitle || "Wedding Party"}
+                    title={group.groupTitle || "Entourage Group"}
                     indexTag={`ROLE // 0${gIdx + 1}`}
                     className="h-full bg-[var(--event-surface)] hover:border-[var(--event-accent)]/50 transition-colors shadow-xs text-center relative z-10"
                   >

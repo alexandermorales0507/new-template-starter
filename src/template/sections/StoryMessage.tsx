@@ -28,7 +28,7 @@ export function StoryMessageSection({ data }: StoryMessageSectionProps) {
           <div className="text-center mb-8 sm:mb-12 space-y-2">
             <span className="text-role-subheading">FOLIO // 14 &bull; THE STORY</span>
             <h2 className="text-role-heading-major text-[var(--event-text,#24342c)] tracking-tight">
-              {data.storyTitle || "Our Story"}
+              {data.storyTitle || "The Story"}
             </h2>
             {data.sectionIntro && (
               <p className="text-role-lead max-w-lg mx-auto mt-2 leading-relaxed">

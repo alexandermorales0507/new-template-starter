@@ -94,7 +94,7 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
           <div className="mb-6 sm:mb-8 space-y-2">
             <span className="text-role-subheading">COUNTDOWN RECORD</span>
             <h2 className="text-role-heading text-[var(--event-text)]">
-              {data.title || "Counting Down To Our Big Day"}
+              {data.title || "Counting Down to the Celebration"}
             </h2>
             {data.shortNote && (
               <p className="text-role-lead max-w-md mx-auto leading-relaxed">{data.shortNote}</p>

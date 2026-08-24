@@ -19,7 +19,7 @@ export const templateConfig: TemplateConfig = {
   name: "Sage Estate — The Glasshouse Ledger",
   version: 1,
   description:
-    "English Garden Estate architectural wedding template with warm ivory surfaces and conservatory sage accents.",
+    "English Garden Estate architectural event template with warm ivory surfaces and conservatory sage accents.",
   palette: [
     { name: "Conservatory Sage", hex: "#657A57" },
     { name: "Mist Sage", hex: "#DDE5D3" },

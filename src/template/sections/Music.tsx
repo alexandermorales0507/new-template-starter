@@ -53,7 +53,7 @@ export function MusicSection({ data }: { data: MusicData }) {
             <span className="text-role-subheading text-[var(--event-accent-soft)]">
               CELEBRATION SOUNDTRACK
             </span>
-            <h2 className="text-role-heading text-[var(--event-on-primary)]">Celebration Song</h2>
+            <h2 className="text-role-heading text-[var(--event-on-primary)]">Theme Song</h2>
           </div>
         </Reveal>
 

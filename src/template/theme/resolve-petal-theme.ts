@@ -76,7 +76,8 @@ export function resolvePetalTheme(element: HTMLElement | null): PetalTheme {
     return DEFAULT_SAGE_PETAL_THEME;
   }
 
-  const target = element.closest("[data-wedding-theme]") ?? document.documentElement;
+  const target =
+    element.closest("[data-event-theme], [data-wedding-theme]") ?? document.documentElement;
   const styles = window.getComputedStyle(target);
 
   const canvasShadow = styles.getPropertyValue("--event-petal-canvas-shadow").trim();
