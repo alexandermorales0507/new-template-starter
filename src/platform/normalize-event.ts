@@ -290,11 +290,15 @@ export function normalizeEventData(
 
   // 3. music_effects
   const musicContent = getSectionContent("music_effects");
+  const defaultMusicTitle = isBirthday ? "Party Playlist" : "Celebration Soundtrack";
   const musicData = {
     musicLink: stringValue(musicContent.musicLink),
-    musicTitle: stringValue(musicContent.musicTitle),
-    playButtonLabel: stringValue(musicContent.playButtonLabel) || "Play Music",
-    shortNote: stringValue(musicContent.shortNote),
+    musicTitle: stringValue(musicContent.musicTitle) || defaultMusicTitle,
+    playButtonLabel:
+      stringValue(musicContent.playButtonLabel) || (isBirthday ? "Play Party Mix" : "Play Music"),
+    shortNote:
+      stringValue(musicContent.shortNote) ||
+      (isBirthday ? "Upbeat tracks curated for the celebration." : ""),
   };
 
   // 4. gallery
@@ -343,12 +347,37 @@ export function normalizeEventData(
   // 8. timeline_program
   const timelineContent = getSectionContent("timeline_program");
   const rawTimelineItems = arrayOfRecords(timelineContent.items);
-  const timelineItems: TimelineItem[] = rawTimelineItems.map((item, idx) => ({
-    id: stringValue(item.id) || `timeline-${idx + 1}`,
-    time: stringValue(item.time) || "",
-    title: stringValue(item.title) || "Program Item",
-    description: stringValue(item.description),
-  }));
+  const defaultBirthdayTimeline: TimelineItem[] = [
+    {
+      id: "timeline-1",
+      time: "18:00",
+      title: "Guest Arrival & Welcome Drinks",
+      description: "Guests arrive and enjoy refreshments.",
+    },
+    {
+      id: "timeline-2",
+      time: "19:00",
+      title: "Dinner & Party Program",
+      description: "Fun games, presentations, and dinner.",
+    },
+    {
+      id: "timeline-3",
+      time: "20:30",
+      title: "Birthday Toast & Cake Cutting",
+      description: "Birthday toast, cake cutting, and wishes.",
+    },
+  ];
+  const timelineItems: TimelineItem[] =
+    rawTimelineItems.length > 0
+      ? rawTimelineItems.map((item, idx) => ({
+          id: stringValue(item.id) || `timeline-${idx + 1}`,
+          time: stringValue(item.time) || "",
+          title: stringValue(item.title) || "Program Item",
+          description: stringValue(item.description),
+        }))
+      : isBirthday
+        ? defaultBirthdayTimeline
+        : [];
   const timelineData = {
     sectionTitle: stringValue(timelineContent.sectionTitle) || "Program & Timeline",
     sectionIntro: stringValue(timelineContent.sectionIntro),
@@ -404,13 +433,31 @@ export function normalizeEventData(
   // 12. extra_info
   const extraContent = getSectionContent("extra_info");
   const rawExtraItems = arrayOfRecords(extraContent.items);
-  const extraItems: ExtraInfoItem[] = rawExtraItems.map((i, idx) => ({
-    id: stringValue(i.id) || `extra-${idx + 1}`,
-    title: stringValue(i.title) || "Note",
-    details: stringValue(i.details) || "",
-  }));
+  const defaultBirthdayExtraInfo: ExtraInfoItem[] = [
+    {
+      id: "extra-1",
+      title: "Parking & Access",
+      details:
+        "Ample guest parking is available near the venue entrance. Follow directional signs upon arrival.",
+    },
+    {
+      id: "extra-2",
+      title: "Welcome Drinks & Mingling",
+      details: "Refreshments and snacks will be served prior to the start of the party program.",
+    },
+  ];
+  const extraItems: ExtraInfoItem[] =
+    rawExtraItems.length > 0
+      ? rawExtraItems.map((i, idx) => ({
+          id: stringValue(i.id) || `extra-${idx + 1}`,
+          title: stringValue(i.title) || "Note",
+          details: stringValue(i.details) || "",
+        }))
+      : isBirthday
+        ? defaultBirthdayExtraInfo
+        : [];
   const extraInfoData = {
-    sectionTitle: stringValue(extraContent.sectionTitle) || "Good to Know",
+    sectionTitle: stringValue(extraContent.sectionTitle) || "Additional Details",
     sectionIntro: stringValue(extraContent.sectionIntro),
     items: extraItems,
   };
@@ -434,22 +481,34 @@ export function normalizeEventData(
   // 14. gift_details (Max 2 options)
   const giftContent = getSectionContent("gift_details");
   const rawOptions = arrayOfRecords(giftContent.options);
-  const giftOptions: GiftOption[] = rawOptions.slice(0, 2).map((opt, idx) => {
-    const rawImage = record(opt.image);
-    const imageUrl = stringValue(rawImage.url);
-    const imagePath = stringValue(rawImage.path) || "";
-    return {
-      id: stringValue(opt.id) || `opt-${idx + 1}`,
-      title: stringValue(opt.title) || "Gift Option",
-      image:
-        imageUrl || imagePath
-          ? { path: imagePath, url: imageUrl, alt: stringValue(rawImage.alt) }
-          : null,
-    };
-  });
+  const defaultGiftOptions: GiftOption[] = [
+    { id: "opt-1", title: "GCash", image: null },
+    { id: "opt-2", title: "Bank Transfer", image: null },
+  ];
+  const giftOptions: GiftOption[] =
+    rawOptions.length > 0
+      ? rawOptions.slice(0, 2).map((opt, idx) => {
+          const rawImage = record(opt.image);
+          const imageUrl = stringValue(rawImage.url);
+          const imagePath = stringValue(rawImage.path) || "";
+          return {
+            id: stringValue(opt.id) || `opt-${idx + 1}`,
+            title: stringValue(opt.title) || "Gift Option",
+            image:
+              imageUrl || imagePath
+                ? { path: imagePath, url: imageUrl, alt: stringValue(rawImage.alt) }
+                : null,
+          };
+        })
+      : isBirthday
+        ? defaultGiftOptions
+        : [];
+  const defaultGiftNote = isBirthday
+    ? "Your presence and celebration are the greatest gifts. If you wish to send a monetary contribution, details are provided below."
+    : "Your presence is the greatest gift.";
   const giftsData = {
-    sectionIntro: stringValue(giftContent.sectionIntro),
-    giftNote: stringValue(giftContent.giftNote),
+    sectionIntro: stringValue(giftContent.sectionIntro) || "Your presence is the greatest gift.",
+    giftNote: stringValue(giftContent.giftNote) || defaultGiftNote,
     options: giftOptions,
   };
 
@@ -480,13 +539,17 @@ export function normalizeEventData(
 
   // 16. story_message (Scalar narrative / Celebrant Bio)
   const storyContent = getSectionContent("story_message");
-  const defaultStoryTitle = isBirthday ? "Celebrant's Story" : "Our Journey";
+  const defaultStoryTitle = isBirthday ? "Celebrant's Story" : "Our Story";
+  const defaultStoryBody = isBirthday
+    ? "We are thrilled to celebrate this special milestone together with family and friends."
+    : "";
   const storyData = {
     storyTitle: stringValue(storyContent.storyTitle ?? storyContent.title) || defaultStoryTitle,
     sectionIntro: stringValue(storyContent.sectionIntro ?? storyContent.subtitle),
-    storyBody: stringValue(
-      storyContent.storyBody ?? storyContent.message ?? storyContent.celebrantMessage
-    ),
+    storyBody:
+      stringValue(
+        storyContent.storyBody ?? storyContent.message ?? storyContent.celebrantMessage
+      ) || defaultStoryBody,
   };
 
   // 17. contact_socials
