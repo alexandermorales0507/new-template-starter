@@ -1,5 +1,5 @@
 import type { HostInfoData } from "@/platform/event-template-data";
-import { deriveHostIdentity } from "@/template/utils/host-identity";
+import { deriveHostIdentity, extractMilestoneNumber } from "@/template/utils/host-identity";
 import { templateAssets } from "@/template/template-assets";
 import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -29,7 +29,11 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
       ? `${data.brideName || identity.brideName} & ${data.groomName || identity.groomName}`
       : `${data.groomName || identity.groomName} & ${data.brideName || identity.brideName}`;
 
-  const badgeText = data.hostLine || "A Special Celebration";
+  // Extract numeric age from milestoneAge or hostLine for the big-number display
+  const milestoneNum =
+    extractMilestoneNumber(data.milestoneAge ? String(data.milestoneAge) : data.hostLine) || "10";
+
+  const badgeText = data.hostLine || `TURNING ${milestoneNum}`;
 
   return (
     <section
@@ -40,23 +44,37 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center lg:items-start">
           {/* Left Column: Editorial Typography & Actions (Left-aligned on desktop, Centered on mobile/tablet) */}
           <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left lg:pt-2">
-            {/* 1. Comic Issue & Milestone Badges */}
+            {/* 1. Comic Issue Badge */}
             <Reveal direction="down" distance={16}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
                 <span className="comic-badge comic-badge-gold">
-                  ★ ISSUE #10 • SPECIAL EDITION ★
+                  ★ ISSUE #{milestoneNum || "01"} • SPECIAL EDITION ★
                 </span>
-                {badgeText && (
-                  <span className="comic-badge comic-badge-red">⚡ {badgeText} ⚡</span>
-                )}
               </div>
             </Reveal>
 
-            {/* 2. Celebrant / Couple Names — Massive Action Display */}
+            {/* 2. Big-Number Age + Celebrant Name — Impact Display */}
             <Reveal direction="up" distance={20} delay={0.1}>
-              <h1 className="text-role-display tracking-tight text-white drop-shadow-[4px_4px_0px_#0f172a] text-center lg:text-left">
-                {displayName}
-              </h1>
+              <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center lg:justify-start gap-3 lg:gap-5 my-1">
+                {milestoneNum && (
+                  <span
+                    className="font-serif text-[clamp(5.5rem,16vw,10.5rem)] leading-[0.8] text-amber-500 drop-shadow-[5px_5px_0px_#0f172a] tracking-tight select-none"
+                    aria-label={`Turning ${milestoneNum}`}
+                  >
+                    {milestoneNum}
+                  </span>
+                )}
+                <div className="flex flex-col items-center lg:items-start gap-1">
+                  {badgeText && (
+                    <span className="comic-badge comic-badge-red text-xs w-fit">
+                      ⚡ {badgeText} ⚡
+                    </span>
+                  )}
+                  <h1 className="text-role-display tracking-tight text-white drop-shadow-[4px_4px_0px_#0f172a] text-center lg:text-left">
+                    {displayName}
+                  </h1>
+                </div>
+              </div>
             </Reveal>
 
             {/* 3. Host Narration / Quote in Yellow Marvel Narrator Box */}
@@ -106,7 +124,7 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
                 <SpecimenFrame
                   src={heroPhoto}
                   alt={displayName}
-                  specimenNumber="COVER ART // ISSUE #10"
+                  specimenNumber={`COVER ART // ISSUE #${milestoneNum || "01"}`}
                   aspectRatio="portrait"
                   priority={true}
                   className="shadow-floating bg-white"
