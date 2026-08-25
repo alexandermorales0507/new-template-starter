@@ -20,11 +20,16 @@ export function ContactSection({ data }: { data?: ContactData | null }) {
   if (!hasContent) return null;
 
   return (
-    <section id="contact_socials" className="template-section section-surface-sage">
-      <div className="template-container">
-        <div className="text-center mb-8">
-          <p className="text-role-subheading mb-1">Get in Touch</p>
-          <h2 className="text-role-heading text-[var(--event-text)]">Contact &amp; Socials</h2>
+    <section
+      id="contact_socials"
+      className="template-section relative overflow-x-clip bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)]"
+    >
+      <div className="template-container relative z-10">
+        <div className="text-center mb-8 space-y-2">
+          <span className="comic-badge comic-badge-gold">HQ COMMS // GET IN TOUCH</span>
+          <h2 className="text-role-heading text-[var(--event-on-dark,#f8fafc)] tracking-tight">
+            Contact &amp; Socials
+          </h2>
         </div>
         <div className="bg-[var(--event-surface)] p-6 rounded-2xl border border-[var(--event-border)] max-w-xl mx-auto space-y-4 text-sm shadow-xs">
           {data.contactPerson && (

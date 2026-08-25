@@ -25,7 +25,7 @@
   --event-ink: #0f172a; /* Pure comic line-art black/slate */
   --event-on-primary: #ffffff; /* Text on primary actions */
   --event-on-dark: #f8fafc; /* High-contrast white text on dark */
-  --event-on-dark-muted: #94a3b8; /* Muted slate text on dark */
+  --event-on-dark-muted: #cbd5e1; /* High-contrast Slate-300 text on dark canvas (11.77:1 AAA) */
   --event-focus: #dc2626; /* Focus ring accent */
 
   /* --- Text Hierarchy --- */
