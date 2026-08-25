@@ -1,9 +1,5 @@
 import type { HostInfoData } from "@/platform/event-template-data";
-import {
-  deriveHostIdentity,
-  extractMilestoneNumber,
-  getOrdinalSuffix,
-} from "@/template/utils/host-identity";
+import { deriveHostIdentity, extractMilestoneNumber } from "@/template/utils/host-identity";
 import { templateAssets } from "@/template/template-assets";
 import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -35,7 +31,14 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
 
   const milestoneNum =
     extractMilestoneNumber(data.milestoneAge ? String(data.milestoneAge) : data.hostLine) || "10";
-  const ordinalMilestone = getOrdinalSuffix(milestoneNum).toUpperCase();
+
+  // Dynamic Sub-Headline resolution (preserves custom dashboard emoji styles)
+  const subHeadline =
+    data.displayAs && data.displayAs.trim().toLowerCase() !== displayName.trim().toLowerCase()
+      ? data.displayAs
+      : data.milestoneAge
+        ? `⚡ TURNING ${milestoneNum}! ⚡`
+        : "⚡ A SPECIAL CELEBRATION ⚡";
 
   return (
     <section
@@ -46,32 +49,45 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Comic Masthead Typography & Actions */}
           <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
-            {/* 1. Comic Issue Pill */}
+            {/* 1. Clean Comic Issue Pill */}
             <Reveal direction="down" distance={16}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
                 <span className="comic-badge comic-badge-gold">
-                  ★ ISSUE #{milestoneNum} • {ordinalMilestone} SPECIAL EDITION ★
+                  ★ ISSUE #{milestoneNum} • SPECIAL EDITION ★
                 </span>
               </div>
             </Reveal>
 
-            {/* 2. Unified Masthead Title Lockup */}
+            {/* 2. Unified Masthead Title Lockup with Host Line Eyebrow */}
             <Reveal direction="up" distance={20} delay={0.1}>
               <div className="space-y-1 sm:space-y-2">
+                {/* Dedicated Host Line Eyebrow Kicker (self-collapsing if empty) */}
+                {data.hostLine && (
+                  <p className="font-mono text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-amber-400">
+                    {data.hostLine}
+                  </p>
+                )}
                 <h1 className="text-role-display text-white drop-shadow-[4px_4px_0px_#0f172a] tracking-tight leading-[0.95]">
                   {displayName}
                 </h1>
                 <p className="text-role-heading-major text-amber-500 font-serif tracking-tight drop-shadow-[3px_3px_0px_#0f172a] flex items-center justify-center lg:justify-start gap-2">
-                  <span>⚡ TURNING {milestoneNum}! ⚡</span>
+                  <span>{subHeadline}</span>
                 </p>
               </div>
             </Reveal>
 
-            {/* 3. Marvel Yellow Narrator Box */}
+            {/* 3. Transparent Frosted Dark Glass Narrative Box */}
             {data.shortHostMessage && (
               <Reveal direction="up" distance={16} delay={0.2}>
-                <div className="comic-caption-box w-fit max-w-lg mx-auto lg:mx-0 p-4 sm:p-5 border-[3px] border-slate-950 bg-amber-200 text-slate-950 font-bold text-base sm:text-lg leading-snug shadow-[4px_4px_0px_#0f172a] rounded-xl text-center lg:text-left">
-                  &ldquo;{data.shortHostMessage}&rdquo;
+                <div className="bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] rounded-2xl p-4 sm:p-5 w-fit max-w-lg mx-auto lg:mx-0 text-center lg:text-left space-y-2">
+                  <div className="flex items-center justify-center lg:justify-start gap-2">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-[10px] font-mono font-bold tracking-widest text-amber-400 uppercase">
+                      MISSION DISPATCH
+                    </span>
+                  </div>
+                  <p className="text-slate-100 text-sm sm:text-base font-medium leading-relaxed">
+                    &ldquo;{data.shortHostMessage}&rdquo;
+                  </p>
                 </div>
               </Reveal>
             )}
