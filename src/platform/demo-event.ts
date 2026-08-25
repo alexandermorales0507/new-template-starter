@@ -25,15 +25,15 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
     groomName: "Michael Santos",
     brideName: "",
     celebrantName: "Michael Santos",
-    milestoneAge: "10",
+    milestoneAge: "10th Birthday",
     nickname: "Mikey",
-    displayAs: "Michael",
-    hostLine: "TURNING 10",
+    displayAs: "⚡ 10th Birthday ⚡",
+    hostLine: "AVENGERS INITIATIVE // TOP SECRET",
     shortHostMessage: "You're invited to join the ultimate Avengers birthday adventure!",
   },
 
   countdown: {
-    title: "Countdown to the Party",
+    title: "COUNTING DOWN TO THE MISSION",
     shortNote: "Avengers… Assemble!",
   },
 
@@ -82,45 +82,21 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
     items: [
       {
         id: "t1",
-        time: "1:30 PM",
-        title: "Guest Arrival & Registration",
+        time: "03:00 PM",
+        title: "HQ Assemble",
         description: "Welcome loot bags and superhero mask station",
       },
       {
         id: "t2",
-        time: "2:00 PM",
-        title: "Opening Number & Welcome",
-        description: "Avengers assemble! Michael's grand entrance",
-      },
-      {
-        id: "t3",
-        time: "2:30 PM",
-        title: "Games & Activities",
+        time: "04:30 PM",
+        title: "Superhero Training & Games",
         description: "Superhero relay race, shield toss, and trivia challenge",
       },
       {
-        id: "t4",
-        time: "3:30 PM",
-        title: "Magic Show & Entertainment",
-        description: "A special performance from Doctor Strange himself",
-      },
-      {
-        id: "t5",
-        time: "4:00 PM",
-        title: "Dinner Buffet",
-        description: "Avengers-themed feast and refreshments",
-      },
-      {
-        id: "t6",
-        time: "5:00 PM",
-        title: "Cake Blowing & Birthday Song",
+        id: "t3",
+        time: "06:00 PM",
+        title: "Avengers Feast & Cake",
         description: "Michael's 10th birthday candle moment with the Avengers cake",
-      },
-      {
-        id: "t7",
-        time: "5:30 PM",
-        title: "Dance Party & After-Games",
-        description: "Open dance floor and final superhero photo booth",
       },
     ],
   },
@@ -154,8 +130,7 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
 
   attire: {
     sectionIntro: "Come dressed as your favorite superhero!",
-    dressCodeNote:
-      "Superhero costumes, Avengers merch, or smart casual with red/blue/gold accents.",
+    dressCodeNote: "Casual superhero or Marvel-inspired costume.",
     colorMotifNote:
       "Our party colors are Red, Royal Blue, and Gold — the classic Avengers palette.",
   },
@@ -200,9 +175,9 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
   },
 
   gifts: {
-    sectionIntro: "Your presence is the greatest gift for Michael!",
+    sectionIntro: "Your presence is our greatest adventure!",
     giftNote:
-      "If you wish to give a gift, Avengers toys, LEGO sets, or a small monetary gift for his savings fund would make his day.",
+      "Your presence is our greatest adventure! Should you wish to honor Michael with a gift, monetary envelopes or toy contributions are welcome.",
     options: [
       {
         id: "opt-1",
@@ -245,7 +220,7 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
   },
 
   story: {
-    storyTitle: "Michael's Story",
+    storyTitle: "THE ORIGIN OF AGENT MICHAEL",
     sectionIntro: "A glimpse into our little hero's journey",
     storyBody:
       "From his first steps to his first superhero cape, Michael has always been our family's greatest adventure. Now turning 10, he's a kind, brave, and curious young hero who dreams of saving the world — one LEGO build at a time. We celebrate a decade of joy, laughter, and endless imagination.",
