@@ -97,7 +97,7 @@ body {
   font-size: clamp(1rem, 1.8vw, 1.125rem);
   font-weight: 500;
   line-height: 1.6;
-  color: var(--event-text-muted);
+  color: var(--event-on-dark-muted, #cbd5e1);
 }
 
 /* 7. Sub-Headings & Card Titles */
@@ -156,5 +156,5 @@ body {
   font-family: var(--font-family-mono);
   font-size: 0.75rem;
   line-height: 1rem;
-  color: var(--event-text-muted);
+  color: inherit;
 }

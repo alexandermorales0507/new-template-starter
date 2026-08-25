@@ -102,24 +102,8 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
   },
 
   entourage: {
-    introLine: "The heroes standing with Michael on his special day",
-    groups: [
-      {
-        id: "grp-1",
-        groupTitle: "Parents & Hosts",
-        names: "Mr. David Santos\nMrs. Christine Santos",
-      },
-      {
-        id: "grp-2",
-        groupTitle: "Party Emcee",
-        names: "Tito Marco Santos",
-      },
-      {
-        id: "grp-3",
-        groupTitle: "Avengers Squad",
-        names: "Ethan Cruz\nJake Reyes\nSophia Lim\nChloe Torres",
-      },
-    ],
+    introLine: "",
+    groups: [],
   },
 
   sponsors: {
@@ -243,7 +227,6 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
     { key: "venue", title: "Venue", enabled: true, content: {} },
     { key: "secondary_event", title: "Dinner", enabled: true, content: {} },
     { key: "timeline_program", title: "Program", enabled: true, content: {} },
-    { key: "entourage", title: "Court & Hosts", enabled: true, content: {} },
     { key: "principal_sponsors", title: "VIP Guests", enabled: true, content: {} },
     { key: "attire_motif", title: "Costume Guide", enabled: true, content: {} },
     { key: "extra_info", title: "Party Reminders", enabled: true, content: {} },
@@ -265,7 +248,6 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
     "venue",
     "secondary_event",
     "timeline_program",
-    "entourage",
     "principal_sponsors",
     "attire_motif",
     "extra_info",
@@ -285,7 +267,6 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
     "venue",
     "secondary_event",
     "timeline_program",
-    "entourage",
     "principal_sponsors",
     "attire_motif",
     "extra_info",

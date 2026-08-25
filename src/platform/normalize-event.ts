@@ -112,17 +112,17 @@ export function normalizeEventData(
     }
   }
 
-  // Also check sectionsByKey for any missing keys
+  // Support both nested .content payloads and flat section objects from public API
   for (const [key, val] of Object.entries(sectionsByKey)) {
-    if (
-      !sectionMap.has(key) &&
-      eventWebsiteSectionKeySet.has(key) &&
-      val &&
-      typeof val === "object"
-    ) {
-      const secObj = record(val);
-      const secContent = record(secObj.content ?? contentSections[key]);
-      sectionContentMap.set(key, secContent);
+    if (!val || typeof val !== "object") continue;
+    const secObj = record(val);
+    const secContent = record(
+      secObj.content ??
+        contentSections[key] ??
+        (Object.keys(secObj).length > 0 ? secObj : undefined)
+    );
+    sectionContentMap.set(key, secContent);
+    if (!sectionMap.has(key) && eventWebsiteSectionKeySet.has(key)) {
       sectionMap.set(key, {
         key,
         title: stringValue(secObj.title),
@@ -149,13 +149,16 @@ export function normalizeEventData(
   }
 
   function getSectionContent(key: string): Record<string, unknown> {
-    return (
-      sectionContentMap.get(key) ||
-      record(record(sectionsByKey[key]).content) ||
-      record(contentSections[key]) ||
-      record(content[key]) ||
-      record(raw[key])
-    );
+    const mapped = sectionContentMap.get(key);
+    if (mapped && Object.keys(mapped).length > 0) return mapped;
+    const fromByKey = record(sectionsByKey[key]);
+    if (fromByKey.content && typeof fromByKey.content === "object") {
+      return record(fromByKey.content);
+    }
+    if (Object.keys(fromByKey).length > 0) {
+      return fromByKey;
+    }
+    return record(contentSections[key]) || record(content[key]) || record(raw[key]);
   }
 
   // Parse sections ordering and enabled lists
