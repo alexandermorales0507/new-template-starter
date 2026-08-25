@@ -29,70 +29,55 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
       ? `${data.brideName || identity.brideName} & ${data.groomName || identity.groomName}`
       : `${data.groomName || identity.groomName} & ${data.brideName || identity.brideName}`;
 
-  // Extract numeric age from milestoneAge or hostLine for the big-number display
   const milestoneNum =
     extractMilestoneNumber(data.milestoneAge ? String(data.milestoneAge) : data.hostLine) || "10";
-
-  const badgeText = data.hostLine || `TURNING ${milestoneNum}`;
 
   return (
     <section
       id="host_info"
-      className="template-section bg-[var(--event-bg)] pattern-comic-dots relative isolate overflow-hidden min-h-0 pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-6 lg:pb-8 text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-[var(--event-bg)] pattern-comic-dots relative isolate overflow-hidden min-h-0 pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-8 lg:pb-12 text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center lg:items-start">
-          {/* Left Column: Editorial Typography & Actions (Left-aligned on desktop, Centered on mobile/tablet) */}
-          <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left lg:pt-2">
-            {/* 1. Comic Issue Badge */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Comic Masthead Typography & Actions */}
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
+            {/* 1. Comic Issue Pill */}
             <Reveal direction="down" distance={16}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
                 <span className="comic-badge comic-badge-gold">
-                  ★ ISSUE #{milestoneNum || "01"} • SPECIAL EDITION ★
+                  ★ ISSUE #{milestoneNum} • SPECIAL EDITION ★
                 </span>
               </div>
             </Reveal>
 
-            {/* 2. Big-Number Age + Celebrant Name — Impact Display */}
+            {/* 2. Unified Masthead Title Lockup */}
             <Reveal direction="up" distance={20} delay={0.1}>
-              <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center lg:justify-start gap-3 lg:gap-5 my-1">
-                {milestoneNum && (
-                  <span
-                    className="font-serif text-[clamp(5.5rem,16vw,10.5rem)] leading-[0.8] text-amber-500 drop-shadow-[5px_5px_0px_#0f172a] tracking-tight select-none"
-                    aria-label={`Turning ${milestoneNum}`}
-                  >
-                    {milestoneNum}
-                  </span>
-                )}
-                <div className="flex flex-col items-center lg:items-start gap-1">
-                  {badgeText && (
-                    <span className="comic-badge comic-badge-red text-xs w-fit">
-                      ⚡ {badgeText} ⚡
-                    </span>
-                  )}
-                  <h1 className="text-role-display tracking-tight text-white drop-shadow-[4px_4px_0px_#0f172a] text-center lg:text-left">
-                    {displayName}
-                  </h1>
-                </div>
+              <div className="space-y-1 sm:space-y-2">
+                <h1 className="text-role-display text-white drop-shadow-[4px_4px_0px_#0f172a] tracking-tight leading-[0.95]">
+                  {displayName}
+                </h1>
+                <p className="text-role-heading-major text-amber-500 font-serif tracking-tight drop-shadow-[3px_3px_0px_#0f172a] flex items-center justify-center lg:justify-start gap-2">
+                  <span>⚡ TURNING {milestoneNum}! ⚡</span>
+                </p>
               </div>
             </Reveal>
 
-            {/* 3. Host Narration / Quote in Yellow Marvel Narrator Box */}
+            {/* 3. Marvel Yellow Narrator Box */}
             {data.shortHostMessage && (
               <Reveal direction="up" distance={16} delay={0.2}>
-                <div className="comic-caption-box max-w-xl mx-auto lg:mx-0 text-slate-950 font-bold text-base sm:text-lg leading-snug">
+                <div className="comic-caption-box max-w-xl mx-auto lg:mx-0 p-4 sm:p-5 border-[3px] border-slate-950 bg-amber-200 text-slate-950 font-bold text-base sm:text-lg leading-snug shadow-[4px_4px_0px_#0f172a] rounded-xl">
                   &ldquo;{data.shortHostMessage}&rdquo;
                 </div>
               </Reveal>
             )}
 
-            {/* 4. Action CTA Buttons with Comic Tactile Push Architecture */}
+            {/* 4. Comic Push-Button CTAs */}
             <Reveal direction="up" distance={16} delay={0.3}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2 font-sans">
                 <Magnetic intensity={0.25}>
                   <a
                     href="/rsvp"
-                    className="comic-button comic-button-primary text-white gap-2 text-base font-bold min-h-[48px]"
+                    className="comic-button comic-button-primary text-white gap-2 text-base font-bold min-h-[48px] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_#0f172a]"
                   >
                     <Zap className="w-4 h-4 text-amber-300 fill-amber-300" />
                     <span>RSVP TO ASSEMBLE</span>
@@ -102,7 +87,7 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
                 {storyEnabled && (
                   <a
                     href="#story_message"
-                    className="comic-button comic-button-secondary text-slate-950 gap-2 text-base font-bold min-h-[48px]"
+                    className="comic-button comic-button-secondary bg-white text-slate-950 gap-2 text-base font-bold min-h-[48px] border-[2.5px] border-slate-950 shadow-[4px_4px_0px_#0f172a]"
                   >
                     <BookOpen className="w-4 h-4 text-slate-950" />
                     <span>ORIGIN STORY</span>
@@ -112,22 +97,22 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
             </Reveal>
           </div>
 
-          {/* Right Column: Mounted Portrait in SpecimenFrame (Viewport-fit responsive sizing) */}
-          <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center lg:justify-start lg:self-start">
+          {/* Right Column: Comic Cover Art in Specimen Frame */}
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center">
             <Reveal
               direction="up"
               distance={24}
               delay={0.2}
               className="w-full flex justify-center lg:justify-end"
             >
-              <div className="relative w-full max-w-[320px] sm:max-w-sm lg:max-w-[min(360px,calc((100dvh-11.5rem)*0.75))] xl:max-w-[min(385px,calc((100dvh-11.5rem)*0.75))]">
+              <div className="relative w-full max-w-[320px] sm:max-w-sm lg:max-w-[360px] rotate-[1.5deg] hover:rotate-0 transition-transform duration-300">
                 <SpecimenFrame
                   src={heroPhoto}
                   alt={displayName}
-                  specimenNumber={`COVER ART // ISSUE #${milestoneNum || "01"}`}
+                  specimenNumber={`COVER ART // ISSUE #${milestoneNum}`}
                   aspectRatio="portrait"
                   priority={true}
-                  className="shadow-floating bg-white"
+                  className="bg-white border-[3.5px] border-slate-950 shadow-[10px_10px_0px_#0f172a] rounded-2xl"
                 />
               </div>
             </Reveal>

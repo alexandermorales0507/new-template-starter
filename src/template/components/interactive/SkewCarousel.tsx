@@ -63,33 +63,29 @@ export function SkewCarousel({
       <div className={cn("mx-auto p-4 font-sans flex justify-center", className)}>
         <div
           onClick={() => onItemClick?.(item, 0)}
-          className="relative inline-flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl border-2 border-[var(--event-border)] bg-[var(--event-surface)] shadow-card cursor-pointer transition-transform hover:scale-[1.02]"
+          className="relative inline-flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl border-[3px] border-slate-950 bg-white shadow-[6px_6px_0px_#0f172a] cursor-pointer transition-transform hover:scale-[1.02]"
         >
-          <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-[var(--event-surface-alt)]/20 w-[min(84vw,330px)] sm:w-[440px] md:w-[500px] h-[280px] sm:h-[340px] md:h-[380px]">
+          <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 border-2 border-slate-900 w-[min(84vw,330px)] sm:w-[440px] md:w-[500px] h-[280px] sm:h-[340px] md:h-[380px]">
             {item.src ? (
               <Image
                 src={item.src}
                 alt={item.alt || "Gallery preview"}
                 fill
                 sizes="(max-width: 640px) 84vw, 500px"
-                className="object-cover rounded-2xl select-none pointer-events-none transition-transform duration-500 hover:scale-105"
+                className="object-cover rounded-xl select-none pointer-events-none transition-transform duration-500 hover:scale-105"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-[var(--event-text-muted)] bg-[var(--event-surface-alt)]/40 rounded-2xl">
-                [ PHOTO MEMORY ]
+              <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-slate-500 bg-slate-100 rounded-xl">
+                [ ACTION CARD #01 ]
               </div>
             )}
           </div>
           {item.caption ? (
             <div className="w-full mt-2.5 px-1 flex items-center justify-between gap-4 text-left">
-              <p className="text-xs font-medium text-[var(--event-text)] font-sans truncate">
-                {item.caption}
-              </p>
-              {item.folioLabel || item.title ? (
-                <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--event-accent-strong,#8f6a2c)] shrink-0">
-                  {item.folioLabel || item.title}
-                </span>
-              ) : null}
+              <p className="text-xs font-bold text-slate-950 font-sans truncate">{item.caption}</p>
+              <span className="text-[10px] font-black font-mono tracking-wider uppercase text-[var(--event-primary)] shrink-0">
+                {item.folioLabel || item.title || "HERO #01"}
+              </span>
             </div>
           ) : null}
         </div>
@@ -234,10 +230,10 @@ export function SkewCarousel({
                       "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease",
                   }}
                   className={cn(
-                    "relative inline-flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-2xl bg-[var(--event-surface)] border-2 transition-all duration-300 select-none shadow-card",
+                    "relative inline-flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl bg-white border-[3px] border-slate-950 transition-all duration-300 select-none",
                     isCurrentlyActive
-                      ? "border-[var(--event-primary)] ring-2 ring-[var(--event-accent)]/70 shadow-xl cursor-pointer"
-                      : "border-[var(--event-border)] hover:border-[var(--event-primary)]/50 cursor-pointer"
+                      ? "shadow-[10px_10px_0px_#0f172a] ring-2 ring-amber-400 scale-[1.02] cursor-pointer"
+                      : "shadow-[6px_6px_0px_#0f172a] hover:shadow-[8px_8px_0px_#0f172a] opacity-90 cursor-pointer"
                   )}
                   onClick={() => {
                     if (isCurrentlyActive) {
@@ -247,40 +243,47 @@ export function SkewCarousel({
                     }
                   }}
                   title={
-                    isCurrentlyActive ? "Click to open expanded view" : "Click to focus photograph"
+                    isCurrentlyActive
+                      ? "Click to open expanded view"
+                      : "Click to focus trading card"
                   }
                 >
-                  {/* Photo Frame Auto-Fitting the Rendered Photography */}
-                  <div className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-[var(--event-surface-alt)]/20 w-[240px] sm:w-[280px] md:w-[320px] h-[300px] sm:h-[350px] md:h-[390px]">
+                  {/* Corner Collector Card Badge */}
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="comic-badge comic-badge-gold text-[10px] py-0.5 px-2 font-mono shadow-[2px_2px_0px_#0f172a]">
+                      CARD #{String(idx + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  {/* Photo Stage */}
+                  <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 border-2 border-slate-900 w-[240px] sm:w-[280px] md:w-[320px] h-[300px] sm:h-[350px] md:h-[390px]">
                     {item.src ? (
                       <Image
                         src={item.src}
-                        alt={item.alt || `Photo ${idx + 1}`}
+                        alt={item.alt || `Card ${idx + 1}`}
                         fill
                         sizes="(max-width: 640px) 240px, (max-width: 1024px) 280px, 320px"
-                        className="object-cover rounded-2xl select-none pointer-events-none transition-transform duration-500 hover:scale-105"
+                        className="object-cover select-none pointer-events-none transition-transform duration-500 hover:scale-105"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-[var(--event-text-muted)] bg-[var(--event-surface-alt)]/40 rounded-2xl">
-                        [ PHOTO #{String(idx + 1).padStart(2, "0")} ]
+                      <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-slate-500 bg-slate-100">
+                        [ ACTION CARD #{String(idx + 1).padStart(2, "0")} ]
                       </div>
                     )}
                   </div>
 
-                  {/* Archival Glasshouse Caption Strip */}
-                  <div className="w-full mt-2 sm:mt-2.5 px-1 flex items-center justify-between gap-3 text-left shrink-0 h-6">
+                  {/* Trading Card Caption Strip */}
+                  <div className="w-full mt-2.5 px-1 flex items-center justify-between gap-3 text-left shrink-0 h-6">
                     {item.caption ? (
-                      <p className="text-xs font-medium text-[var(--event-text)] font-sans truncate max-w-[68%]">
+                      <p className="text-xs font-bold text-slate-950 font-sans truncate max-w-[68%]">
                         {item.caption}
                       </p>
                     ) : (
                       <span />
                     )}
-                    {item.folioLabel || item.title ? (
-                      <span className="text-[10px] font-bold font-mono tracking-wider uppercase text-[var(--event-accent-strong,#8f6a2c)] shrink-0">
-                        {item.folioLabel || item.title}
-                      </span>
-                    ) : null}
+                    <span className="text-[10px] font-black font-mono tracking-wider uppercase text-[var(--event-primary)] shrink-0">
+                      {item.folioLabel || `HERO #${String(idx + 1).padStart(2, "0")}`}
+                    </span>
                   </div>
                 </div>
               </SwiperSlide>
@@ -289,23 +292,23 @@ export function SkewCarousel({
         </Swiper>
       </div>
 
-      {/* Glasshouse Ledger Progress Rail & Navigation Shelf */}
+      {/* Comic Navigation Shelf & Progress Rail */}
       <div className="flex items-center justify-center gap-3 sm:gap-4 mt-3 sm:mt-4 select-none min-h-[44px]">
         {/* Previous Chevron Button */}
         <button
           type="button"
           onClick={() => swiperRef.current?.slidePrev()}
-          className="w-9 h-9 rounded-full bg-[var(--event-surface)] text-[var(--event-text)] border border-[var(--event-border)] shadow-xs flex items-center justify-center hover:bg-[var(--event-surface-alt)] hover:scale-105 active:scale-95 transition-all template-focus-ring cursor-pointer"
+          className="w-10 h-10 rounded-xl bg-white text-slate-950 border-2 border-slate-950 shadow-[3px_3px_0px_#0f172a] flex items-center justify-center hover:bg-amber-300 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all template-focus-ring cursor-pointer"
           aria-label="Previous photograph"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
         </button>
 
         {/* Numeric Counter: CURRENT / TOTAL */}
-        <div className="font-mono text-xs font-bold tracking-wider text-[var(--event-text-muted)] px-1">
-          <span className="text-[var(--event-accent-strong,#8f6a2c)]">{currentFormatted}</span>
-          <span className="mx-1 opacity-40">/</span>
-          <span>{totalFormatted}</span>
+        <div className="font-mono text-xs font-black tracking-wider text-slate-300 px-1">
+          <span className="text-amber-400 font-black">{currentFormatted}</span>
+          <span className="mx-1 text-slate-500">/</span>
+          <span className="text-slate-400">{totalFormatted}</span>
         </div>
 
         {/* Capped 5-Segment Progress Rail */}
@@ -326,10 +329,10 @@ export function SkewCarousel({
                 aria-label={`Jump to gallery section ${i + 1}`}
                 onClick={() => handleSegmentClick(i)}
                 className={cn(
-                  "h-1.5 rounded-full transition-all duration-300 cursor-pointer template-focus-ring",
+                  "h-2 rounded-full transition-all duration-300 cursor-pointer border border-slate-950",
                   isSegActive
-                    ? "w-7 sm:w-9 bg-[var(--event-primary)] shadow-xs"
-                    : "w-2.5 sm:w-3.5 bg-[var(--event-border)] hover:bg-[var(--event-primary)]/50 opacity-80"
+                    ? "w-7 sm:w-9 bg-[var(--event-primary)] shadow-[2px_2px_0px_#0f172a]"
+                    : "w-2.5 sm:w-3.5 bg-slate-700 hover:bg-slate-500 opacity-80"
                 )}
               />
             );
@@ -340,10 +343,10 @@ export function SkewCarousel({
         <button
           type="button"
           onClick={() => swiperRef.current?.slideNext()}
-          className="w-9 h-9 rounded-full bg-[var(--event-surface)] text-[var(--event-text)] border border-[var(--event-border)] shadow-xs flex items-center justify-center hover:bg-[var(--event-surface-alt)] hover:scale-105 active:scale-95 transition-all template-focus-ring cursor-pointer"
+          className="w-10 h-10 rounded-xl bg-white text-slate-950 border-2 border-slate-950 shadow-[3px_3px_0px_#0f172a] flex items-center justify-center hover:bg-amber-300 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all template-focus-ring cursor-pointer"
           aria-label="Next photograph"
         >
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-5 h-5 stroke-[2.5]" />
         </button>
       </div>
     </div>
