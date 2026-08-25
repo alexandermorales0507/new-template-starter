@@ -33,8 +33,16 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
     extractMilestoneNumber(data.milestoneAge ? String(data.milestoneAge) : data.hostLine) || "10";
 
   // Dynamic Sub-Headline resolution (pure milestone without repeating celebrant name)
+  const isStaleNameInDisplayAs = Boolean(
+    data.displayAs &&
+    data.displayAs.toLowerCase().includes("'s") &&
+    !data.displayAs.toLowerCase().includes(displayName.toLowerCase())
+  );
+
   const subHeadline =
-    data.displayAs && data.displayAs.trim().toLowerCase() !== displayName.trim().toLowerCase()
+    data.displayAs &&
+    data.displayAs.trim().toLowerCase() !== displayName.trim().toLowerCase() &&
+    !isStaleNameInDisplayAs
       ? data.displayAs
       : data.milestoneAge
         ? `⚡ ${data.milestoneAge} ⚡`
