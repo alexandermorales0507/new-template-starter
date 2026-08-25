@@ -1,8 +1,6 @@
 "use client";
 
 import type { ExtraInfoData } from "@/platform/event-template-data";
-import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
-import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import {
   Accordion,
   AccordionItem,
@@ -12,7 +10,6 @@ import {
 import { Reveal } from "@/template/components/motion/Reveal";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// SAGE ESTATE GUEST GUIDANCE & FAQ (THE GLASSHOUSE LEDGER)
 
 export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
   if (!data.items || data.items.length === 0) return null;
@@ -20,19 +17,19 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
   return (
     <section
       id="extra_info"
-      className="template-section section-surface-sage pattern-archival-dot pattern-subtle relative overflow-x-clip"
+      className="template-section relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-10 sm:mb-12 space-y-2">
-            <span className="text-role-subheading">
+            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
               FOLIO // 10 &bull; GUEST GUIDANCE &amp; FAQ
             </span>
-            <h2 className="text-role-heading text-[var(--event-text)] tracking-tight">
+            <h2 className="text-role-heading text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               {data.sectionTitle || "Frequently Asked Questions"}
             </h2>
             {data.sectionIntro && (
-              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed">
+              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-[var(--event-on-dark-muted,#94a3b8)]">
                 {data.sectionIntro}
               </p>
             )}
@@ -41,10 +38,7 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
 
         <Reveal direction="up" distance={20} delay={0.1}>
           <div className="relative overflow-visible">
-            {/* Botanical Corner Pair on FAQ Container */}
-            <BotanicalCornerPair size="md" />
-
-            <div className="bg-[var(--event-surface)] rounded-2xl border border-[var(--event-border)] p-6 sm:p-8 shadow-card relative z-10">
+            <div className="bg-[var(--event-surface)] rounded-2xl border-2 border-[var(--event-border)] p-6 sm:p-8 shadow-[var(--event-shadow-paper-md)] relative z-10">
               <Accordion type="single" collapsible className="w-full space-y-2">
                 {data.items.map((item, idx) => (
                   <AccordionItem
@@ -52,10 +46,10 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
                     value={`item-${idx + 1}`}
                     className="border-b border-[var(--event-border-subtle)] last:border-0"
                   >
-                    <AccordionTrigger className="font-serif text-base sm:text-lg font-bold text-[var(--event-text)] hover:text-[var(--event-primary)] py-4 text-left">
+                    <AccordionTrigger className="font-serif text-base sm:text-lg font-bold text-[var(--event-text-main)] hover:text-[var(--event-primary)] py-4 text-left">
                       {item.title}
                     </AccordionTrigger>
-                    <AccordionContent className="text-sm sm:text-base text-[var(--event-text)] font-sans leading-relaxed pt-1 pb-4">
+                    <AccordionContent className="text-sm sm:text-base text-[var(--event-text-main)] font-sans leading-relaxed pt-1 pb-4">
                       {item.details}
                     </AccordionContent>
                   </AccordionItem>
@@ -65,9 +59,6 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
           </div>
         </Reveal>
       </div>
-
-      {/* Boundary Threshold Divider: Extra Info -> RSVP */}
-      <SectionFloralDivider />
     </section>
   );
 }

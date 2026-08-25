@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import type { RsvpData } from "@/platform/event-template-data";
-import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { submitRsvp, type PublicRsvpPayload } from "@/platform/submit-rsvp";
 import { formatRsvpDeadline } from "@/template/utils/event-formatting";
-import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { CorrespondenceSheet } from "@/template/components/containers/CorrespondenceSheet";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { Magnetic } from "@/template/components/motion/Magnetic";
@@ -411,25 +409,25 @@ export function RSVPSection(props: RsvpProps) {
   return (
     <section
       id="rsvp_form"
-      className="template-section section-surface-forest pattern-ledger-rule pattern-subtle pattern-dark relative overflow-x-clip pb-12 sm:pb-16"
+      className="template-section relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-10 space-y-2">
-            <span className="text-role-subheading text-[var(--event-accent-soft)]">
+            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
               FOLIO // 11 &bull; RSVP CONFIRMATION
             </span>
-            <h2 className="text-role-heading-major text-[var(--event-on-dark)] tracking-tight">
+            <h2 className="text-role-heading-major text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               RSVP
             </h2>
             {formattedDeadline && (
-              <p className="text-base text-[var(--event-accent-soft)] mt-1 font-sans">
+              <p className="text-base text-[var(--event-on-dark-muted,#94a3b8)] mt-1 font-sans">
                 Kindly respond on or before{" "}
                 <strong className="font-semibold text-white">{formattedDeadline}</strong>
               </p>
             )}
             {props.isDemoMode && (
-              <div className="inline-block mt-2 px-3 py-1 bg-[var(--event-accent-soft)]/20 border border-[var(--event-accent)]/50 text-[var(--event-on-dark)] text-xs font-mono rounded-full">
+              <div className="inline-block mt-2 px-3 py-1 bg-[var(--event-accent,#f59e0b)]/20 border border-[var(--event-accent,#f59e0b)]/50 text-[var(--event-on-dark,#f8fafc)] text-xs font-mono rounded-full">
                 Demo Mode RSVP (Simulated Submission)
               </div>
             )}
@@ -438,19 +436,13 @@ export function RSVPSection(props: RsvpProps) {
 
         <Reveal direction="up" distance={24} delay={0.1}>
           <div className="relative overflow-visible">
-            {/* Signature LG Botanical Corner Pair at z-20 overlapping the paper edge */}
-            <BotanicalCornerPair size="lg" />
-
-            {/* Form Stage (Interactive Controls above florals, Sheet Paper at base) */}
+            {/* Form Stage */}
             <div className="relative z-10">
               <RSVPForm {...props} />
             </div>
           </div>
         </Reveal>
       </div>
-
-      {/* Boundary Threshold Divider: RSVP -> Gifts */}
-      <SectionFloralDivider />
     </section>
   );
 }

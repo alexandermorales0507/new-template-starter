@@ -1,12 +1,10 @@
 import type { StoryMessageData } from "@/platform/event-template-data";
 import { templateAssets } from "@/template/template-assets";
-import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
 import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
 import { CorrespondenceSheet } from "@/template/components/containers/CorrespondenceSheet";
 import { Reveal } from "@/template/components/motion/Reveal";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// SAGE ESTATE STORY MESSAGE JOURNAL (THE GLASSHOUSE LEDGER)
 
 export type StoryMessageSectionProps = {
   data: StoryMessageData;
@@ -21,17 +19,19 @@ export function StoryMessageSection({ data }: StoryMessageSectionProps) {
   return (
     <section
       id="story_message"
-      className="template-section section-surface-paper pattern-ledger-rule pattern-subtle relative overflow-x-clip"
+      className="template-section relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-12 space-y-2">
-            <span className="text-role-subheading">FOLIO // 14 &bull; THE STORY</span>
-            <h2 className="text-role-heading-major text-[var(--event-text,#24342c)] tracking-tight">
+            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
+              FOLIO // 14 &bull; THE STORY
+            </span>
+            <h2 className="text-role-heading-major text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               {data.storyTitle || "The Story"}
             </h2>
             {data.sectionIntro && (
-              <p className="text-role-lead max-w-lg mx-auto mt-2 leading-relaxed">
+              <p className="text-role-lead max-w-lg mx-auto mt-2 leading-relaxed text-[var(--event-on-dark-muted,#94a3b8)]">
                 {data.sectionIntro}
               </p>
             )}
@@ -45,28 +45,22 @@ export function StoryMessageSection({ data }: StoryMessageSectionProps) {
               <SpecimenFrame
                 src={storyPhotos[0]}
                 alt="Story Photo"
-                caption="Archival Journal Memory"
-                specimenNumber="MEMORY // 14"
+                caption="Comic Origin Story"
+                specimenNumber="ISSUE // 14"
                 aspectRatio="landscape"
-                className="shadow-soft bg-[var(--event-surface,#fffdf7)]"
+                className="shadow-[var(--event-shadow-paper-md)] bg-[var(--event-surface)]"
               />
             )}
 
-            {/* Story Description Card with Elevated Outward Botanical Corner Framing */}
+            {/* Story Description Card */}
             {data.storyBody && (
               <div className="relative overflow-visible">
-                <BotanicalCornerPair
-                  size="lg"
-                  className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
-                  leftOffset="-top-7 -left-6 sm:-top-9 sm:-left-8 md:-top-11 md:-left-10"
-                  rightOffset="-top-7 -right-6 sm:-top-9 sm:-right-8 md:-top-11 md:-right-10"
-                />
                 <CorrespondenceSheet
-                  senderLabel="ESTATE DISPATCH"
+                  senderLabel="HERO ORIGIN"
                   dateStamp="CHRONICLE"
-                  className="bg-[var(--event-surface,#fffdf7)] relative z-10"
+                  className="bg-[var(--event-surface)] relative z-10"
                 >
-                  <p className="text-base sm:text-lg text-[var(--event-text,#24342c)] leading-relaxed font-sans text-left pt-1">
+                  <p className="text-base sm:text-lg text-[var(--event-text-main)] leading-relaxed font-sans text-left pt-1">
                     &ldquo;{data.storyBody}&rdquo;
                   </p>
                 </CorrespondenceSheet>

@@ -1,14 +1,11 @@
 import type { VenueData } from "@/platform/event-template-data";
 import { templateAssets } from "@/template/template-assets";
-import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
-import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { MapPin, Navigation, Info } from "lucide-react";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// SAGE ESTATE VENUE LOCATION (THE GLASSHOUSE LEDGER)
 
 export function VenueSection({ data }: { data: VenueData }) {
   const venuePhoto = templateAssets.photos.venue;
@@ -16,13 +13,15 @@ export function VenueSection({ data }: { data: VenueData }) {
   return (
     <section
       id="venue"
-      className="template-section section-surface-sage pattern-glazing-grid pattern-subtle relative overflow-x-clip"
+      className="template-section relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-12 space-y-2">
             <span className="text-role-subheading">FOLIO // 03 &bull; THE GROUNDS</span>
-            <h2 className="text-role-heading text-[var(--event-text)] tracking-tight">The Venue</h2>
+            <h2 className="text-role-heading text-[var(--event-on-dark,#f8fafc)] tracking-tight">
+              The Venue
+            </h2>
           </div>
         </Reveal>
 
@@ -36,14 +35,13 @@ export function VenueSection({ data }: { data: VenueData }) {
                 caption={data.venueName ? `Estate Grounds: ${data.venueName}` : "Estate Grounds"}
                 specimenNumber="ESTATE VIEW // 03"
                 aspectRatio="landscape"
-                className="shadow-soft bg-[var(--event-surface)]"
+                className="shadow-[var(--event-shadow-paper-md)] bg-[var(--event-surface)]"
               />
             </div>
 
-            {/* Right Column: Structured Venue Record with Signature Botanical Corners */}
+            {/* Right Column: Structured Venue Record */}
             <div className="lg:col-span-6">
               <div className="relative overflow-visible">
-                <BotanicalCornerPair size="md" />
                 <LedgerPanel
                   title={data.venueName || "Estate Location"}
                   indexTag="VENUE // RECORD"
@@ -57,7 +55,7 @@ export function VenueSection({ data }: { data: VenueData }) {
                           <span className="text-role-metadata text-[var(--event-text-muted)] block mb-0.5">
                             Official Address
                           </span>
-                          <p className="text-base font-medium text-[var(--event-text)] leading-relaxed font-sans">
+                          <p className="text-base font-medium text-[var(--event-text-main)] leading-relaxed font-sans">
                             {data.address}
                           </p>
                         </div>
@@ -65,7 +63,7 @@ export function VenueSection({ data }: { data: VenueData }) {
                     )}
 
                     {data.arrivalNote && (
-                      <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[var(--event-surface-alt)] border border-[var(--event-border-subtle)] text-sm text-[var(--event-text)]">
+                      <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[var(--event-surface-alt)] border border-[var(--event-border-subtle)] text-sm text-[var(--event-text-main)]">
                         <Info className="w-5 h-5 text-[var(--event-primary)] shrink-0 mt-0.5" />
                         <div>
                           <span className="text-role-metadata text-[var(--event-text-muted)] block mb-0.5">
@@ -84,7 +82,7 @@ export function VenueSection({ data }: { data: VenueData }) {
                           href={data.mapsLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2.5 py-3 px-6 bg-[var(--event-primary)] hover:bg-[var(--event-primary-hover)] text-[var(--event-on-primary)] text-sm font-semibold rounded-xl transition-all shadow-xs template-focus-ring cursor-pointer min-h-[44px]"
+                          className="inline-flex items-center gap-2.5 py-3 px-6 bg-[var(--event-primary)] hover:bg-[var(--event-primary-hover)] text-[var(--event-on-primary)] text-sm font-semibold rounded-xl transition-all shadow-[var(--event-shadow-paper-sm)] template-focus-ring cursor-pointer min-h-[44px]"
                         >
                           <Navigation className="w-4 h-4" />
                           <span>Get Driving Directions</span>
@@ -98,9 +96,6 @@ export function VenueSection({ data }: { data: VenueData }) {
           </div>
         </Reveal>
       </div>
-
-      {/* Boundary Threshold Divider: Venue -> Reception */}
-      <SectionFloralDivider />
     </section>
   );
 }

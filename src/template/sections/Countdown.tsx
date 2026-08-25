@@ -2,15 +2,10 @@
 
 import { useEffect, useState } from "react";
 import type { CountdownData } from "@/platform/event-template-data";
-import { sageDecorations } from "@/template/template-assets";
-import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
-import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
-import { DecorativePattern } from "@/template/components/decorations/DecorativePattern";
 import { AnimatedNumber } from "@/template/components/interactive/AnimatedNumber";
 import { Reveal } from "@/template/components/motion/Reveal";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// SAGE ESTATE COUNTDOWN (THE GLASSHOUSE LEDGER)
 // Real timer calculations mapped to rolling FLIP digits.
 
 export type CountdownSectionProps = {
@@ -79,25 +74,19 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
   return (
     <section
       id="countdown"
-      className="template-section section-surface-sage template-section-compact relative overflow-x-clip"
+      className="template-section template-section-compact relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
-      {/* Decorative Glasshouse Grid Pattern Background (Readable Strength) */}
-      <DecorativePattern
-        src={sageDecorations.glasshouseGridPattern}
-        opacity={0.35}
-        objectPosition="center center"
-        blendMode="multiply"
-      />
-
       <div className="template-container-narrow text-center relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="mb-6 sm:mb-8 space-y-2">
             <span className="text-role-subheading">COUNTDOWN RECORD</span>
-            <h2 className="text-role-heading text-[var(--event-text)]">
+            <h2 className="text-role-heading text-[var(--event-on-dark,#f8fafc)]">
               {data.title || "Counting Down to the Celebration"}
             </h2>
             {data.shortNote && (
-              <p className="text-role-lead max-w-md mx-auto leading-relaxed">{data.shortNote}</p>
+              <p className="text-role-lead max-w-md mx-auto leading-relaxed text-[var(--event-on-dark-muted,#94a3b8)]">
+                {data.shortNote}
+              </p>
             )}
           </div>
         </Reveal>
@@ -107,11 +96,8 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
             {units.map((unit) => (
               <div
                 key={unit.label}
-                className="relative flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border border-[var(--event-border)] bg-[var(--event-surface)] shadow-xs hover:border-[var(--event-accent)]/50 transition-colors overflow-visible"
+                className="relative flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border-2 border-[var(--event-border)] bg-[var(--event-surface)] shadow-[var(--event-shadow-paper-sm)] hover:shadow-[var(--event-shadow-paper-md)] transition-all overflow-visible"
               >
-                {/* Micro Botanical Corner Pair on each Number Card */}
-                <BotanicalCornerPair size="xs" />
-
                 <span className="text-3xl sm:text-4xl lg:text-5xl font-bold font-mono tracking-tight text-[var(--event-text)] tabular-nums relative z-10">
                   <AnimatedNumber value={unit.value} format={{ minimumIntegerDigits: 2 }} />
                 </span>
@@ -123,9 +109,6 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
           </div>
         </Reveal>
       </div>
-
-      {/* Boundary Threshold Divider: Countdown -> Music */}
-      <SectionFloralDivider />
     </section>
   );
 }

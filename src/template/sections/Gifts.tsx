@@ -2,15 +2,12 @@
 
 import { useState } from "react";
 import type { GiftsData } from "@/platform/event-template-data";
-import { BotanicalCornerPair } from "@/template/components/decorations/BotanicalCornerPair";
-import { SectionFloralDivider } from "@/template/components/decorations/SectionFloralDivider";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/template/components/ui/Dialog";
 import { QrCode } from "lucide-react";
 
 // PLATFORM DATA — KEEP DYNAMIC.
-// SAGE ESTATE GIFT DETAILS & REGISTRY (THE GLASSHOUSE LEDGER)
 // Gift Details & Monetary Gift options (Max 2 options).
 
 export function GiftsSection({ data }: { data: GiftsData }) {
@@ -22,17 +19,19 @@ export function GiftsSection({ data }: { data: GiftsData }) {
   return (
     <section
       id="gift_details"
-      className="template-section section-surface-ivory pattern-archival-dot pattern-subtle relative overflow-x-clip"
+      className="template-section relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-10 space-y-2">
-            <span className="text-role-subheading">FOLIO // 12 &bull; GIFT REGISTRY</span>
-            <h2 className="text-role-heading-quiet text-[var(--event-text)] tracking-tight">
+            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
+              FOLIO // 12 &bull; GIFT REGISTRY
+            </span>
+            <h2 className="text-role-heading-quiet text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               Gift Details
             </h2>
             {data.sectionIntro && (
-              <p className="text-role-lead max-w-lg mx-auto mt-2 leading-relaxed">
+              <p className="text-role-lead max-w-lg mx-auto mt-2 leading-relaxed text-[var(--event-on-dark-muted,#94a3b8)]">
                 {data.sectionIntro}
               </p>
             )}
@@ -41,24 +40,21 @@ export function GiftsSection({ data }: { data: GiftsData }) {
 
         <Reveal direction="up" distance={20} delay={0.1}>
           <div className="relative overflow-visible">
-            {/* Botanical Corner Pair on Registry Guidance Outer Panel */}
-            <BotanicalCornerPair size="md" />
-
             <LedgerPanel
               title="Registry Guidance"
               indexTag="GIFTS // FOLIO"
               headerAlign="center"
-              className="max-w-2xl mx-auto bg-[var(--event-surface)] shadow-card space-y-6 relative z-10"
+              className="max-w-2xl mx-auto bg-[var(--event-surface)] text-[var(--event-text-main)] shadow-[var(--event-shadow-paper-md)] space-y-6 relative z-10"
             >
               {data.giftNote && (
-                <p className="text-base sm:text-lg text-[var(--event-text)] leading-relaxed text-center italic font-serif max-w-md mx-auto">
+                <p className="text-base sm:text-lg text-[var(--event-text-main)] leading-relaxed text-center italic font-sans max-w-md mx-auto">
                   &ldquo;{data.giftNote}&rdquo;
                 </p>
               )}
 
               {options.length > 0 && (
                 <div className="border-t border-[var(--event-border-subtle)] pt-5 font-sans">
-                  <span className="text-role-metadata text-[var(--event-accent)] block mb-4 text-center">
+                  <span className="text-role-metadata text-[var(--event-primary)] block mb-4 text-center">
                     Available Contribution Channels
                   </span>
                   <div
@@ -69,14 +65,14 @@ export function GiftsSection({ data }: { data: GiftsData }) {
                     {options.map((opt) => (
                       <div
                         key={opt.id}
-                        className="p-5 rounded-2xl border border-[var(--event-border)] bg-[var(--event-surface-alt)] text-center shadow-xs space-y-3"
+                        className="p-5 rounded-2xl border-2 border-[var(--event-border)] bg-[var(--event-surface-alt)] text-center shadow-[var(--event-shadow-paper-sm)] space-y-3"
                       >
-                        <span className="font-serif font-bold text-[var(--event-text)] block text-lg">
+                        <span className="font-serif font-bold text-[var(--event-text-main)] block text-lg">
                           {opt.title}
                         </span>
                         {opt.image?.url && (
                           <div
-                            className="mt-2 inline-block p-3 bg-[var(--event-surface)] rounded-2xl border border-[var(--event-border)] shadow-xs cursor-pointer group hover:border-[var(--event-primary)] transition-all"
+                            className="mt-2 inline-block p-3 bg-[var(--event-surface)] rounded-2xl border-2 border-[var(--event-border)] shadow-[var(--event-shadow-paper-sm)] cursor-pointer group hover:border-[var(--event-primary)] transition-all"
                             onClick={() => {
                               if (opt.image?.url) {
                                 setZoomImage({
@@ -112,11 +108,11 @@ export function GiftsSection({ data }: { data: GiftsData }) {
           <Dialog open={Boolean(zoomImage)} onOpenChange={() => setZoomImage(null)}>
             <DialogContent className="max-w-sm p-6 bg-[var(--event-surface)] border-[var(--event-border)] text-center">
               <DialogHeader>
-                <DialogTitle className="font-serif text-xl text-[var(--event-text)]">
+                <DialogTitle className="font-serif text-xl text-[var(--event-text-main)]">
                   {zoomImage.title}
                 </DialogTitle>
               </DialogHeader>
-              <div className="p-4 bg-white rounded-2xl border border-[var(--event-border)] mt-3 inline-block">
+              <div className="p-4 bg-white rounded-2xl border-2 border-[var(--event-border)] mt-3 inline-block">
                 <img
                   src={zoomImage.url}
                   alt={zoomImage.title}
@@ -130,9 +126,6 @@ export function GiftsSection({ data }: { data: GiftsData }) {
           </Dialog>
         )}
       </div>
-
-      {/* Boundary Threshold Divider: Gifts -> Guestbook */}
-      <SectionFloralDivider />
     </section>
   );
 }
