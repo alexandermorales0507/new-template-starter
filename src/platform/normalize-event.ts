@@ -250,16 +250,13 @@ export function normalizeEventData(
   let groomName = stringValue(hostContent.groomName);
   let brideName = stringValue(hostContent.brideName);
   let displayAs = stringValue(hostContent.displayAs) || "";
-  let hostLine = stringValue(hostContent.hostLine);
+  let hostLine = stringValue(hostContent.hostLine) || "";
   let shortHostMessage =
     stringValue(hostContent.shortHostMessage) || stringValue(hostContent.invitationNote) || "";
 
   if (isBirthday || celebrantName) {
     groomName = celebrantName || groomName || "Celebrant";
     brideName = brideName || "";
-    if (!hostLine) {
-      hostLine = milestoneAge ? `TURNING ${milestoneAge}` : "A Special Celebration";
-    }
     if (!displayAs) {
       displayAs = celebrantName || groomName;
     }
