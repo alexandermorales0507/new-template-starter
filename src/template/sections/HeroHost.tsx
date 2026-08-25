@@ -32,13 +32,13 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
   const milestoneNum =
     extractMilestoneNumber(data.milestoneAge ? String(data.milestoneAge) : data.hostLine) || "10";
 
-  // Dynamic Sub-Headline resolution (preserves custom dashboard emoji styles)
+  // Dynamic Sub-Headline resolution (pure milestone without repeating celebrant name)
   const subHeadline =
     data.displayAs && data.displayAs.trim().toLowerCase() !== displayName.trim().toLowerCase()
       ? data.displayAs
       : data.milestoneAge
-        ? `⚡ TURNING ${milestoneNum}! ⚡`
-        : "⚡ A SPECIAL CELEBRATION ⚡";
+        ? `⚡ ${data.milestoneAge} ⚡`
+        : `⚡ TURNING ${milestoneNum}! ⚡`;
 
   return (
     <section
