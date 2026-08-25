@@ -1,77 +1,17 @@
 /* ==========================================================================
-   SAGE ESTATE — BACKGROUND PATTERN ARCHITECTURE (SVG / CSS GRADIENTS)
-   Zero runtime dependencies. Infinite resolution. Pure theme-aware gradients.
+   COMIC PAPER DESIGN SYSTEM — PATTERNS & HALFTONE TEXTURES
+   Clean comic halftone / action dots pattern
    ========================================================================== */
 
-:root {
-  --pattern-opacity: 0.06;
-  --pattern-color: 36, 52, 44; /* Deep Pine Charcoal on light surfaces */
+.pattern-comic-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
 }
 
-/* Intensity Modifiers */
-.pattern-subtle {
-  --pattern-opacity: 0.04;
-}
-
-.pattern-standard {
-  --pattern-opacity: 0.07;
-}
-
-.pattern-feature {
-  --pattern-opacity: 0.11;
-}
-
-/* Surface-Aware Inversion (for Forest / Dark Sections: Reception, RSVP, Footer) */
-.pattern-dark {
-  --pattern-color: 235, 220, 201; /* Soft Champagne Brass on dark surfaces */
-}
-
-/* 1. Glazing Grid: Greenhouse / Conservatory window pane structure */
-.pattern-glazing-grid {
-  background-size: 32px 32px;
-  background-image:
-    linear-gradient(
-      to right,
-      rgba(var(--pattern-color), var(--pattern-opacity)) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(var(--pattern-color), var(--pattern-opacity)) 1px,
-      transparent 1px
-    );
-}
-
-/* 2. Ledger Rule: Archival correspondence & ledger paper lines */
-.pattern-ledger-rule {
-  background-size: 100% 28px;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 27px,
-    rgba(var(--pattern-color), var(--pattern-opacity)) 28px
-  );
-}
-
-/* 3. Archival Dot: Subtle metric dot grid */
+.pattern-glazing,
+.pattern-glazing-grid,
+.pattern-ledger-rule,
+.pattern-lattice,
 .pattern-archival-dot {
-  background-size: 20px 20px;
-  background-image: radial-gradient(
-    circle,
-    rgba(var(--pattern-color), var(--pattern-opacity)) 1px,
-    transparent 1px
-  );
-}
-
-/* 4. Conservatory Lattice: 45-degree diagonal trellis geometry */
-.pattern-lattice {
-  background-size: 28px 28px;
-  background-image:
-    linear-gradient(45deg, rgba(var(--pattern-color), var(--pattern-opacity)) 25%, transparent 25%),
-    linear-gradient(
-      -45deg,
-      rgba(var(--pattern-color), var(--pattern-opacity)) 25%,
-      transparent 25%
-    ),
-    linear-gradient(45deg, transparent 75%, rgba(var(--pattern-color), var(--pattern-opacity)) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(var(--pattern-color), var(--pattern-opacity)) 75%);
+  background-image: none !important;
 }

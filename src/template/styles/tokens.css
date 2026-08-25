@@ -1,73 +1,60 @@
 /* ==========================================================================
-   SAGE ESTATE — THE GLASSHOUSE LEDGER
-   DESIGN SYSTEM TOKENS (60 / 30 / 10 BOTANICAL ARCHITECTURE)
+   COMIC PAPER DESIGN SYSTEM — AVENGERS ASSEMBLE (BIRTHDAY 10TH)
+   CENTRALIZED DESIGN TOKENS (HIGH-CONTRAST COMIC PAPER & ACTION ENGINE)
    ========================================================================== */
 
 :root {
-  /* ==========================================================================
-     PRIMARY SEMANTIC WEDDING TOKENS (AUTHORITATIVE SAGE ESTATE PALETTE)
-     ========================================================================== */
-  /* 60% Dominant Base Surfaces (Cream / Ivory / Pure Paper Stationery) */
-  --event-bg: #f7f4ea; /* Warm Cream / Ivory Page Canvas */
-  --event-surface: #fffdf7; /* Soft Warm Paper Stationery (Cards/Panels) */
-  --event-surface-card: #ffffff; /* Pure Stationery Surface */
+  /* --- Canvas & Comic Paper Backgrounds --- */
+  --event-bg: #0f172a; /* Deep slate dark canvas */
+  --event-surface: #ffffff; /* Pure crisp comic paper card */
+  --event-surface-paper: #faf9f5; /* Off-white pulp paper */
+  --event-surface-caption: #fef08a; /* Marvel yellow narrator box */
+  --event-surface-dark: #1e293b; /* Dark panel surface */
+  --event-surface-dark-alt: #090d16; /* Deepest ink anchor */
+  --event-surface-alt: #f1f5f9; /* Light panel wash */
+  --event-surface-card: #ffffff; /* Pure paper surface */
 
-  /* 30% Secondary Botanical Identity (Mist Sage Wash / Conservatory Sage) */
-  --event-surface-alt: #dde5d3; /* Mist Sage Wash (Alternating Section Bands) */
-  --event-primary: #657a57; /* Conservatory Sage (Primary Brand Action) */
-  --event-primary-hover: #4f6445; /* Deep Dusk Sage (Hover / Active Action) */
-  --event-border: #c7cfbc; /* Hairline Glazing Border */
-  --event-border-subtle: #e1e7d9; /* Ledger Rule Line */
-  --event-text: #24342c; /* Deep Pine Charcoal (Headings & Primary Text) */
-  --event-text-muted: #5d695f; /* Slate Botanical Gray (Secondary & Body Text) */
+  /* --- Superhero Action Palette --- */
+  --event-primary: #dc2626; /* Marvel Crimson Action Red */
+  --event-primary-hover: #b91c1c;
+  --event-accent: #f59e0b; /* Stark Gold / Amber */
+  --event-accent-hover: #d97706;
+  --event-accent-strong: #b45309; /* High-contrast amber/gold */
+  --event-accent-soft: #fef3c7; /* Pale gold badge fill */
+  --event-cyan: #0284c7; /* Arc Reactor Cyan */
+  --event-ink: #0f172a; /* Pure comic line-art black/slate */
+  --event-on-primary: #ffffff; /* Text on primary actions */
+  --event-on-dark: #f8fafc; /* High-contrast white text on dark */
+  --event-on-dark-muted: #94a3b8; /* Muted slate text on dark */
+  --event-focus: #dc2626; /* Focus ring accent */
 
-  /* 10% Accents & Dark Anchors (Deep Estate Forest & Antique Brass Gold) */
-  --event-surface-dark: #304438; /* Deep Estate Forest (Reception, RSVP, Footer) */
-  --event-surface-dark-alt: #223322; /* Deepest Shade Anchor */
-  --event-accent: #c9a86a; /* Antique Brass Gold (Seals, Borders, Badges) */
-  --event-accent-strong: #8f6a2c; /* High-Contrast Antique Brass Gold (Folios, Micro-Labels, Dates, Ledger Tags) */
-  --event-accent-soft: #ebdcc9; /* Soft Champagne Gold (Muted Brass Glyphs) */
-  --event-on-primary: #ffffff; /* Text on Sage & Forest Actions */
-  --event-on-dark: #fffdf7; /* Warm Cloud Ivory Text on Deep Forest Surfaces & Aurora */
-  --event-on-dark-muted: #dde5d3; /* Mist Sage Wash Secondary Text on Dark Surfaces & Aurora */
-  --event-focus: #657a57; /* Focus Ring Accent */
+  /* --- Text Hierarchy --- */
+  --event-text: #0f172a; /* Primary text (maps to ink) */
+  --event-text-main: #0f172a; /* High-contrast ink on white */
+  --event-text-muted: #475569; /* Slate subtitle */
+  --event-text-light: #f8fafc; /* Light text on dark surfaces */
 
-  /* ESTATE GLASS TOKENS (STATIONERY & CONTROLS ON MOVING BACKGROUNDS) */
-  --event-glass-light-bg: rgba(255, 253, 247, 0.78);
-  --event-glass-light-border: rgba(255, 253, 247, 0.7);
-  --event-glass-sage-bg: rgba(101, 122, 87, 0.88);
-  --event-glass-sage-border: rgba(221, 229, 211, 0.4);
-  --event-glass-blur: 14px;
+  /* --- Comic Ink Borders --- */
+  --event-border: #0f172a;
+  --event-border-subtle: #cbd5e1;
+  --event-border-comic-sm: 2px solid #0f172a;
+  --event-border-comic: 2.5px solid #0f172a;
+  --event-border-comic-lg: 3.5px solid #0f172a;
 
-  /* SAGE ESTATE AMBIENT PETAL PALETTE */
-  --event-petal-light-highlight: #fffdf7; /* Warm Cloud Ivory */
-  --event-petal-light-base: #f7f4ea;
-  --event-petal-light-shadow: #e8e2d2;
-  --event-petal-light-vein: #c5bc9f;
+  /* --- Centralized Hard Ink Shadows (Zero Blur) --- */
+  --event-shadow-paper-sm: 3px 3px 0px #0f172a;
+  --event-shadow-paper-md: 6px 6px 0px #0f172a;
+  --event-shadow-paper-lg: 10px 10px 0px #0f172a;
+  --event-shadow-paper-red: 6px 6px 0px #991b1b;
+  --event-shadow-paper-gold: 6px 6px 0px #b45309;
 
-  --event-petal-secondary-highlight: #e8efe0; /* Mist / Pale Botanical Sage */
-  --event-petal-secondary-base: #dde5d3;
-  --event-petal-secondary-shadow: #b8c4a9;
-  --event-petal-secondary-vein: #97a884;
+  /* --- Backward compatibility aliases --- */
+  --event-card-shadow: var(--event-shadow-paper-md);
+  --event-floating-shadow: var(--event-shadow-paper-lg);
+  --shadow-xs: var(--event-shadow-paper-sm);
+  --shadow-soft: var(--event-shadow-paper-md);
+  --shadow-floating: var(--event-shadow-paper-lg);
 
-  --event-petal-primary-highlight: #a8be92; /* Luminous Botanical Sage */
-  --event-petal-primary-base: #8fa878;
-  --event-petal-primary-shadow: #6f8857;
-  --event-petal-primary-vein: #4e653a;
-
-  --event-petal-metallic-highlight: #e2cca3; /* Antique Gold / Champagne */
-  --event-petal-metallic-base: #c9a86a;
-  --event-petal-metallic-shadow: #a7864b;
-  --event-petal-metallic-vein: #7d612e;
-
-  --event-petal-botanical-highlight: #4a6354; /* Deep Forest Accent */
-  --event-petal-botanical-base: #304438;
-  --event-petal-botanical-shadow: #213027;
-  --event-petal-botanical-vein: #151f19;
-
-  --event-petal-canvas-shadow: rgba(23, 33, 27, 0.1);
-
-  /* COMPATIBILITY ALIASES (MAP DIRECTLY TO SEMANTIC TOKENS) */
   --surface-page: var(--event-bg);
   --surface-card: var(--event-surface);
   --surface-muted: var(--event-surface-alt);
@@ -78,7 +65,6 @@
   --text-muted: var(--event-text-muted);
   --text-on-dark: var(--event-on-dark);
   --border-default: var(--event-border);
-  --border-subtle: var(--event-border-subtle);
 
   --action-primary: var(--event-primary);
   --action-primary-hover: var(--event-primary-hover);
@@ -86,31 +72,20 @@
   --accent-primary: var(--event-accent);
   --focus-ring: var(--event-focus);
 
-  /* Legacy color aliases mapped strictly to new palette */
-  --color-sage-daylight: var(--event-bg);
-  --color-sage-paper: var(--event-surface-card);
-  --color-sage-wash: var(--event-surface-alt);
-  --color-sage-primary: var(--event-primary);
-  --color-sage-primary-hover: var(--event-primary-hover);
-  --color-sage-forest: var(--event-surface-dark);
-  --color-sage-forest-dark: var(--event-surface-dark-alt);
-  --color-brass-accent: var(--event-accent);
-  --color-brass-soft: var(--event-accent-soft);
-  --color-brass-gold: var(--event-accent);
+  /* --- Comic Paper Glass & Panels --- */
+  --event-glass-light-bg: #ffffff;
+  --event-glass-light-border: #0f172a;
+  --event-glass-sage-bg: #dc2626;
+  --event-glass-sage-border: #0f172a;
+  --event-glass-blur: 0px;
 
-  /* GEOMETRY & RADIUS */
+  /* --- GEOMETRY & RADIUS --- */
   --radius-sm: 0.375rem;
-  --radius-card: 1rem;
+  --radius-card: 0.75rem;
   --radius-control: 0.5rem;
   --radius-pill: 9999px;
 
-  /* SHADOWS (PAPER-LIKE RESTRAINED ELEVATION) */
-  --shadow-xs: 0 1px 2px 0 rgba(36, 52, 44, 0.04);
-  --shadow-soft: 0 4px 12px -2px rgba(36, 52, 44, 0.06), 0 2px 4px -1px rgba(36, 52, 44, 0.03);
-  --shadow-floating:
-    0 12px 32px -4px rgba(36, 52, 44, 0.14), 0 4px 12px -2px rgba(36, 52, 44, 0.06);
-
-  /* SPACING & LAYOUT */
+  /* --- SPACING & LAYOUT --- */
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 1.5rem;
@@ -122,15 +97,15 @@
   --content-max-width: 68rem;
   --reading-max-width: 44rem;
 
-  /* SHELL & NAVIGATION TOKENS */
+  /* --- SHELL & NAVIGATION TOKENS --- */
   --nav-height: 4.25rem;
   --event-nav-height: 4.25rem;
   --event-nav-bg-hero: transparent;
-  --event-nav-bg-scrolled: rgba(247, 244, 234, 0.94);
-  --event-nav-border-scrolled: var(--event-border);
-  --event-nav-shadow-scrolled: var(--shadow-soft);
-  --event-nav-text: var(--event-text);
-  --event-nav-muted: var(--event-text-muted);
+  --event-nav-bg-scrolled: rgba(15, 23, 42, 0.95);
+  --event-nav-border-scrolled: #334155;
+  --event-nav-shadow-scrolled: var(--event-shadow-paper-sm);
+  --event-nav-text: var(--event-on-dark);
+  --event-nav-muted: var(--event-on-dark-muted);
 
   --event-floating-bottom: calc(env(safe-area-inset-bottom) + 1.25rem);
   --event-floating-gap: 0.75rem;
@@ -139,14 +114,10 @@
   --event-dock-btn-size-compact: 2.375rem;
   --event-music-circle-size: 3.5rem;
   --event-music-circle-size-compact: 3rem;
-  --event-music-card-radius: 1rem;
-  --event-floating-shadow:
-    0 12px 32px -4px rgba(36, 52, 44, 0.18), 0 4px 12px -2px rgba(36, 52, 44, 0.08);
-  --event-card-shadow:
-    0 18px 48px -8px rgba(36, 52, 44, 0.08), 0 6px 16px -4px rgba(36, 52, 44, 0.03);
+  --event-music-card-radius: 0.75rem;
 
-  --event-dock-bg: rgba(255, 253, 247, 0.95);
-  --event-dock-border: var(--event-border);
+  --event-dock-bg: #ffffff;
+  --event-dock-border: #0f172a;
   --event-dock-primary-bg: var(--event-primary);
   --event-dock-primary-fg: var(--event-on-primary);
   --event-dock-secondary-bg: var(--event-surface-alt);
@@ -154,7 +125,7 @@
 
   --event-drawer-width: 26rem;
   --event-drawer-bg: var(--event-bg);
-  --event-drawer-border: var(--event-border);
+  --event-drawer-border: #334155;
 
   --event-footer-pt-full: 3.5rem;
   --event-footer-pb-full: 7.5rem;

@@ -1,19 +1,19 @@
 /* ==========================================================================
-   SAGE ESTATE — THE GLASSHOUSE LEDGER
-   CENTRALIZED TYPOGRAPHY ROLES (PLAYFAIR DISPLAY + MANROPE + MONOSPACE)
+   COMIC PAPER DESIGN SYSTEM — ACTION TYPOGRAPHY ENGINE
+   CENTRALIZED TYPOGRAPHY ROLES (BEBAS NEUE + PLUS JAKARTA SANS + MONOSPACE)
    ========================================================================== */
 
 :root {
   --font-family-body: var(
     --font-event-body,
-    "Manrope",
+    "Plus Jakarta Sans",
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
     Roboto,
     sans-serif
   );
-  --font-family-display: var(--font-event-display, "Playfair Display", Georgia, serif);
+  --font-family-display: var(--font-event-display, "Bebas Neue", sans-serif);
   --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
@@ -37,107 +37,124 @@ body {
    CENTRALIZED RESPONSIVE TYPE SCALE ROLES
    ========================================================================== */
 
-/* 1. Hero Display (Playfair Display 700/800) */
+/* 1. Hero Display (Bebas Neue 400 - Bold Action Headline) */
 .text-role-display {
-  font-family: var(--font-family-display);
-  font-size: clamp(2.25rem, 5.5vw, 3.75rem);
-  line-height: 1.08;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--font-event-display), var(--font-family-display), sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
   color: inherit;
 }
 
-/* 2. Major Peak Section Headings (Ceremony, RSVP, Gallery, Love Story) */
+/* 2. Major Peak Section Headings (Ceremony, RSVP, Gallery, Story) */
 .text-role-heading-major {
-  font-family: var(--font-family-display);
-  font-size: clamp(1.875rem, 4vw, 2.75rem);
-  line-height: 1.15;
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  font-family: var(--font-event-display), var(--font-family-display), sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  font-size: clamp(2rem, 5vw, 3.5rem);
   color: inherit;
 }
 
-/* 3. Standard Section Headings (Countdown, Music, Venue, Reception, Timeline, Attire, Extra Info) */
+/* 3. Standard Section Headings */
 .text-role-heading {
-  font-family: var(--font-family-display);
-  font-size: clamp(1.5rem, 3vw, 2.125rem);
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-family: var(--font-event-display), var(--font-family-display), sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
   color: inherit;
 }
 
-/* 4. Quiet Section Headings (Entourage, Sponsors, Gifts, Guestbook) */
+/* 4. Quiet Section Headings */
 .text-role-heading-quiet {
-  font-family: var(--font-family-display);
-  font-size: clamp(1.375rem, 2.5vw, 1.875rem);
-  line-height: 1.25;
-  font-weight: 600;
+  font-family: var(--font-event-display), var(--font-family-display), sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  font-size: clamp(1.35rem, 3vw, 1.875rem);
   color: inherit;
 }
 
-/* 5. Estate Numeric Date (ui-monospace 700 / Manrope 700) */
+/* 5. Estate Numeric Date / Milestone Stamp */
 .text-role-estate-date {
   font-family: var(--font-family-mono);
   font-size: clamp(1.25rem, 2.8vw, 1.75rem);
   font-weight: 700;
   letter-spacing: 0.16em;
-  color: var(--event-accent-strong, #8f6a2c);
+  color: var(--event-accent-strong, #b45309);
   text-transform: uppercase;
 }
 
-/* 6. Section Intro & Prominent Lead Prose (Manrope 500) */
+/* 6. Section Intro & Prominent Lead Prose */
 .text-role-lead {
   font-family: var(--font-family-body);
-  font-size: clamp(1rem, 1.8vw, 1.125rem); /* 16px - 18px */
+  font-size: clamp(1rem, 1.8vw, 1.125rem);
   font-weight: 500;
-  line-height: 1.65;
+  line-height: 1.6;
   color: var(--event-text-muted);
 }
 
 /* 7. Sub-Headings & Card Titles */
 .text-role-card-heading {
-  font-family: var(--font-family-display);
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
-  line-height: 1.35;
-  font-weight: 600;
-  color: inherit;
-}
-
-/* 8. Standard Body & Descriptions (Manrope 400/500 - 16px baseline) */
-.text-role-body {
-  font-family: var(--font-family-body);
-  font-size: 1rem; /* 16px solid mobile baseline */
+  font-family: var(--font-event-display), var(--font-family-display), sans-serif;
   font-weight: 400;
-  line-height: 1.65;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  font-size: 1.35rem;
   color: inherit;
 }
 
-/* 9. UI Labels & Form Field Headers (Manrope 600) */
+/* 8. Standard Body & Descriptions */
+.text-role-body {
+  font-family: var(--font-event-body), var(--font-family-body), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--event-text-main);
+}
+
+/* 9. Comic Folio / Section Tag */
+.text-role-folio {
+  font-family: var(--font-event-body), var(--font-family-body), sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  color: inherit;
+}
+
+/* 10. UI Labels & Form Field Headers */
 .text-role-ui-label {
   font-family: var(--font-family-body);
-  font-size: 0.875rem; /* 14px */
-  font-weight: 600;
+  font-size: 0.875rem;
+  font-weight: 700;
   line-height: 1.4;
   color: inherit;
 }
 
-/* 10. Archival Metadata Tag & Folio Stamps (ui-monospace 700) */
+/* 11. Archival Metadata Tag & Stamps */
 .text-role-metadata,
 .text-role-subheading {
   font-family: var(--font-family-mono);
-  font-size: 0.75rem; /* 12px */
+  font-size: 0.75rem;
   line-height: 1rem;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--event-accent-strong, #8f6a2c);
+  letter-spacing: 0.15em;
+  color: var(--event-accent-strong, #b45309);
 }
 
-/* 11. Small Metadata & Captions */
+/* 12. Small Metadata & Captions */
 .text-role-caption {
   font-family: var(--font-family-mono);
-  font-size: 0.75rem; /* 12px */
+  font-size: 0.75rem;
   line-height: 1rem;
   color: var(--event-text-muted);
 }
