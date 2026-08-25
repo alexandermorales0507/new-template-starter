@@ -51,7 +51,7 @@ export function LedgerPanel({
             </div>
           ) : null}
           {title ? (
-            <h3 className="mt-1 font-serif text-xl font-bold tracking-tight text-[var(--event-text)]">
+            <h3 className="mt-1 font-serif text-xl font-bold tracking-wider text-[var(--event-text)]">
               {title}
             </h3>
           ) : null}

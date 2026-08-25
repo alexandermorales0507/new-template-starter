@@ -44,6 +44,34 @@ export function extractMilestoneNumber(milestone?: string | null): string | null
   return match ? match[1] : null;
 }
 
+/**
+ * Converts an integer milestone into an ordinal string.
+ * Examples:
+ * - "1"  -> "1st",  "2"  -> "2nd",  "3"  -> "3rd",  "4"  -> "4th"
+ * - "10" -> "10th", "11" -> "11th", "12" -> "12th", "13" -> "13th"
+ * - "21" -> "21st", "22" -> "22nd", "30" -> "30th"
+ */
+export function getOrdinalSuffix(num?: string | number | null): string {
+  if (!num) return "";
+  const n = parseInt(String(num).trim(), 10);
+  if (isNaN(n)) return String(num);
+  const remainder100 = n % 100;
+  if (remainder100 >= 11 && remainder100 <= 13) {
+    return `${n}th`;
+  }
+  const remainder10 = n % 10;
+  switch (remainder10) {
+    case 1:
+      return `${n}st`;
+    case 2:
+      return `${n}nd`;
+    case 3:
+      return `${n}rd`;
+    default:
+      return `${n}th`;
+  }
+}
+
 export function deriveHostIdentity(
   groomName?: string,
   brideName?: string,

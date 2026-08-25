@@ -88,7 +88,7 @@ export function DateCalendar({
     >
       {/* Month & Year Header */}
       <div className="mb-4 flex items-center justify-between border-b border-[var(--event-border-subtle)] pb-3">
-        <span className="font-serif text-xl font-bold text-[var(--event-text)] tracking-tight">
+        <span className="font-serif text-xl font-bold text-[var(--event-text)] tracking-wider">
           {monthName}
         </span>
         <span className="font-mono text-xs font-bold text-[var(--event-accent-strong,#8f6a2c)]">

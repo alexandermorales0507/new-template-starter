@@ -1,5 +1,9 @@
 import type { HostInfoData } from "@/platform/event-template-data";
-import { deriveHostIdentity, extractMilestoneNumber } from "@/template/utils/host-identity";
+import {
+  deriveHostIdentity,
+  extractMilestoneNumber,
+  getOrdinalSuffix,
+} from "@/template/utils/host-identity";
 import { templateAssets } from "@/template/template-assets";
 import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
 import { Reveal } from "@/template/components/motion/Reveal";
@@ -31,6 +35,7 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
 
   const milestoneNum =
     extractMilestoneNumber(data.milestoneAge ? String(data.milestoneAge) : data.hostLine) || "10";
+  const ordinalMilestone = getOrdinalSuffix(milestoneNum).toUpperCase();
 
   return (
     <section
@@ -45,7 +50,7 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
             <Reveal direction="down" distance={16}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
                 <span className="comic-badge comic-badge-gold">
-                  ★ ISSUE #{milestoneNum} • SPECIAL EDITION ★
+                  ★ ISSUE #{milestoneNum} • {ordinalMilestone} SPECIAL EDITION ★
                 </span>
               </div>
             </Reveal>
@@ -65,7 +70,7 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
             {/* 3. Marvel Yellow Narrator Box */}
             {data.shortHostMessage && (
               <Reveal direction="up" distance={16} delay={0.2}>
-                <div className="comic-caption-box max-w-xl mx-auto lg:mx-0 p-4 sm:p-5 border-[3px] border-slate-950 bg-amber-200 text-slate-950 font-bold text-base sm:text-lg leading-snug shadow-[4px_4px_0px_#0f172a] rounded-xl">
+                <div className="comic-caption-box w-fit max-w-lg mx-auto lg:mx-0 p-4 sm:p-5 border-[3px] border-slate-950 bg-amber-200 text-slate-950 font-bold text-base sm:text-lg leading-snug shadow-[4px_4px_0px_#0f172a] rounded-xl text-center lg:text-left">
                   &ldquo;{data.shortHostMessage}&rdquo;
                 </div>
               </Reveal>
