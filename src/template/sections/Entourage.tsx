@@ -47,7 +47,7 @@ export function EntourageSection({ data }: { data: EntourageData }) {
           <div className="text-center mb-10 sm:mb-14 space-y-2">
             <span className="comic-badge comic-badge-gold">ALLIES // THE ASSEMBLED SQUAD</span>
             <h2 className="text-role-heading-quiet text-[var(--event-on-dark,#f8fafc)] tracking-tight">
-              The Entourage
+              {data.sectionTitle || "The Entourage"}
             </h2>
             {data.introLine && (
               <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-slate-300">

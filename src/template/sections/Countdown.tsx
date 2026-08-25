@@ -84,7 +84,7 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
               {data.title || "Counting Down to the Celebration"}
             </h2>
             {data.shortNote && (
-              <p className="text-role-lead max-w-md mx-auto leading-relaxed text-[var(--event-on-dark-muted,#94a3b8)]">
+              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-slate-300">
                 {data.shortNote}
               </p>
             )}

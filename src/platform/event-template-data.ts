@@ -66,6 +66,7 @@ export type CeremonyData = MainEventData;
 
 // venue (Location)
 export type VenueData = {
+  sectionTitle?: string;
   venueName: string;
   address: string;
   mapsLink?: string;
@@ -106,18 +107,21 @@ export type EntourageGroup = {
 };
 
 export type EntourageData = {
+  sectionTitle?: string;
   introLine?: string;
   groups: EntourageGroup[];
 };
 
 // principal_sponsors
 export type SponsorsData = {
+  sectionTitle?: string;
   introLine?: string;
   names: string;
 };
 
 // attire_motif
 export type AttireData = {
+  sectionTitle?: string;
   sectionIntro?: string;
   dressCodeNote?: string;
   colorMotifNote?: string;
@@ -165,6 +169,7 @@ export type GiftOption = {
 };
 
 export type GiftsData = {
+  sectionTitle?: string;
   sectionIntro?: string;
   giftNote?: string;
   options: GiftOption[];

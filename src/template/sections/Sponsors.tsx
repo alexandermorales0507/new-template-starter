@@ -40,7 +40,7 @@ export function SponsorsSection({ data }: { data: SponsorsData }) {
           <div className="text-center mb-8 sm:mb-10 space-y-2">
             <span className="comic-badge comic-badge-gold">HONORARY GUARDIANS // VIP</span>
             <h2 className="text-role-heading-quiet text-[var(--event-on-dark,#f8fafc)] tracking-tight">
-              Principal Sponsors
+              {data.sectionTitle || "Principal Sponsors"}
             </h2>
             {data.introLine && (
               <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-slate-300">

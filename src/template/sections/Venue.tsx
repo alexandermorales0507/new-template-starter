@@ -20,7 +20,7 @@ export function VenueSection({ data }: { data: VenueData }) {
           <div className="text-center mb-8 sm:mb-12 space-y-2">
             <span className="comic-badge comic-badge-gold">MISSION // 03 • HEADQUARTERS</span>
             <h2 className="text-role-heading text-[var(--event-on-dark,#f8fafc)] tracking-tight">
-              The Venue
+              {data.sectionTitle || "The Venue"}
             </h2>
           </div>
         </Reveal>

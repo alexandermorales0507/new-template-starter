@@ -26,7 +26,7 @@ export function GiftsSection({ data }: { data: GiftsData }) {
           <div className="text-center mb-8 sm:mb-10 space-y-2">
             <span className="comic-badge comic-badge-gold">SUPPLY DROP // GIFT DETAILS</span>
             <h2 className="text-role-heading-quiet text-[var(--event-on-dark,#f8fafc)] tracking-tight">
-              Gift Details
+              {data.sectionTitle || "Gift Details"}
             </h2>
             {data.sectionIntro && (
               <p className="text-role-lead max-w-lg mx-auto mt-2 leading-relaxed text-slate-300">

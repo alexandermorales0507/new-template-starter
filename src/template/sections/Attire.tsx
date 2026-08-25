@@ -25,7 +25,7 @@ export function AttireSection({ data }: { data: AttireData }) {
               TACTICAL GEAR // COSTUME &amp; MOTIF
             </span>
             <h2 className="text-role-heading text-[var(--event-on-dark,#f8fafc)] tracking-tight">
-              Dress Code &amp; Palette
+              {data.sectionTitle || "Dress Code & Palette"}
             </h2>
             {data.sectionIntro && (
               <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-slate-300">

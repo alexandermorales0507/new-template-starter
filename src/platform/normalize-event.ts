@@ -322,6 +322,7 @@ export function normalizeEventData(
   // 6. venue (Location)
   const venueContent = getSectionContent("venue");
   const venueData = {
+    sectionTitle: stringValue(venueContent.sectionTitle),
     venueName: stringValue(venueContent.venueName ?? raw.venueName) || "Event Venue",
     address: stringValue(venueContent.address ?? raw.venueAddress) || "Venue Address",
     mapsLink: stringValue(venueContent.mapsLink),
@@ -400,6 +401,7 @@ export function normalizeEventData(
     };
   });
   const entourageData = {
+    sectionTitle: stringValue(entourageContent.sectionTitle),
     introLine: stringValue(entourageContent.introLine),
     groups: entourageGroups,
   };
@@ -415,6 +417,7 @@ export function normalizeEventData(
       .join("\n");
   }
   const sponsorsData = {
+    sectionTitle: stringValue(sponsorContent.sectionTitle),
     introLine: stringValue(sponsorContent.introLine),
     names: sponsorsNamesStr,
   };
@@ -422,6 +425,7 @@ export function normalizeEventData(
   // 11. attire_motif
   const attireContent = getSectionContent("attire_motif");
   const attireData = {
+    sectionTitle: stringValue(attireContent.sectionTitle),
     sectionIntro: stringValue(attireContent.sectionIntro),
     dressCodeNote: stringValue(attireContent.dressCodeNote),
     colorMotifNote: stringValue(attireContent.colorMotifNote),
@@ -504,6 +508,7 @@ export function normalizeEventData(
     ? "Your presence and celebration are the greatest gifts. If you wish to send a monetary contribution, details are provided below."
     : "Your presence is the greatest gift.";
   const giftsData = {
+    sectionTitle: stringValue(giftContent.sectionTitle),
     sectionIntro: stringValue(giftContent.sectionIntro) || "Your presence is the greatest gift.",
     giftNote: stringValue(giftContent.giftNote) || defaultGiftNote,
     options: giftOptions,
