@@ -7,7 +7,7 @@ import { formatRsvpDeadline } from "@/template/utils/event-formatting";
 import { CorrespondenceSheet } from "@/template/components/containers/CorrespondenceSheet";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { Magnetic } from "@/template/components/motion/Magnetic";
-import { CheckCircle2, AlertCircle, Loader2, Heart, Send, User, UserPlus } from "lucide-react";
+import { CheckCircle2, AlertCircle, Loader2, Zap, Send, User, UserPlus } from "lucide-react";
 
 // PLATFORM ACTION — DO NOT REIMPLEMENT.
 // Keep submission through the shared platform adapter.
@@ -179,27 +179,27 @@ export function RSVPForm({
               <button
                 type="button"
                 onClick={() => setAttendanceStatus("attending")}
-                className={`py-3.5 px-4 rounded-xl text-sm font-semibold border text-center transition-all cursor-pointer flex items-center justify-center gap-2 min-h-[46px] ${
+                className={`py-3.5 px-4 rounded-xl text-sm font-bold border-2 text-center transition-all cursor-pointer flex items-center justify-center gap-2 min-h-[46px] ${
                   attendanceStatus === "attending"
-                    ? "bg-[var(--event-primary)] text-[var(--event-on-primary)] border-[var(--event-primary)] shadow-sm"
-                    : "bg-[var(--event-surface)] text-[var(--event-text)] border-[var(--event-border)] hover:bg-[var(--event-surface-alt)]"
+                    ? "bg-[var(--event-primary)] text-white border-slate-950 shadow-[3px_3px_0px_#0f172a]"
+                    : "bg-white text-slate-900 border-slate-300 hover:border-slate-950 hover:bg-slate-50"
                 }`}
               >
-                <Heart
-                  className={`w-4 h-4 ${attendanceStatus === "attending" ? "fill-white/20" : ""}`}
+                <CheckCircle2
+                  className={`w-4 h-4 ${attendanceStatus === "attending" ? "stroke-[2.5]" : ""}`}
                 />
-                <span>Joyfully Accept</span>
+                <span>I&apos;ll Be There!</span>
               </button>
               <button
                 type="button"
                 onClick={() => setAttendanceStatus("not_attending")}
-                className={`py-3.5 px-4 rounded-xl text-sm font-semibold border text-center transition-all cursor-pointer min-h-[46px] ${
+                className={`py-3.5 px-4 rounded-xl text-sm font-bold border-2 text-center transition-all cursor-pointer min-h-[46px] ${
                   attendanceStatus === "not_attending"
-                    ? "bg-[var(--event-primary)] text-[var(--event-on-primary)] border-[var(--event-primary)] shadow-sm"
-                    : "bg-[var(--event-surface)] text-[var(--event-text)] border-[var(--event-border)] hover:bg-[var(--event-surface-alt)]"
+                    ? "bg-slate-800 text-white border-slate-950 shadow-[3px_3px_0px_#0f172a]"
+                    : "bg-white text-slate-900 border-slate-300 hover:border-slate-950 hover:bg-slate-50"
                 }`}
               >
-                Regretfully Decline
+                Can&apos;t Make It
               </button>
             </div>
           </div>
@@ -414,14 +414,12 @@ export function RSVPSection(props: RsvpProps) {
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-10 space-y-2">
-            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
-              FOLIO // 11 &bull; RSVP CONFIRMATION
-            </span>
+            <span className="comic-badge comic-badge-gold">HQ DISPATCH // CONFIRM ATTENDANCE</span>
             <h2 className="text-role-heading-major text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               RSVP
             </h2>
             {formattedDeadline && (
-              <p className="text-base text-[var(--event-on-dark-muted,#94a3b8)] mt-1 font-sans">
+              <p className="text-base text-slate-300 mt-1 font-sans">
                 Kindly respond on or before{" "}
                 <strong className="font-semibold text-white">{formattedDeadline}</strong>
               </p>

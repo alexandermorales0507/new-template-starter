@@ -38,14 +38,12 @@ export function SponsorsSection({ data }: { data: SponsorsData }) {
       <div className="template-container-narrow relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-10 space-y-2">
-            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
-              FOLIO // 08 &bull; PRINCIPAL SPONSORS
-            </span>
+            <span className="comic-badge comic-badge-gold">HONORARY GUARDIANS // VIP</span>
             <h2 className="text-role-heading-quiet text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               Principal Sponsors
             </h2>
             {data.introLine && (
-              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-[var(--event-on-dark-muted,#94a3b8)]">
+              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-slate-300">
                 {data.introLine}
               </p>
             )}
@@ -55,8 +53,8 @@ export function SponsorsSection({ data }: { data: SponsorsData }) {
         <Reveal direction="up" distance={20} delay={0.1}>
           <div className="relative overflow-visible">
             <LedgerPanel
-              title="Roll of Principal Sponsors"
-              indexTag="OFFICIAL REGISTER"
+              title="Roll of Honorary Guardians"
+              indexTag="HONOR ROLL // 08"
               headerAlign="center"
               className="bg-[var(--event-surface)] text-[var(--event-text-main)] shadow-[var(--event-shadow-paper-md)] relative z-10"
             >

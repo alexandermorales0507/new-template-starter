@@ -13,7 +13,7 @@ export default async function RsvpPage({ searchParams }: RsvpPageProps) {
 
   if (result.status === "available") {
     return (
-      <div className="min-h-screen flex flex-col bg-white text-gray-900 font-sans">
+      <div className="min-h-screen flex flex-col bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)] font-sans">
         <Navbar data={result.data} />
         <main className="flex-1 py-12 pt-20">
           <RSVPSection

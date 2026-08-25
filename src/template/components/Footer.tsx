@@ -50,7 +50,7 @@ export function Footer({ data }: { data: EventTemplateData }) {
           {/* Legal / Attribution */}
           <div className="text-center text-xs text-[var(--event-accent-soft,#c7cfbc)]/85 tracking-wider flex flex-col gap-1 font-mono">
             <p>
-              &copy; {eventYear} {hostDisplayName}. Estate Archive Record.
+              &copy; {eventYear} {hostDisplayName}. Celebration Archive Record.
             </p>
             <p className="text-[11px]">
               Custom RSVP by{" "}
@@ -170,7 +170,7 @@ export function Footer({ data }: { data: EventTemplateData }) {
 
         <div className="text-center text-xs text-[var(--event-accent-soft,#c7cfbc)]/85 tracking-wider flex flex-col gap-1 font-mono">
           <p>
-            &copy; {eventYear} {hostDisplayName}. Estate Archive Record. All rights reserved.
+            &copy; {eventYear} {hostDisplayName}. Celebration Archive Record. All rights reserved.
           </p>
           <p className="text-[11px]">
             Custom RSVP by{" "}

@@ -53,7 +53,7 @@ export function Navbar({ data }: { data: EventTemplateData }) {
     <>
       <header
         data-scrolled={isScrolled ? "true" : "false"}
-        className="event-nav fixed top-0 left-0 right-0 z-40 w-full transition-all duration-300"
+        className="event-nav fixed top-0 left-0 right-0 z-40 w-full transition-all duration-300 bg-slate-950/90 backdrop-blur-md border-b-2 border-slate-900"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-17 flex items-center justify-between">
           {/* Zone 1: Left Monogram */}
@@ -77,7 +77,7 @@ export function Navbar({ data }: { data: EventTemplateData }) {
           {/* Zone 2: Center Primary Browsing Links */}
           <nav
             aria-label="Primary browsing navigation"
-            className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-secondary,#5d695f)] select-none"
+            className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8 text-sm font-bold uppercase tracking-wider text-slate-300 select-none"
           >
             {navModel.primaryNavItems.map((item) => {
               const resolvedHref = resolveEventHref(item.anchor, pathname);
@@ -87,7 +87,7 @@ export function Navbar({ data }: { data: EventTemplateData }) {
                   key={item.key}
                   href={resolvedHref}
                   onClick={(e) => handleAnchorClick(e, item.anchor)}
-                  className="event-nav-link py-2 relative hover:text-[var(--text-primary,#24342c)] transition-colors after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-bottom-right after:scale-x-0 after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100 after:bg-[var(--action-primary,#657a57)] template-focus-ring rounded-xs"
+                  className="event-nav-link py-2 relative hover:text-white transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100 after:bg-[var(--event-primary)] template-focus-ring rounded-xs"
                 >
                   {item.label}
                 </Link>
@@ -99,13 +99,13 @@ export function Navbar({ data }: { data: EventTemplateData }) {
           <div className="flex items-center justify-end min-w-[100px] sm:min-w-[120px]">
             <button
               onClick={() => setDrawerOpen(true)}
-              className="event-nav-menu inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[var(--text-primary,#24342c)] hover:bg-[var(--surface-muted,#dde5d3)] transition-all duration-200 template-focus-ring cursor-pointer"
+              className="event-nav-menu inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-white hover:bg-slate-800 transition-all duration-200 template-focus-ring cursor-pointer border border-slate-700/60"
               aria-expanded={drawerOpen}
               aria-controls="sitemap-drawer"
               aria-label="Open complete celebration menu"
             >
-              <span className="hidden sm:inline text-[11px] font-bold uppercase tracking-[0.18em] mt-0.5 font-mono">
-                Folio
+              <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider font-mono">
+                Menu
               </span>
               <Menu className="w-5 h-5 stroke-[2.2]" />
             </button>

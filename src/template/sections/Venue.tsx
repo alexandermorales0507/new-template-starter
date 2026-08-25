@@ -18,7 +18,7 @@ export function VenueSection({ data }: { data: VenueData }) {
       <div className="template-container">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-12 space-y-2">
-            <span className="text-role-subheading">FOLIO // 03 &bull; THE GROUNDS</span>
+            <span className="comic-badge comic-badge-gold">MISSION // 03 • HEADQUARTERS</span>
             <h2 className="text-role-heading text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               The Venue
             </h2>
@@ -32,8 +32,8 @@ export function VenueSection({ data }: { data: VenueData }) {
               <SpecimenFrame
                 src={venuePhoto}
                 alt={data.venueName || "Event Venue"}
-                caption={data.venueName ? `Estate Grounds: ${data.venueName}` : "Estate Grounds"}
-                specimenNumber="ESTATE VIEW // 03"
+                caption={data.venueName ? `HQ Grounds: ${data.venueName}` : "HQ Grounds"}
+                specimenNumber="HQ VIEW // 03"
                 aspectRatio="landscape"
                 className="shadow-[var(--event-shadow-paper-md)] bg-[var(--event-surface)]"
               />
@@ -43,8 +43,8 @@ export function VenueSection({ data }: { data: VenueData }) {
             <div className="lg:col-span-6">
               <div className="relative overflow-visible">
                 <LedgerPanel
-                  title={data.venueName || "Estate Location"}
-                  indexTag="VENUE // RECORD"
+                  title={data.venueName || "HQ Location"}
+                  indexTag="COORDINATES // 01"
                   className="bg-[var(--event-surface)] relative z-10"
                 >
                   <div className="space-y-4 pt-1 font-sans">

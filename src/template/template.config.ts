@@ -15,16 +15,16 @@ export type TemplateConfig = {
 };
 
 export const templateConfig: TemplateConfig = {
-  id: "template-03-sage-estate",
-  name: "Sage Estate — The Glasshouse Ledger",
+  id: "template-birthday-avengers-10th",
+  name: "Avengers Assemble — Comic Paper Edition",
   version: 1,
   description:
-    "English Garden Estate architectural event template with warm ivory surfaces and conservatory sage accents.",
+    "Action comic paper card template with bold halftone dots, dynamic superhero palettes, and zero-blur ink drop shadows.",
   palette: [
-    { name: "Conservatory Sage", hex: "#657A57" },
-    { name: "Mist Sage", hex: "#DDE5D3" },
-    { name: "Deep Forest", hex: "#304438" },
-    { name: "Antique Brass", hex: "#C9A86A" },
-    { name: "Warm Cream", hex: "#F7F4EA" },
+    { name: "Marvel Crimson", hex: "#DC2626" },
+    { name: "Stark Gold", hex: "#F59E0B" },
+    { name: "Arc Cyan", hex: "#0284C7" },
+    { name: "Comic Ink", hex: "#0F172A" },
+    { name: "Action White", hex: "#FFFFFF" },
   ],
 };

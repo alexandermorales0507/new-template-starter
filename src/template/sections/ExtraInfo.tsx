@@ -22,14 +22,12 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-10 sm:mb-12 space-y-2">
-            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
-              FOLIO // 10 &bull; GUEST GUIDANCE &amp; FAQ
-            </span>
+            <span className="comic-badge comic-badge-gold">MISSION INTEL // GUEST FAQ</span>
             <h2 className="text-role-heading text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               {data.sectionTitle || "Frequently Asked Questions"}
             </h2>
             {data.sectionIntro && (
-              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-[var(--event-on-dark-muted,#94a3b8)]">
+              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-slate-300">
                 {data.sectionIntro}
               </p>
             )}

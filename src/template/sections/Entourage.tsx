@@ -45,14 +45,12 @@ export function EntourageSection({ data }: { data: EntourageData }) {
       <div className="template-container relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-10 sm:mb-14 space-y-2">
-            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
-              FOLIO // 07 &bull; THE ENTOURAGE
-            </span>
+            <span className="comic-badge comic-badge-gold">ALLIES // THE ASSEMBLED SQUAD</span>
             <h2 className="text-role-heading-quiet text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               The Entourage
             </h2>
             {data.introLine && (
-              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-[var(--event-on-dark-muted,#94a3b8)]">
+              <p className="text-role-lead max-w-md mx-auto mt-2 leading-relaxed text-slate-300">
                 {data.introLine}
               </p>
             )}

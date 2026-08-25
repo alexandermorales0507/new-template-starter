@@ -25,9 +25,7 @@ export function SecondaryEventSection({ data }: SecondaryEventSectionProps) {
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-10 space-y-2">
-            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
-              FOLIO // 05 &bull; RECEPTION &amp; DINNER
-            </span>
+            <span className="comic-badge comic-badge-gold">MISSION // 05 • FEAST &amp; PARTY</span>
             <h2 className="text-role-heading text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               {title}
             </h2>
@@ -38,7 +36,7 @@ export function SecondaryEventSection({ data }: SecondaryEventSectionProps) {
           <div className="relative overflow-visible">
             <LedgerPanel
               title={data.venueName || "Event Grounds"}
-              indexTag="RECORD // 02"
+              indexTag="FEAST RECORD // 02"
               className="bg-[var(--event-surface)] text-[var(--event-text-main)] shadow-[var(--event-shadow-paper-md)] relative z-10"
             >
               <div className="space-y-4 pt-1 font-sans">

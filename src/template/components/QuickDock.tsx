@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { EventNavItem } from "@/template/navigation/event-navigation";
 import { resolveEventHref } from "@/template/navigation/event-navigation";
-import { Calendar, MapPin, Mail, Utensils, Shirt, Heart, Info, Clock } from "lucide-react";
+import { Calendar, MapPin, Mail, Utensils, Shirt, Sparkles, Zap, Info, Clock } from "lucide-react";
 
 const ICON_MAP: Record<string, React.ElementType> = {
   Calendar,
@@ -13,7 +13,9 @@ const ICON_MAP: Record<string, React.ElementType> = {
   Mail,
   Utensils,
   Shirt,
-  Heart,
+  Heart: Sparkles,
+  Sparkles,
+  Zap,
   Info,
   Clock,
 };
@@ -43,7 +45,7 @@ export function QuickDock({ items, compact = false, className = "" }: QuickDockP
 
   return (
     <aside
-      className={`event-guest-dock bg-[var(--event-dock-bg,#fffdf7)] backdrop-blur-md border border-[var(--border-default,#c7cfbc)] shadow-xl rounded-full flex items-center shrink-0 ${
+      className={`event-guest-dock bg-white border-2 border-slate-950 shadow-[4px_4px_0px_#0f172a] rounded-full flex items-center shrink-0 ${
         compact ? "gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3 sm:py-2" : "gap-2.5 sm:gap-3 px-3.5 py-2"
       } ${className}`}
       role="toolbar"
@@ -67,8 +69,8 @@ export function QuickDock({ items, compact = false, className = "" }: QuickDockP
                 compact ? "w-[38px] h-[38px]" : "w-11 h-11"
               } ${
                 isPrimary
-                  ? "bg-[var(--action-primary,#657a57)] text-[var(--action-text,#ffffff)] shadow-md hover:bg-[var(--action-primary-hover,#4f6445)] hover:scale-105 active:scale-95"
-                  : "bg-[var(--surface-muted,#dde5d3)] text-[var(--text-secondary,#5d695f)] hover:bg-[var(--border-default,#c7cfbc)] hover:text-[var(--text-primary,#24342c)] active:scale-95 border border-[var(--border-subtle,#e1e7d9)]"
+                  ? "bg-[var(--event-primary)] text-white hover:bg-[var(--event-primary-hover)] border-2 border-slate-950 shadow-[2px_2px_0px_#0f172a] hover:scale-105 active:scale-95"
+                  : "bg-slate-100 text-slate-900 hover:bg-amber-400 hover:text-slate-950 active:scale-95 border border-slate-300"
               }`}
               aria-label={item.label}
             >
@@ -77,7 +79,7 @@ export function QuickDock({ items, compact = false, className = "" }: QuickDockP
 
             {/* Floating Tooltip */}
             <div
-              className={`absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-[var(--surface-dark,#304438)] text-[var(--text-on-dark,#f7f4ea)] text-[11px] font-mono uppercase tracking-wider rounded-md whitespace-nowrap shadow-md pointer-events-none transition-opacity duration-150 ${
+              className={`absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono font-bold uppercase tracking-wider rounded-md border border-slate-800 shadow-[2px_2px_0px_#0f172a] whitespace-nowrap pointer-events-none transition-opacity duration-150 ${
                 activeTooltip === item.key ? "opacity-100" : "opacity-0"
               }`}
               role="tooltip"

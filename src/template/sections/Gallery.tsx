@@ -46,14 +46,12 @@ export function GallerySection({ data }: { data: GalleryData }) {
       <div className="template-container relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="mb-5 sm:mb-7 space-y-2">
-            <span className="text-role-subheading text-[var(--event-accent,#f59e0b)]">
-              PHOTO FOLIO // 04
-            </span>
+            <span className="comic-badge comic-badge-gold">ACTION ARCHIVE // ISSUE #10</span>
             <h2 className="text-role-heading-major text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               {data.sectionTitle || "Gallery"}
             </h2>
             {data.sectionIntro && (
-              <p className="text-role-lead max-w-xl mx-auto mt-2 leading-relaxed text-[var(--event-on-dark-muted,#94a3b8)]">
+              <p className="text-role-lead max-w-xl mx-auto mt-2 leading-relaxed text-slate-300">
                 {data.sectionIntro}
               </p>
             )}

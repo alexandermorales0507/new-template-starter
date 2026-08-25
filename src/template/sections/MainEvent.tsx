@@ -32,7 +32,7 @@ export function MainEventSection({ data }: MainEventSectionProps) {
       <div className="template-container">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-12 space-y-2">
-            <span className="text-role-subheading">FOLIO // 02 &bull; MAIN EVENT</span>
+            <span className="comic-badge comic-badge-gold">MISSION // 02 • THE MAIN EVENT</span>
             <h2 className="text-role-heading-major text-[var(--event-on-dark,#f8fafc)] tracking-tight">
               {eventLabel}
             </h2>

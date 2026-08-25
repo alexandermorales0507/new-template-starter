@@ -4,7 +4,7 @@ import { templateAssets } from "@/template/template-assets";
 import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { Magnetic } from "@/template/components/motion/Magnetic";
-import { Heart, BookOpen } from "lucide-react";
+import { Zap, BookOpen } from "lucide-react";
 
 // PLATFORM DATA — KEEP DYNAMIC.
 // DYNAMIC HOST IDENTITY: Never hardcode client initials or names.
@@ -40,64 +40,54 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center lg:items-start">
           {/* Left Column: Editorial Typography & Actions (Left-aligned on desktop, Centered on mobile/tablet) */}
           <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left lg:pt-2">
-            {/* 1. Folio Stamp */}
+            {/* 1. Comic Issue & Milestone Badges */}
             <Reveal direction="down" distance={16}>
-              <div className="flex items-center justify-center lg:justify-start">
-                <span className="text-xs font-mono font-bold uppercase tracking-[0.18em] text-[var(--event-accent-strong,#8f6a2c)] estate-glass-light px-4 py-1.5 rounded-full border shadow-xs">
-                  ESTATE FOLIO // 01
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
+                <span className="comic-badge comic-badge-gold">
+                  ★ ISSUE #10 • SPECIAL EDITION ★
                 </span>
+                {badgeText && (
+                  <span className="comic-badge comic-badge-red">⚡ {badgeText} ⚡</span>
+                )}
               </div>
             </Reveal>
 
-            {/* 2. Celebrant / Couple Names — Luminous Warm Ivory on Aurora */}
+            {/* 2. Celebrant / Couple Names — Massive Action Display */}
             <Reveal direction="up" distance={20} delay={0.1}>
-              <h1 className="text-role-display tracking-tight text-[var(--event-on-dark,#f7f4ea)] drop-shadow-xs text-center lg:text-left">
+              <h1 className="text-role-display tracking-tight text-white drop-shadow-[4px_4px_0px_#0f172a] text-center lg:text-left">
                 {displayName}
               </h1>
             </Reveal>
 
-            {/* 3. Single Connected Estate Date / Milestone in Light Estate Glass Pill Container */}
-            {badgeText && (
-              <Reveal direction="up" distance={16} delay={0.15}>
-                <div className="flex justify-center lg:justify-start">
-                  <div className="inline-flex items-center justify-center px-6 py-2 sm:px-7 sm:py-2.5 rounded-full estate-glass-light border shadow-xs">
-                    <span className="font-mono font-bold text-lg sm:text-xl md:text-2xl tracking-[0.16em] text-[var(--event-accent-strong,#8f6a2c)] uppercase">
-                      {badgeText}
-                    </span>
-                  </div>
+            {/* 3. Host Narration / Quote in Yellow Marvel Narrator Box */}
+            {data.shortHostMessage && (
+              <Reveal direction="up" distance={16} delay={0.2}>
+                <div className="comic-caption-box max-w-xl mx-auto lg:mx-0 text-slate-950 font-bold text-base sm:text-lg leading-snug">
+                  &ldquo;{data.shortHostMessage}&rdquo;
                 </div>
               </Reveal>
             )}
 
-            {/* 4. Editorial Invitation Greeting ("you're invited!") — Luminous Warm Ivory */}
-            {data.shortHostMessage && (
-              <Reveal direction="up" distance={16} delay={0.25}>
-                <p className="font-serif italic text-2xl sm:text-3xl text-[var(--event-on-dark,#f7f4ea)] font-bold max-w-xl mx-auto lg:mx-0 text-center lg:text-left leading-relaxed drop-shadow-xs">
-                  &ldquo;{data.shortHostMessage}&rdquo;
-                </p>
-              </Reveal>
-            )}
-
-            {/* 5. Action CTA Buttons with Estate Glass Architecture */}
+            {/* 4. Action CTA Buttons with Comic Tactile Push Architecture */}
             <Reveal direction="up" distance={16} delay={0.3}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2 font-sans">
                 <Magnetic intensity={0.25}>
                   <a
                     href="/rsvp"
-                    className="inline-flex items-center gap-2 py-3 px-6 estate-glass-sage hover:bg-[var(--event-primary,#657a57)] text-[var(--event-on-primary,#ffffff)] text-sm font-semibold rounded-xl border shadow-soft transition-all active:scale-95 template-focus-ring cursor-pointer min-h-[44px]"
+                    className="comic-button comic-button-primary text-white gap-2 text-base font-bold min-h-[48px]"
                   >
-                    <Heart className="w-4 h-4 fill-white/20" />
-                    <span>Reserve Your Seat</span>
+                    <Zap className="w-4 h-4 text-amber-300 fill-amber-300" />
+                    <span>RSVP TO ASSEMBLE</span>
                   </a>
                 </Magnetic>
 
                 {storyEnabled && (
                   <a
                     href="#story_message"
-                    className="inline-flex items-center gap-2 py-3 px-5 estate-glass-light hover:bg-[var(--event-surface,#fffdf7)] text-[var(--event-text,#24342c)] text-sm font-medium rounded-xl border transition-all active:scale-95 template-focus-ring cursor-pointer shadow-xs min-h-[44px]"
+                    className="comic-button comic-button-secondary text-slate-950 gap-2 text-base font-bold min-h-[48px]"
                   >
-                    <BookOpen className="w-4 h-4 text-[var(--event-primary,#657a57)]" />
-                    <span>{isSingleHost ? "Story" : "Our Story"}</span>
+                    <BookOpen className="w-4 h-4 text-slate-950" />
+                    <span>ORIGIN STORY</span>
                   </a>
                 )}
               </div>
@@ -116,10 +106,10 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
                 <SpecimenFrame
                   src={heroPhoto}
                   alt={displayName}
-                  specimenNumber="PORTRAIT FOLIO // 01"
+                  specimenNumber="COVER ART // ISSUE #10"
                   aspectRatio="portrait"
                   priority={true}
-                  className="shadow-floating bg-[var(--event-surface,#fffdf7)]"
+                  className="shadow-floating bg-white"
                 />
               </div>
             </Reveal>
