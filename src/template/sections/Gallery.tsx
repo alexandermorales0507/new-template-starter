@@ -102,10 +102,11 @@ export function GallerySection({ data }: { data: GalleryData }) {
                   <Image
                     src={selectedPhoto.src}
                     alt={selectedPhoto.alt || "Expanded photo"}
-                    width={selectedPhoto.width || 1600}
-                    height={selectedPhoto.height || 1200}
+                    width={selectedPhoto.width || 2752}
+                    height={selectedPhoto.height || 1536}
+                    quality={90}
                     className="w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-md select-none block"
-                    sizes="(max-width: 1024px) 95vw, 1100px"
+                    sizes="(max-width: 1024px) 95vw, 1200px"
                     priority
                   />
                 ) : (

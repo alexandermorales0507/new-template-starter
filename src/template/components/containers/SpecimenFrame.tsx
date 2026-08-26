@@ -2,14 +2,25 @@ import * as React from "react";
 import Image from "next/image";
 import { cn } from "../ui/cn";
 
+export type SpecimenAspectRatio = "portrait" | "landscape" | "square" | "widescreen" | "video";
+
 export interface SpecimenFrameProps extends React.HTMLAttributes<HTMLDivElement> {
   src?: string;
   alt?: string;
   caption?: string;
   specimenNumber?: string;
-  aspectRatio?: "square" | "portrait" | "landscape" | "video";
+  aspectRatio?: SpecimenAspectRatio;
   priority?: boolean;
+  rotateDeg?: number;
 }
+
+const ASPECT_CLASSES: Record<SpecimenAspectRatio, string> = {
+  portrait: "aspect-[3/4]",
+  landscape: "aspect-[4/3]",
+  widescreen: "aspect-[16/10]",
+  video: "aspect-[16/9]",
+  square: "aspect-square",
+};
 
 export function SpecimenFrame({
   className,
@@ -19,16 +30,11 @@ export function SpecimenFrame({
   specimenNumber,
   aspectRatio = "portrait",
   priority = false,
+  rotateDeg,
+  style,
   children,
   ...props
 }: SpecimenFrameProps) {
-  const aspectClasses = {
-    square: "aspect-square",
-    portrait: "aspect-3/4",
-    landscape: "aspect-4/3",
-    video: "aspect-16/9",
-  };
-
   return (
     <div
       data-surface="light"
@@ -36,13 +42,17 @@ export function SpecimenFrame({
         "specimen-frame group relative rounded-2xl border-2 border-[var(--event-border)] bg-[var(--event-surface)] text-[var(--event-text)] p-3 shadow-xs transition-all hover:shadow-soft",
         className
       )}
+      style={{
+        ...(rotateDeg ? { transform: `rotate(${rotateDeg}deg)` } : {}),
+        ...style,
+      }}
       {...props}
     >
       {/* Visual Inner Frame */}
       <div
         className={cn(
           "relative w-full overflow-hidden rounded-xl bg-[var(--event-surface-alt)]",
-          aspectClasses[aspectRatio]
+          ASPECT_CLASSES[aspectRatio] || ASPECT_CLASSES.portrait
         )}
       >
         {src ? (
@@ -51,8 +61,9 @@ export function SpecimenFrame({
             alt={alt}
             fill
             priority={priority}
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            quality={90}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px"
+            className="object-cover select-none pointer-events-none transition-transform duration-500 group-hover:scale-105 [transform:translateZ(0)]"
           />
         ) : (
           children || (

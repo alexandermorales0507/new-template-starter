@@ -40,13 +40,13 @@ export function StoryMessageSection({ data }: StoryMessageSectionProps) {
             {/* Left Column: Origin Specimen Photo */}
             {storyPhotos.length > 0 && (
               <div className="md:col-span-5 flex justify-center">
-                <div className="w-full max-w-[320px] sm:max-w-sm rotate-[-1.5deg] hover:rotate-0 transition-transform duration-300">
+                <div className="w-full max-w-[360px] sm:max-w-md rotate-[-1.5deg] hover:rotate-0 transition-transform duration-300">
                   <SpecimenFrame
                     src={storyPhotos[0]}
-                    alt="Origin Photo"
+                    alt="Origin Story - Training and Suiting Up"
                     caption="Hero Chronicle"
                     specimenNumber="ARCHIVE // YR 10"
-                    aspectRatio="portrait"
+                    aspectRatio="widescreen"
                     className="bg-white border-[3px] border-slate-950 shadow-[8px_8px_0px_#0f172a] rounded-2xl"
                   />
                 </div>

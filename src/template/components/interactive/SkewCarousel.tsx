@@ -65,14 +65,15 @@ export function SkewCarousel({
           onClick={() => onItemClick?.(item, 0)}
           className="relative inline-flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-2xl border-[3px] border-slate-950 bg-white shadow-[6px_6px_0px_#0f172a] cursor-pointer transition-transform hover:scale-[1.02]"
         >
-          <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 border-2 border-slate-900 w-[min(84vw,330px)] sm:w-[440px] md:w-[500px] h-[280px] sm:h-[340px] md:h-[380px]">
+          <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 border-2 border-slate-900 w-[min(90vw,340px)] sm:w-[420px] md:w-[480px] h-[210px] sm:h-[265px] md:h-[300px]">
             {item.src ? (
               <Image
                 src={item.src}
                 alt={item.alt || "Gallery preview"}
                 fill
-                sizes="(max-width: 640px) 84vw, 500px"
-                className="object-cover rounded-xl select-none pointer-events-none transition-transform duration-500 hover:scale-105"
+                quality={90}
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 800px"
+                className="object-cover rounded-xl select-none pointer-events-none transition-transform duration-500 hover:scale-105 [transform:translateZ(0)]"
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-slate-500 bg-slate-100 rounded-xl">
@@ -151,7 +152,7 @@ export function SkewCarousel({
             setActiveIndex(swiper.activeIndex);
             onActiveIndexChange?.(swiper.activeIndex);
           }}
-          className="!overflow-visible w-full h-[420px] sm:h-[480px] md:h-[530px] py-1"
+          className="!overflow-visible w-full h-[320px] sm:h-[370px] md:h-[420px] py-1"
           style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
         >
           {items.map((item, idx) => {
@@ -226,6 +227,7 @@ export function SkewCarousel({
                     transformStyle: "preserve-3d",
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
+                    willChange: "transform",
                     transition:
                       "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease",
                   }}
@@ -255,19 +257,23 @@ export function SkewCarousel({
                     </span>
                   </div>
 
-                  {/* Photo Stage */}
-                  <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 border-2 border-slate-900 w-[240px] sm:w-[280px] md:w-[320px] h-[300px] sm:h-[350px] md:h-[390px]">
+                  {/* Photo Stage: Widescreen Comic Action Card (16:10 / 16:9 ratio) */}
+                  <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 border-2 border-slate-900 w-[280px] sm:w-[360px] md:w-[420px] lg:w-[460px] h-[185px] sm:h-[235px] md:h-[275px] lg:h-[300px]">
                     {item.src ? (
                       <Image
                         src={item.src}
                         alt={item.alt || `Card ${idx + 1}`}
                         fill
-                        sizes="(max-width: 640px) 240px, (max-width: 1024px) 280px, 320px"
-                        className="object-cover select-none pointer-events-none transition-transform duration-500 hover:scale-105"
+                        priority={idx === 0 || idx === 1}
+                        quality={90}
+                        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 800px"
+                        className="object-cover select-none pointer-events-none transition-transform duration-500 hover:scale-105 [transform:translateZ(0)]"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center p-6 text-center text-xs font-mono text-slate-500 bg-slate-100">
-                        [ ACTION CARD #{String(idx + 1).padStart(2, "0")} ]
+                      <div className="flex flex-col items-center justify-center text-slate-400 p-4 text-center">
+                        <span className="text-xs font-mono font-bold uppercase">
+                          NO IMAGE SPECIFIED
+                        </span>
                       </div>
                     )}
                   </div>

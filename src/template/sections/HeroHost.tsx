@@ -134,12 +134,13 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
               delay={0.2}
               className="w-full flex justify-center lg:justify-end"
             >
-              <div className="relative w-full max-w-[320px] sm:max-w-sm lg:max-w-[360px] rotate-[1.5deg] hover:rotate-0 transition-transform duration-300">
+              <div className="relative w-full max-w-[440px] sm:max-w-md lg:max-w-[480px] rotate-[1.5deg] hover:rotate-0 transition-transform duration-300">
                 <SpecimenFrame
                   src={heroPhoto}
                   alt={displayName}
+                  caption="Hero Chronicle"
                   specimenNumber={`COVER ART // ISSUE #${milestoneNum}`}
-                  aspectRatio="portrait"
+                  aspectRatio="widescreen"
                   priority={true}
                   className="bg-white border-[3.5px] border-slate-950 shadow-[10px_10px_0px_#0f172a] rounded-2xl"
                 />
