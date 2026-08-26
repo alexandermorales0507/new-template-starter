@@ -17,6 +17,11 @@ export function SecondaryEventSection({ data }: SecondaryEventSectionProps) {
   const timeFormatted = formatTimeRange(data.startTime, data.endTime);
   const title = data.title || "Dinner & Celebration";
 
+  // Self-collapse if all secondary event fields are blank
+  if (!data.venueName && !data.address && !timeFormatted && !data.note && !data.mapsLink) {
+    return null;
+  }
+
   return (
     <section
       id="secondary_event"
