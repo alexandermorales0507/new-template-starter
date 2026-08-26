@@ -221,8 +221,8 @@ export const DEMO_BIRTHDAY_DATA: EventTemplateData = {
     contactNumber: "+63 917 987 6543",
     email: "santosparty2026@gmail.com",
     facebookUrl: "https://facebook.com/santos.family",
-    instagramUrl: "",
-    tikTokUrl: "",
+    instagramUrl: "https://instagram.com/michaels_avengers_10",
+    tikTokUrl: "https://tiktok.com/@michaels_superhero_quest",
   },
 
   sections: [

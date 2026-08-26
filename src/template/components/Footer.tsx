@@ -1,5 +1,5 @@
 import type { EventTemplateData } from "@/platform/event-template-data";
-import { EventMonogram } from "./EventMonogram";
+import { extractMilestoneNumber } from "@/template/utils/host-identity";
 import { extractEventYear } from "@/template/utils/event-formatting";
 import { Mail, Phone, User } from "lucide-react";
 import { FacebookIcon, InstagramIcon, TikTokIcon } from "./ui/BrandIcons";
@@ -11,6 +11,17 @@ import { FacebookIcon, InstagramIcon, TikTokIcon } from "./ui/BrandIcons";
 export function Footer({ data }: { data: EventTemplateData }) {
   const eventYear = extractEventYear(data.ceremony?.eventDate || data.eventDate);
   const hostDisplayName = data.coupleDisplayName || "The Celebrant";
+
+  const fullName =
+    data.couple?.celebrantName || data.couple?.groomName || data.coupleDisplayName || "Michael";
+  const firstName = fullName.trim().split(/\s+/)[0] || "Michael";
+  const milestoneNum =
+    extractMilestoneNumber(
+      data.couple?.milestoneAge ? String(data.couple?.milestoneAge) : undefined
+    ) || "10";
+  const milestoneText = data.couple?.milestoneAge
+    ? String(data.couple?.milestoneAge)
+    : `${milestoneNum}th Birthday`;
 
   const isContactEnabled =
     Boolean(data.enabledSectionKeys?.includes("contact_socials")) && Boolean(data.contact);
@@ -36,13 +47,21 @@ export function Footer({ data }: { data: EventTemplateData }) {
       <footer className="event-footer pattern-glazing-grid pattern-feature pattern-dark pt-10 sm:pt-12 pb-24 sm:pb-28 px-4 bg-[var(--event-surface-dark,#304438)] text-[var(--event-accent-soft,#c7cfbc)] border-t border-[var(--event-surface-dark-alt,#223322)] text-xs">
         <div className="max-w-3xl mx-auto flex flex-col items-center text-center gap-3 sm:gap-4 select-none">
           {/* Centered Identity */}
-          <EventMonogram
-            groomName={data.couple?.groomName}
-            brideName={data.couple?.brideName}
-            coupleDisplayName={data.coupleDisplayName}
-            milestone={data.couple?.milestoneAge}
-            variant="footer"
-          />
+          <div className="flex items-center gap-2 select-none">
+            {/* Primary Wordmark */}
+            <span className="font-heading font-black tracking-wider text-white text-sm sm:text-base lg:text-lg uppercase">
+              {firstName}
+            </span>
+            <span className="text-amber-400 font-mono font-bold text-xs sm:text-sm">•</span>
+            {/* Milestone & Emoji */}
+            <span className="font-heading font-bold tracking-wide text-amber-400 text-xs sm:text-sm lg:text-base uppercase">
+              <span className="hidden sm:inline">
+                {milestoneText || `${milestoneNum}th Birthday`}
+              </span>
+              <span className="sm:hidden">{milestoneNum}th</span>
+            </span>
+            <span className="text-sm sm:text-base">⚡</span>
+          </div>
 
           {/* Compact Divider */}
           <div className="w-24 h-px bg-[var(--event-accent,#8f6a2c)]/30 my-1 sm:my-2" />
@@ -87,13 +106,21 @@ export function Footer({ data }: { data: EventTemplateData }) {
         >
           {/* Column 1: Centered Host Identity */}
           <div className="flex flex-col items-center md:items-start gap-1">
-            <EventMonogram
-              groomName={data.couple?.groomName}
-              brideName={data.couple?.brideName}
-              coupleDisplayName={data.coupleDisplayName}
-              milestone={data.couple?.milestoneAge}
-              variant="footer"
-            />
+            <div className="flex items-center gap-2 select-none">
+              {/* Primary Wordmark */}
+              <span className="font-heading font-black tracking-wider text-white text-sm sm:text-base lg:text-lg uppercase">
+                {firstName}
+              </span>
+              <span className="text-amber-400 font-mono font-bold text-xs sm:text-sm">•</span>
+              {/* Milestone & Emoji */}
+              <span className="font-heading font-bold tracking-wide text-amber-400 text-xs sm:text-sm lg:text-base uppercase">
+                <span className="hidden sm:inline">
+                  {milestoneText || `${milestoneNum}th Birthday`}
+                </span>
+                <span className="sm:hidden">{milestoneNum}th</span>
+              </span>
+              <span className="text-sm sm:text-base">⚡</span>
+            </div>
           </div>
 
           {/* Column 2: Inquiries / Host Contact (When available) */}

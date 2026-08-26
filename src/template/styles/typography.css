@@ -25,6 +25,10 @@ body {
   font-family: var(--font-family-display);
 }
 
+.font-heading {
+  font-family: var(--font-family-display);
+}
+
 .font-mono {
   font-family: var(--font-family-mono);
 }

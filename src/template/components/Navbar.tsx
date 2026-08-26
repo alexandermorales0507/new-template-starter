@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { EventTemplateData } from "@/platform/event-template-data";
 import { buildEventNavigation, resolveEventHref } from "@/template/navigation/event-navigation";
-import { EventMonogram } from "./EventMonogram";
+import { extractMilestoneNumber } from "@/template/utils/host-identity";
 import { MoreDrawer } from "./MoreDrawer";
 import { Menu } from "lucide-react";
 
@@ -20,6 +20,17 @@ export function Navbar({ data }: { data: EventTemplateData }) {
 
   const navModel = buildEventNavigation(data);
   const isScrolled = !isHomePage || hasScrolled;
+
+  const fullName =
+    data.couple?.celebrantName || data.couple?.groomName || data.coupleDisplayName || "Michael";
+  const firstName = fullName.trim().split(/\s+/)[0] || "Michael";
+  const milestoneNum =
+    extractMilestoneNumber(
+      data.couple?.milestoneAge ? String(data.couple?.milestoneAge) : undefined
+    ) || "10";
+  const milestoneText = data.couple?.milestoneAge
+    ? String(data.couple?.milestoneAge)
+    : `${milestoneNum}th Birthday`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,7 +67,7 @@ export function Navbar({ data }: { data: EventTemplateData }) {
         className="event-nav fixed top-0 left-0 right-0 z-40 w-full transition-all duration-300 bg-slate-950/90 backdrop-blur-md border-b-2 border-slate-900"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-17 flex items-center justify-between">
-          {/* Zone 1: Left Monogram */}
+          {/* Zone 1: Left Celebrant Wordmark */}
           <div className="flex items-center min-w-[100px] sm:min-w-[120px]">
             <Link
               href="/"
@@ -64,13 +75,21 @@ export function Navbar({ data }: { data: EventTemplateData }) {
               className="template-focus-ring rounded-md inline-flex items-center"
               aria-label={`Home - ${data.coupleDisplayName} celebration`}
             >
-              <EventMonogram
-                groomName={data.couple?.groomName}
-                brideName={data.couple?.brideName}
-                coupleDisplayName={data.coupleDisplayName}
-                milestone={data.couple?.milestoneAge}
-                variant="nav"
-              />
+              <div className="flex items-center gap-2 select-none">
+                {/* Primary Wordmark */}
+                <span className="font-heading font-black tracking-wider text-white text-sm sm:text-base lg:text-lg uppercase">
+                  {firstName}
+                </span>
+                <span className="text-amber-400 font-mono font-bold text-xs sm:text-sm">•</span>
+                {/* Milestone & Emoji */}
+                <span className="font-heading font-bold tracking-wide text-amber-400 text-xs sm:text-sm lg:text-base uppercase">
+                  <span className="hidden sm:inline">
+                    {milestoneText || `${milestoneNum}th Birthday`}
+                  </span>
+                  <span className="sm:hidden">{milestoneNum}th</span>
+                </span>
+                <span className="text-sm sm:text-base">⚡</span>
+              </div>
             </Link>
           </div>
 
