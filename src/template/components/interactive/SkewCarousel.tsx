@@ -265,8 +265,8 @@ export function SkewCarousel({
                         alt={item.alt || `Card ${idx + 1}`}
                         fill
                         priority={idx === 0 || idx === 1}
-                        quality={90}
-                        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 800px"
+                        quality={95}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 1000px"
                         className="object-cover select-none pointer-events-none transition-transform duration-500 hover:scale-105 [transform:translateZ(0)]"
                       />
                     ) : (

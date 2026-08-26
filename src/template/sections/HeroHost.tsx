@@ -63,23 +63,20 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
                 <span className="comic-badge comic-badge-gold">
                   ★ ISSUE #{milestoneNum} • SPECIAL EDITION ★
                 </span>
+                {data.hostLine && (
+                  <span className="comic-badge comic-badge-red font-mono">{data.hostLine}</span>
+                )}
               </div>
             </Reveal>
 
-            {/* 2. Unified Masthead Title Lockup with Host Line Eyebrow */}
+            {/* 2. Unified Masthead Title Lockup */}
             <Reveal direction="up" distance={20} delay={0.1}>
-              <div className="space-y-1 sm:space-y-2">
-                {/* Dedicated Host Line Eyebrow Kicker (self-collapsing if empty) */}
-                {data.hostLine && (
-                  <p className="font-mono text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-amber-400">
-                    {data.hostLine}
-                  </p>
-                )}
+              <div className="space-y-1.5 sm:space-y-2">
                 <h1 className="text-role-display text-white drop-shadow-[4px_4px_0px_#0f172a] tracking-tight leading-[0.95]">
                   {displayName}
                 </h1>
-                <p className="text-role-heading-major text-amber-500 font-serif tracking-tight drop-shadow-[3px_3px_0px_#0f172a] flex items-center justify-center lg:justify-start gap-2">
-                  <span>{subHeadline}</span>
+                <p className="text-role-heading-major text-amber-400 font-serif tracking-tight drop-shadow-[2px_2px_0px_#0f172a] flex items-center justify-center lg:justify-start gap-2">
+                  <span>⚡ {subHeadline} ⚡</span>
                 </p>
               </div>
             </Reveal>

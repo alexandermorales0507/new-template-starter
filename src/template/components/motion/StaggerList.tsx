@@ -63,7 +63,7 @@ export function StaggerList({
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.05, margin: "0px" }}
+      viewport={{ once: true, amount: 0.01, margin: "50px 0px" }}
       className={cn(className)}
     >
       {React.Children.map(children, (child, i) => (

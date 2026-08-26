@@ -40,11 +40,11 @@ body {
 /* 1. Hero Display (Bebas Neue 400 - Bold Action Headline) */
 .text-role-display {
   font-family: var(--font-event-display), var(--font-family-display), sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: clamp(2.25rem, 5.2vw, 4.25rem);
   line-height: 0.95;
-  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
   color: inherit;
 }
 

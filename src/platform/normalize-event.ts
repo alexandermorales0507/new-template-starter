@@ -270,7 +270,16 @@ export function normalizeEventData(
   }
   function sanitizeCelebrantPhoto(url?: string | null): string | undefined {
     if (!url || typeof url !== "string") return undefined;
-    if (url.includes("bride") || url.includes("groom") || url.includes("wedding")) return undefined;
+    const lower = url.toLowerCase();
+    if (
+      lower.includes("bride") ||
+      lower.includes("groom") ||
+      lower.includes("wedding") ||
+      lower.includes("couple") ||
+      lower.includes("gallery-02")
+    ) {
+      return undefined;
+    }
     return url;
   }
 
