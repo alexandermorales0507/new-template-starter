@@ -17,9 +17,9 @@ export function ExtraInfoSection({ data }: { data: ExtraInfoData }) {
   return (
     <section
       id="extra_info"
-      className="template-section bg-pattern-heroic-02 relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-02 min-h-[500px] h-auto relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
-      <div className="template-container-narrow">
+      <div className="template-container-narrow relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-10 sm:mb-12 space-y-2">
             <span className="comic-badge comic-badge-gold">MISSION INTEL // GUEST FAQ</span>

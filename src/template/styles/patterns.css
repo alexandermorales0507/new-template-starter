@@ -1,18 +1,38 @@
 /* ==========================================================================
-   COMIC PAPER DESIGN SYSTEM — HEROIC ACTION BACKGROUND PATTERNS
-   2-Pattern Alternating Cadence Engine
+   HEROIC ACTION BACKGROUND PATTERNS (MUTED WATERMARK OVERLAY ENGINE)
    ========================================================================== */
 
-.bg-pattern-heroic-01 {
-  background-image: url("/template-assets/backgrounds/pattern-01-tech.webp");
-  background-repeat: repeat;
-  background-size: clamp(260px, 28vw, 340px);
+.bg-pattern-heroic-01,
+.bg-pattern-heroic-02 {
+  position: relative;
+  background-color: var(--event-bg, #0b1120);
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 480px;
 }
 
-.bg-pattern-heroic-02 {
+.bg-pattern-heroic-01::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/template-assets/backgrounds/pattern-01-tech.webp");
+  background-repeat: repeat;
+  background-size: clamp(420px, 32vw, 560px);
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-pattern-heroic-02::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background-image: url("/template-assets/backgrounds/pattern-02-strike.webp");
   background-repeat: repeat;
-  background-size: clamp(260px, 28vw, 340px);
+  background-size: clamp(420px, 32vw, 560px);
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .pattern-comic-dots {

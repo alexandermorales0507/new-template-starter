@@ -10,9 +10,9 @@ export function VenueSection({ data }: { data: VenueData }) {
   return (
     <section
       id="venue"
-      className="template-section bg-pattern-heroic-01 relative overflow-x-clip bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-01 min-h-[500px] h-auto relative overflow-x-clip bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)]"
     >
-      <div className="template-container">
+      <div className="template-container relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-12 space-y-2">
             <span className="comic-badge comic-badge-gold">MISSION // 03 • HEADQUARTERS</span>

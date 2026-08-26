@@ -16,9 +16,9 @@ export function AttireSection({ data }: { data: AttireData }) {
   return (
     <section
       id="attire_motif"
-      className="template-section bg-pattern-heroic-01 relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-01 min-h-[480px] flex flex-col justify-center relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
-      <div className="template-container-narrow">
+      <div className="template-container-narrow relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-10 sm:mb-12 space-y-2">
             <span className="comic-badge comic-badge-gold">

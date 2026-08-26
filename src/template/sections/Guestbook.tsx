@@ -12,7 +12,7 @@ export function GuestbookSection({ data }: { data: GuestbookData }) {
   return (
     <section
       id="guestbook"
-      className="template-section bg-pattern-heroic-01 relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-01 min-h-[500px] h-auto relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container-narrow relative z-10">
         <Reveal direction="up" distance={16}>

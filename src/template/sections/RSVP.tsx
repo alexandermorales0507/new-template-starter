@@ -409,9 +409,9 @@ export function RSVPSection(props: RsvpProps) {
   return (
     <section
       id="rsvp_form"
-      className="template-section bg-pattern-heroic-01 relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-01 min-h-[500px] h-auto relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
-      <div className="template-container-narrow">
+      <div className="template-container-narrow relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-10 space-y-2">
             <span className="comic-badge comic-badge-gold">HQ DISPATCH // CONFIRM ATTENDANCE</span>

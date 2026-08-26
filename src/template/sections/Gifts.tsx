@@ -20,9 +20,9 @@ export function GiftsSection({ data }: { data: GiftsData }) {
   return (
     <section
       id="gift_details"
-      className="template-section bg-pattern-heroic-02 relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-02 min-h-[500px] h-auto relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
-      <div className="template-container-narrow">
+      <div className="template-container-narrow relative z-10">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-10 space-y-2">
             <span className="comic-badge comic-badge-gold">SUPPLY DROP // GIFT DETAILS</span>
