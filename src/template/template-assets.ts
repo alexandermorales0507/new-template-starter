@@ -8,7 +8,6 @@ export type TemplateAssets = {
     hero?: string;
     gallery: string[];
     story: string[];
-    venue?: string;
     [key: string]: unknown;
   };
   decorations: Record<string, string>;
@@ -21,15 +20,14 @@ export const templateAssets: TemplateAssets = {
   photos: {
     hero: "/template-assets/photos/hero/hero-portrait.webp",
     gallery: [
-      "/template-assets/photos/gallery/gallery-01-ceremony.webp",
-      "/template-assets/photos/gallery/gallery-02-bride.webp",
-      "/template-assets/photos/gallery/gallery-03-groom.webp",
-      "/template-assets/photos/gallery/gallery-04-silhouette.webp",
-      "/template-assets/photos/gallery/gallery-05-toast.webp",
-      "/template-assets/photos/gallery/gallery-06-table.webp",
+      "/template-assets/photos/gallery/gallery-01-action.webp",
+      "/template-assets/photos/gallery/gallery-02-shield.webp",
+      "/template-assets/photos/gallery/gallery-03-candles.webp",
+      "/template-assets/photos/gallery/gallery-04-arcade.webp",
+      "/template-assets/photos/gallery/gallery-05-confetti.webp",
+      "/template-assets/photos/gallery/gallery-06-teamwork.webp",
     ],
-    story: ["/template-assets/photos/story/story-journal.webp"],
-    venue: "/template-assets/photos/venue/venue-grounds.webp",
+    story: ["/template-assets/photos/story/story-origin.webp"],
   },
   decorations: {
     qrDemo: "/template-assets/decorations/qr-demo.svg",

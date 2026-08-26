@@ -180,8 +180,6 @@
 
 .section-surface-ivory,
 .surface-ivory,
-.section-surface-sage,
-.surface-sage,
 .section-surface-forest,
 .section-surface-dark,
 .surface-dark,
@@ -211,13 +209,6 @@
   border: var(--event-border-comic-sm);
   box-shadow: var(--event-shadow-paper-sm);
   color: var(--event-text-main);
-}
-
-.estate-glass-sage {
-  background-color: var(--event-primary);
-  border: var(--event-border-comic-sm);
-  box-shadow: var(--event-shadow-paper-sm);
-  color: var(--event-on-primary);
 }
 
 /* ==========================================================================
@@ -326,7 +317,7 @@ section[id] {
 }
 
 /* COMIC GALLERY PAGINATION BULLETS */
-.sage-gallery-bullet {
+.comic-gallery-bullet {
   display: inline-block;
   width: 0.75rem;
   height: 0.75rem;
@@ -337,11 +328,11 @@ section[id] {
   transition: all 0.2s ease;
 }
 
-.sage-gallery-bullet:hover {
+.comic-gallery-bullet:hover {
   background-color: var(--event-accent);
 }
 
-.sage-gallery-bullet-active {
+.comic-gallery-bullet-active {
   width: 2rem !important;
   border-radius: 4px !important;
   background-color: var(--event-primary) !important;
