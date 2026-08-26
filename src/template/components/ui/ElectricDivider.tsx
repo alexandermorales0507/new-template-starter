@@ -32,9 +32,9 @@ function hexToRgba(hex: string, alpha: number = 1): string {
 
 export const ElectricDivider: React.FC<ElectricDividerProps> = ({
   color = "#00f0ff",
-  speed = 1.5,
-  chaos = 0.24,
-  thickness = 2.5,
+  speed = 1.2,
+  chaos = 0.22,
+  thickness = 2.2,
   className = "",
   style,
 }) => {
@@ -70,7 +70,7 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
     [random]
   );
 
-  // 10-Octave Harmonic Turbulence Noise Synthesis
+  // High-Frequency Pixel-Relative Electrical Noise Engine
   const octavedNoise = useCallback(
     (
       x: number,
@@ -108,7 +108,7 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
     const updateSize = () => {
       const rect = container.getBoundingClientRect();
       const width = rect.width;
-      const height = rect.height || 40;
+      const height = rect.height || 56;
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = width * dpr;
@@ -131,7 +131,7 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
       }
 
       const deltaTime = (currentTime - lastFrameTimeRef.current) / 1000;
-      timeRef.current += Math.min(deltaTime, 0.1) * (prefersReducedMotion ? 0.2 : speed);
+      timeRef.current += Math.min(deltaTime, 0.1) * (prefersReducedMotion ? 0.2 : speed * 4.5);
       lastFrameTimeRef.current = currentTime;
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -140,23 +140,45 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
       ctx.scale(dpr, dpr);
 
       const midY = height / 2;
-      const sampleCount = Math.max(Math.floor(width / 2), 60);
+      const sampleCount = Math.max(Math.floor(width / 3), 80);
 
-      // 1. PRIMARY HIGH-VOLTAGE BOLT (Main 10-Octave Jagged Stroke)
+      // PASS 1: OUTER AMBIENT NEON ARC (Soft Glowing Halo Arc)
+      ctx.beginPath();
+      ctx.strokeStyle = hexToRgba(color, 0.85);
+      ctx.lineWidth = 3.2;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 18;
+
+      for (let i = 0; i <= sampleCount; i++) {
+        const progress = i / sampleCount;
+        const x = progress * width;
+        const edgeTaper = Math.sin(progress * Math.PI);
+        const yNoise =
+          octavedNoise(x, 6, 2.0, 0.65, chaos * 24, 0.035, timeRef.current * 3.5, 0) * edgeTaper;
+        const y = midY + yNoise;
+
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // PASS 2: PRIMARY HIGH-CHAOS JAGGED BOLT (Main Electric Discharge)
       ctx.beginPath();
       ctx.strokeStyle = color;
       ctx.lineWidth = thickness;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.shadowColor = color;
-      ctx.shadowBlur = 12;
+      ctx.shadowBlur = 8;
 
       for (let i = 0; i <= sampleCount; i++) {
         const progress = i / sampleCount;
         const x = progress * width;
         const edgeTaper = Math.sin(progress * Math.PI);
         const yNoise =
-          octavedNoise(progress * 10, 10, 1.6, 0.7, chaos * 32, 10, timeRef.current, 0) * edgeTaper;
+          octavedNoise(x, 8, 2.2, 0.7, chaos * 30, 0.07, timeRef.current * 7.0, 100) * edgeTaper;
         const y = midY + yNoise;
 
         if (i === 0) ctx.moveTo(x, y);
@@ -164,30 +186,12 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
       }
       ctx.stroke();
 
-      // 2. SECONDARY OUT-OF-PHASE ERRATIC JITTER (Counter-Phase Plasma)
-      ctx.beginPath();
-      ctx.strokeStyle = hexToRgba(color, 0.75);
-      ctx.lineWidth = Math.max(thickness * 0.6, 1.2);
-      ctx.shadowBlur = 6;
-
-      for (let i = 0; i <= sampleCount; i++) {
-        const progress = i / sampleCount;
-        const x = progress * width;
-        const edgeTaper = Math.sin(progress * Math.PI);
-        const yNoise =
-          octavedNoise(progress * 14, 8, 1.8, 0.65, chaos * 24, 12, timeRef.current * 1.7, 4) *
-          edgeTaper;
-        const y = midY + yNoise;
-
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      // 3. HOT WHITE CORE FILAMENT (High-Frequency Center Spark)
+      // PASS 3: HOT-WHITE OUT-OF-PHASE PLASMA FILAMENT (High-Voltage Core Spark)
       ctx.beginPath();
       ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 1.0;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
       ctx.shadowColor = "#ffffff";
       ctx.shadowBlur = 4;
 
@@ -196,14 +200,16 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
         const x = progress * width;
         const edgeTaper = Math.sin(progress * Math.PI);
         const yNoise =
-          octavedNoise(progress * 10, 6, 1.6, 0.7, chaos * 18, 10, timeRef.current * 1.2, 0) *
-          edgeTaper;
+          octavedNoise(x, 6, 2.0, 0.6, chaos * 18, 0.1, timeRef.current * 9.0, 200) * edgeTaper;
         const y = midY + yNoise;
 
         if (i === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
       ctx.stroke();
+
+      // Reset shadow blur
+      ctx.shadowBlur = 0;
 
       animationRef.current = requestAnimationFrame(draw);
     };
@@ -238,21 +244,12 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
       ref={containerRef}
       aria-hidden="true"
       className={cn(
-        "relative w-full h-10 overflow-visible pointer-events-none select-none z-30",
+        "relative w-full h-14 overflow-visible pointer-events-none select-none z-30",
         className
       )}
       style={style}
     >
-      {/* Ambient Neon Beam Underlay */}
-      <div
-        className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[3px] w-full pointer-events-none"
-        style={{
-          background: color,
-          filter: "blur(4px)",
-          boxShadow: `0 0 16px ${hexToRgba(color, 0.85)}, 0 0 36px ${hexToRgba(color, 0.45)}`,
-        }}
-      />
-      {/* Animated Dual-Arc Canvas */}
+      {/* Animated 3-Pass Electrical Discharge Canvas */}
       <canvas ref={canvasRef} className="block w-full h-full pointer-events-none" />
     </div>
   );
