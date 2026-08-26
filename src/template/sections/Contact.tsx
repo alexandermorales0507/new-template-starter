@@ -22,7 +22,7 @@ export function ContactSection({ data }: { data?: ContactData | null }) {
   return (
     <section
       id="contact_socials"
-      className="template-section relative overflow-x-clip bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-02 relative overflow-x-clip bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container relative z-10">
         <div className="text-center mb-8 space-y-2">

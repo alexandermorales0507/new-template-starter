@@ -15,7 +15,7 @@ export default async function RsvpPage({ searchParams }: RsvpPageProps) {
     return (
       <div className="min-h-screen flex flex-col bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)] font-sans">
         <Navbar data={result.data} />
-        <main className="flex-1 py-12 pt-20">
+        <main className="flex-1 py-12 pt-20 bg-pattern-heroic-02">
           <RSVPSection
             data={result.data.rsvp}
             eventSlug={result.data.eventSlug}

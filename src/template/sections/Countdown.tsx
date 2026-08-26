@@ -74,7 +74,7 @@ export function CountdownSection({ data, eventDate, eventTime }: CountdownSectio
   return (
     <section
       id="countdown"
-      className="template-section template-section-compact relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section template-section-compact bg-pattern-heroic-02 relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container-narrow text-center relative z-10">
         <Reveal direction="up" distance={16}>

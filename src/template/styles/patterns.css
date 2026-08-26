@@ -1,7 +1,19 @@
 /* ==========================================================================
-   COMIC PAPER DESIGN SYSTEM — PATTERNS & HALFTONE TEXTURES
-   Clean comic halftone / action dots pattern
+   COMIC PAPER DESIGN SYSTEM — HEROIC ACTION BACKGROUND PATTERNS
+   2-Pattern Alternating Cadence Engine
    ========================================================================== */
+
+.bg-pattern-heroic-01 {
+  background-image: url("/template-assets/backgrounds/pattern-01-tech.webp");
+  background-repeat: repeat;
+  background-size: clamp(260px, 28vw, 340px);
+}
+
+.bg-pattern-heroic-02 {
+  background-image: url("/template-assets/backgrounds/pattern-02-strike.webp");
+  background-repeat: repeat;
+  background-size: clamp(260px, 28vw, 340px);
+}
 
 .pattern-comic-dots {
   background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);

@@ -27,7 +27,7 @@ export function MainEventSection({ data }: MainEventSectionProps) {
   return (
     <section
       id="main_event"
-      className="template-section relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-02 relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container">
         <Reveal direction="up" distance={16}>

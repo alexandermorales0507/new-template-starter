@@ -41,7 +41,7 @@ export function GallerySection({ data }: { data: GalleryData }) {
   return (
     <section
       id="gallery"
-      className="template-section !pt-20 !pb-14 sm:!pt-24 sm:!pb-16 md:!pt-28 md:!pb-18 text-center relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-02 !pt-20 !pb-14 sm:!pt-24 sm:!pb-16 md:!pt-28 md:!pb-18 text-center relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container relative z-10">
         <Reveal direction="up" distance={16}>

@@ -58,7 +58,7 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
   return (
     <section
       id="host_info"
-      className="template-section bg-[var(--event-bg,#0f172a)] relative isolate overflow-hidden min-h-0 pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-8 lg:pb-12 text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-[var(--event-bg,#0f172a)] bg-pattern-heroic-01 relative isolate overflow-hidden min-h-0 pt-6 pb-12 sm:pt-8 sm:pb-14 lg:pt-8 lg:pb-12 text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">

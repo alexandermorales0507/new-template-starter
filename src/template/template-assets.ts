@@ -32,7 +32,10 @@ export const templateAssets: TemplateAssets = {
   decorations: {
     qrDemo: "/template-assets/decorations/qr-demo.svg",
   },
-  backgrounds: {},
+  backgrounds: {
+    heroic01: "/template-assets/backgrounds/pattern-01-tech.webp",
+    heroic02: "/template-assets/backgrounds/pattern-02-strike.webp",
+  },
   illustrations: {},
   icons: {},
 };

@@ -10,7 +10,7 @@ export function VenueSection({ data }: { data: VenueData }) {
   return (
     <section
       id="venue"
-      className="template-section relative overflow-x-clip bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-01 relative overflow-x-clip bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container">
         <Reveal direction="up" distance={16}>

@@ -409,7 +409,7 @@ export function RSVPSection(props: RsvpProps) {
   return (
     <section
       id="rsvp_form"
-      className="template-section relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
+      className="template-section bg-pattern-heroic-01 relative overflow-x-clip bg-[var(--event-bg)] text-[var(--event-on-dark,#f8fafc)]"
     >
       <div className="template-container-narrow">
         <Reveal direction="up" distance={16}>
