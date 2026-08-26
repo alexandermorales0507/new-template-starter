@@ -88,7 +88,7 @@ export function Navbar({ data }: { data: EventTemplateData }) {
                   </span>
                   <span className="sm:hidden">{milestoneNum}th</span>
                 </span>
-                <span className="text-sm sm:text-base">⚡</span>
+                <span className="text-sm sm:text-base">🎂</span>
               </div>
             </Link>
           </div>

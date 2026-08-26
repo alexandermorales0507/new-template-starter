@@ -60,7 +60,7 @@ export function Footer({ data }: { data: EventTemplateData }) {
               </span>
               <span className="sm:hidden">{milestoneNum}th</span>
             </span>
-            <span className="text-sm sm:text-base">⚡</span>
+            <span className="text-sm sm:text-base">🎂</span>
           </div>
 
           {/* Compact Divider */}
@@ -119,7 +119,7 @@ export function Footer({ data }: { data: EventTemplateData }) {
                 </span>
                 <span className="sm:hidden">{milestoneNum}th</span>
               </span>
-              <span className="text-sm sm:text-base">⚡</span>
+              <span className="text-sm sm:text-base">🎂</span>
             </div>
           </div>
 
