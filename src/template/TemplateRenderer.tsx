@@ -58,9 +58,10 @@ export function TemplateRenderer({
                   {!isLast && (
                     <ElectricDivider
                       color={dividerColor}
-                      chaos={0.16}
-                      thickness={2}
-                      className="-my-3 sm:-my-4 relative z-30 pointer-events-none"
+                      speed={1.6}
+                      chaos={0.26}
+                      thickness={2.5}
+                      className="-my-5 relative z-30 pointer-events-none"
                     />
                   )}
                 </React.Fragment>

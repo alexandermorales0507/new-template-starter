@@ -32,9 +32,9 @@ function hexToRgba(hex: string, alpha: number = 1): string {
 
 export const ElectricDivider: React.FC<ElectricDividerProps> = ({
   color = "#00f0ff",
-  speed = 1.2,
-  chaos = 0.15,
-  thickness = 2,
+  speed = 1.5,
+  chaos = 0.24,
+  thickness = 2.5,
   className = "",
   style,
 }) => {
@@ -70,6 +70,7 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
     [random]
   );
 
+  // 10-Octave Harmonic Turbulence Noise Synthesis
   const octavedNoise = useCallback(
     (
       x: number,
@@ -86,7 +87,7 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
       let frequency = baseFrequency;
 
       for (let i = 0; i < octaves; i++) {
-        y += amplitude * noise2D(frequency * x + seed * 100, time * frequency * 0.3);
+        y += amplitude * noise2D(frequency * x + seed * 100, time * frequency * 0.35);
         frequency *= lacunarity;
         amplitude *= gain;
       }
@@ -107,7 +108,7 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
     const updateSize = () => {
       const rect = container.getBoundingClientRect();
       const width = rect.width;
-      const height = rect.height || 28;
+      const height = rect.height || 40;
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = width * dpr;
@@ -139,21 +140,23 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
       ctx.scale(dpr, dpr);
 
       const midY = height / 2;
-      const sampleCount = Math.max(Math.floor(width / 3), 40);
+      const sampleCount = Math.max(Math.floor(width / 2), 60);
 
-      // 1. Primary High-Voltage Arc
+      // 1. PRIMARY HIGH-VOLTAGE BOLT (Main 10-Octave Jagged Stroke)
       ctx.beginPath();
       ctx.strokeStyle = color;
       ctx.lineWidth = thickness;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 12;
 
       for (let i = 0; i <= sampleCount; i++) {
         const progress = i / sampleCount;
         const x = progress * width;
         const edgeTaper = Math.sin(progress * Math.PI);
         const yNoise =
-          octavedNoise(progress * 5, 5, 1.8, 0.6, chaos * 18, 3, timeRef.current, 0) * edgeTaper;
+          octavedNoise(progress * 10, 10, 1.6, 0.7, chaos * 32, 10, timeRef.current, 0) * edgeTaper;
         const y = midY + yNoise;
 
         if (i === 0) ctx.moveTo(x, y);
@@ -161,17 +164,18 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
       }
       ctx.stroke();
 
-      // 2. Secondary High-Frequency Jitter Wisp
+      // 2. SECONDARY OUT-OF-PHASE ERRATIC JITTER (Counter-Phase Plasma)
       ctx.beginPath();
-      ctx.strokeStyle = hexToRgba(color, 0.45);
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = hexToRgba(color, 0.75);
+      ctx.lineWidth = Math.max(thickness * 0.6, 1.2);
+      ctx.shadowBlur = 6;
 
       for (let i = 0; i <= sampleCount; i++) {
         const progress = i / sampleCount;
         const x = progress * width;
         const edgeTaper = Math.sin(progress * Math.PI);
         const yNoise =
-          octavedNoise(progress * 9, 3, 2.0, 0.5, chaos * 12, 5, timeRef.current * 1.6, 2) *
+          octavedNoise(progress * 14, 8, 1.8, 0.65, chaos * 24, 12, timeRef.current * 1.7, 4) *
           edgeTaper;
         const y = midY + yNoise;
 
@@ -180,17 +184,20 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
       }
       ctx.stroke();
 
-      // 3. Hot White Center Filament
+      // 3. HOT WHITE CORE FILAMENT (High-Frequency Center Spark)
       ctx.beginPath();
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
-      ctx.lineWidth = Math.max(thickness * 0.4, 0.8);
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+      ctx.lineWidth = 1;
+      ctx.shadowColor = "#ffffff";
+      ctx.shadowBlur = 4;
 
       for (let i = 0; i <= sampleCount; i++) {
         const progress = i / sampleCount;
         const x = progress * width;
         const edgeTaper = Math.sin(progress * Math.PI);
         const yNoise =
-          octavedNoise(progress * 5, 3, 1.8, 0.6, chaos * 12, 3, timeRef.current, 0) * edgeTaper;
+          octavedNoise(progress * 10, 6, 1.6, 0.7, chaos * 18, 10, timeRef.current * 1.2, 0) *
+          edgeTaper;
         const y = midY + yNoise;
 
         if (i === 0) ctx.moveTo(x, y);
@@ -213,7 +220,7 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
         const entry = entries[0];
         isVisibleRef.current = entry ? entry.isIntersecting : true;
       },
-      { rootMargin: "100px" }
+      { rootMargin: "120px" }
     );
     intersectionObserver.observe(container);
 
@@ -231,21 +238,21 @@ export const ElectricDivider: React.FC<ElectricDividerProps> = ({
       ref={containerRef}
       aria-hidden="true"
       className={cn(
-        "relative w-full h-7 overflow-visible pointer-events-none select-none z-30",
+        "relative w-full h-10 overflow-visible pointer-events-none select-none z-30",
         className
       )}
       style={style}
     >
       {/* Ambient Neon Beam Underlay */}
       <div
-        className="absolute inset-0 top-1/2 -translate-y-1/2 h-[2px] w-full pointer-events-none"
+        className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[3px] w-full pointer-events-none"
         style={{
           background: color,
-          filter: "blur(3px)",
-          boxShadow: `0 0 14px ${hexToRgba(color, 0.75)}, 0 0 28px ${hexToRgba(color, 0.35)}`,
+          filter: "blur(4px)",
+          boxShadow: `0 0 16px ${hexToRgba(color, 0.85)}, 0 0 36px ${hexToRgba(color, 0.45)}`,
         }}
       />
-      {/* Animated Canvas */}
+      {/* Animated Dual-Arc Canvas */}
       <canvas ref={canvasRef} className="block w-full h-full pointer-events-none" />
     </div>
   );
