@@ -56,7 +56,7 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
       <div className="template-container relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Comic Masthead Typography & Actions */}
-          <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
+          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-center lg:text-left">
             {/* 1. Clean Comic Issue Pill */}
             <Reveal direction="down" distance={16}>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
@@ -126,17 +126,17 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
             </Reveal>
           </div>
 
-          {/* Right Column: Comic Cover Art in Specimen Frame */}
-          <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center">
+          {/* Right Column: Scaled-Up Hero Specimen Frame */}
+          <div className="lg:col-span-6 flex flex-col items-center lg:items-end justify-center">
             <Reveal
               direction="up"
               distance={24}
               delay={0.2}
               className="w-full flex justify-center lg:justify-end"
             >
-              <div className="relative w-full max-w-[440px] sm:max-w-md lg:max-w-[480px] rotate-[1.5deg] hover:rotate-0 transition-transform duration-300">
+              <div className="relative w-full max-w-[560px] lg:max-w-[620px] rotate-[1.5deg] hover:rotate-0 transition-transform duration-300">
                 <SpecimenFrame
-                  src={heroPhoto}
+                  src={data.celebrantPhoto || data.photoUrl || heroPhoto}
                   alt={displayName}
                   caption="Hero Chronicle"
                   specimenNumber={`COVER ART // ISSUE #${milestoneNum}`}

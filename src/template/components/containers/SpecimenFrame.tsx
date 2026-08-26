@@ -61,8 +61,8 @@ export function SpecimenFrame({
             alt={alt}
             fill
             priority={priority}
-            quality={90}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px"
+            quality={95}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 1000px"
             className="object-cover select-none pointer-events-none transition-transform duration-500 group-hover:scale-105 [transform:translateZ(0)]"
           />
         ) : (

@@ -50,7 +50,7 @@ export function Reveal({
         x: 0,
         y: 0,
       }}
-      viewport={{ once, margin: "-40px" }}
+      viewport={{ once, amount: 0.05, margin: "0px" }}
       transition={{
         duration,
         delay,

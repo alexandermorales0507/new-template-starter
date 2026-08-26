@@ -1,5 +1,6 @@
 import type { VenueData } from "@/platform/event-template-data";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
+import { SpecimenFrame } from "@/template/components/containers/SpecimenFrame";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { MapPin, Navigation, Info } from "lucide-react";
 
@@ -11,7 +12,7 @@ export function VenueSection({ data }: { data: VenueData }) {
       id="venue"
       className="template-section relative overflow-x-clip bg-[var(--event-bg,#0f172a)] text-[var(--event-on-dark,#f8fafc)]"
     >
-      <div className="template-container-narrow">
+      <div className="template-container">
         <Reveal direction="up" distance={16}>
           <div className="text-center mb-8 sm:mb-12 space-y-2">
             <span className="comic-badge comic-badge-gold">MISSION // 03 • HEADQUARTERS</span>
@@ -21,8 +22,35 @@ export function VenueSection({ data }: { data: VenueData }) {
           </div>
         </Reveal>
 
-        <Reveal direction="up" distance={24} delay={0.1}>
-          <div className="max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-5xl mx-auto">
+          {/* Left Column: HQ Exterior Specimen Frame */}
+          <div className="lg:col-span-6 flex justify-center">
+            <div className="w-full max-w-[480px] rotate-[-1.5deg] hover:rotate-0 transition-transform duration-300">
+              <SpecimenFrame
+                src={data.photoUrl}
+                alt={data.venueName || "Event HQ"}
+                caption={data.venueName ? `HQ: ${data.venueName}` : "HQ Command Center"}
+                specimenNumber="HQ EXTERIOR // COORD 01"
+                aspectRatio="widescreen"
+                className="bg-white border-[3.5px] border-slate-950 shadow-[8px_8px_0px_#0f172a] rounded-2xl"
+              >
+                <div className="flex flex-col items-center justify-center p-8 text-center space-y-3 bg-slate-900 text-white h-full min-h-[200px]">
+                  <div className="w-14 h-14 rounded-2xl bg-amber-400 border-2 border-slate-950 flex items-center justify-center text-slate-950 shadow-[3px_3px_0px_#0f172a]">
+                    <MapPin className="w-7 h-7 stroke-[2.5]" />
+                  </div>
+                  <span className="font-mono text-xs font-black uppercase tracking-wider text-amber-400">
+                    {data.venueName || "STARK TOWER PLAY ARENA"}
+                  </span>
+                  <span className="text-[11px] font-mono text-slate-400">
+                    [ COORDINATES VERIFIED • MISSION HQ ]
+                  </span>
+                </div>
+              </SpecimenFrame>
+            </div>
+          </div>
+
+          {/* Right Column: Structured Coordinates Ledger */}
+          <div className="lg:col-span-6">
             <LedgerPanel
               title={data.venueName || "HQ Location"}
               indexTag="COORDINATES // 01"
@@ -73,7 +101,7 @@ export function VenueSection({ data }: { data: VenueData }) {
               </div>
             </LedgerPanel>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

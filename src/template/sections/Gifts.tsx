@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { GiftsData } from "@/platform/event-template-data";
 import { LedgerPanel } from "@/template/components/containers/LedgerPanel";
 import { Reveal } from "@/template/components/motion/Reveal";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/template/components/ui/Dialog";
-import { QrCode } from "lucide-react";
+import { QrCode, Gift } from "lucide-react";
 
 // PLATFORM DATA — KEEP DYNAMIC.
 // Gift Details & Monetary Gift options (Max 2 options).
@@ -52,7 +53,7 @@ export function GiftsSection({ data }: { data: GiftsData }) {
 
               {options.length > 0 && (
                 <div className="border-t border-[var(--event-border-subtle)] pt-5 font-sans">
-                  <span className="text-role-metadata text-[var(--event-primary)] block mb-4 text-center">
+                  <span className="text-role-metadata text-[var(--event-primary)] block mb-4 text-center font-bold">
                     Available Contribution Channels
                   </span>
                   <div
@@ -63,12 +64,12 @@ export function GiftsSection({ data }: { data: GiftsData }) {
                     {options.map((opt) => (
                       <div
                         key={opt.id}
-                        className="p-5 rounded-2xl border-2 border-[var(--event-border)] bg-[var(--event-surface-alt)] text-center shadow-[var(--event-shadow-paper-sm)] space-y-3"
+                        className="p-5 rounded-2xl border-2 border-[var(--event-border)] bg-[var(--event-surface-alt)] text-center shadow-[var(--event-shadow-paper-sm)] space-y-3 flex flex-col justify-between"
                       >
                         <span className="font-serif font-bold text-[var(--event-text-main)] block text-lg">
                           {opt.title}
                         </span>
-                        {opt.image?.url && (
+                        {opt.image?.url ? (
                           <div
                             className="mt-2 inline-block p-3 bg-[var(--event-surface)] rounded-2xl border-2 border-[var(--event-border)] shadow-[var(--event-shadow-paper-sm)] cursor-pointer group hover:border-[var(--event-primary)] transition-all"
                             onClick={() => {
@@ -90,6 +91,16 @@ export function GiftsSection({ data }: { data: GiftsData }) {
                               <QrCode className="w-3.5 h-3.5" />
                               <span>Tap to enlarge</span>
                             </div>
+                          </div>
+                        ) : (
+                          <div className="mt-2 flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-dashed border-slate-400 bg-white min-h-[180px] text-center space-y-2.5">
+                            <div className="w-12 h-12 rounded-xl bg-amber-300 border-2 border-slate-900 flex items-center justify-center text-slate-950 shadow-[2px_2px_0px_#0f172a]">
+                              <Gift className="w-6 h-6 stroke-[2.5]" />
+                            </div>
+                            <p className="text-xs font-sans font-medium text-slate-700 max-w-[200px] leading-relaxed">
+                              Physical gifts and toy contributions are warmly welcomed at the
+                              celebration reception.
+                            </p>
                           </div>
                         )}
                       </div>

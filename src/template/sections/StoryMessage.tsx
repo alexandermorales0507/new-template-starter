@@ -36,18 +36,18 @@ export function StoryMessageSection({ data }: StoryMessageSectionProps) {
         </Reveal>
 
         <Reveal direction="up" distance={20} delay={0.1}>
-          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Left Column: Origin Specimen Photo */}
             {storyPhotos.length > 0 && (
-              <div className="md:col-span-5 flex justify-center">
-                <div className="w-full max-w-[360px] sm:max-w-md rotate-[-1.5deg] hover:rotate-0 transition-transform duration-300">
+              <div className="md:col-span-6 flex justify-center">
+                <div className="w-full max-w-[520px] lg:max-w-[580px] rotate-[-1.5deg] hover:rotate-0 transition-transform duration-300">
                   <SpecimenFrame
                     src={storyPhotos[0]}
                     alt="Origin Story - Training and Suiting Up"
                     caption="Hero Chronicle"
                     specimenNumber="ARCHIVE // YR 10"
                     aspectRatio="widescreen"
-                    className="bg-white border-[3px] border-slate-950 shadow-[8px_8px_0px_#0f172a] rounded-2xl"
+                    className="bg-white border-[3.5px] border-slate-950 shadow-[10px_10px_0px_#0f172a] rounded-2xl"
                   />
                 </div>
               </div>
@@ -58,7 +58,7 @@ export function StoryMessageSection({ data }: StoryMessageSectionProps) {
               <div
                 className={
                   storyPhotos.length > 0
-                    ? "md:col-span-7"
+                    ? "md:col-span-6"
                     : "md:col-span-12 max-w-2xl mx-auto w-full"
                 }
               >

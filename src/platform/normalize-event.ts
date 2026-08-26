@@ -268,6 +268,21 @@ export function normalizeEventData(
     brideName = brideName || "Bride";
     hostLine = hostLine || "Together with their families";
   }
+  function sanitizeCelebrantPhoto(url?: string | null): string | undefined {
+    if (!url || typeof url !== "string") return undefined;
+    if (url.includes("bride") || url.includes("groom") || url.includes("wedding")) return undefined;
+    return url;
+  }
+
+  const rawCelebrantPhoto =
+    stringValue(hostContent.celebrantPhoto) ||
+    stringValue(hostContent.photoUrl) ||
+    stringValue(rawCelebrant.photoUrl) ||
+    stringValue(rawCelebrant.photo) ||
+    stringValue(raw.photoUrl);
+  const celebrantPhoto = isBirthday
+    ? sanitizeCelebrantPhoto(rawCelebrantPhoto)
+    : rawCelebrantPhoto || undefined;
 
   const coupleData = {
     kind: isBirthday ? "birthday" : stringValue(hostContent.kind) || "wedding",
@@ -279,6 +294,8 @@ export function normalizeEventData(
     displayAs,
     hostLine,
     shortHostMessage,
+    celebrantPhoto,
+    photoUrl: celebrantPhoto,
   };
 
   // 2. countdown
@@ -298,7 +315,9 @@ export function normalizeEventData(
       stringValue(musicContent.playButtonLabel) || (isBirthday ? "Play Party Mix" : "Play Music"),
     shortNote:
       stringValue(musicContent.shortNote) ||
-      (isBirthday ? "Upbeat tracks curated for the celebration." : ""),
+      (isBirthday
+        ? "Official party playlist for our birthday adventure"
+        : "Official event soundtrack"),
   };
 
   // 4. gallery
@@ -311,12 +330,12 @@ export function normalizeEventData(
 
   // 5. main_event (Ceremony / Party)
   const ceremonyContent = getSectionContent("main_event");
-  const defaultEventLabel = isBirthday ? "The Celebration" : "The Holy Ceremony";
   const ceremonyData = {
     eventLabel:
-      stringValue(ceremonyContent.eventLabel ?? ceremonyContent.partyLabel) || defaultEventLabel,
+      stringValue(ceremonyContent.eventLabel) ||
+      (isBirthday ? "Birthday Celebration" : "The Ceremony"),
     eventDate: stringValue(ceremonyContent.eventDate ?? raw.eventDate),
-    eventTime: stringValue(ceremonyContent.eventTime ?? ceremonyContent.startTime ?? raw.eventTime),
+    eventTime: stringValue(ceremonyContent.eventTime ?? raw.eventTime),
     endTime: stringValue(ceremonyContent.endTime),
     rsvpDeadline: stringValue(ceremonyContent.rsvpDeadline),
     scheduleNote: stringValue(ceremonyContent.scheduleNote),
@@ -330,6 +349,7 @@ export function normalizeEventData(
     address: stringValue(venueContent.address ?? raw.venueAddress) || "Venue Address",
     mapsLink: stringValue(venueContent.mapsLink),
     arrivalNote: stringValue(venueContent.arrivalNote),
+    photoUrl: stringValue(venueContent.photoUrl ?? venueContent.photo ?? raw.venuePhotoUrl),
   };
 
   // 7. secondary_event (Reception / Dinner)

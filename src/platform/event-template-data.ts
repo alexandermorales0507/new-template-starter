@@ -36,6 +36,8 @@ export type HostInfoData = {
   displayAs: string;
   hostLine: string;
   shortHostMessage: string;
+  celebrantPhoto?: string;
+  photoUrl?: string;
 };
 export type CoupleData = HostInfoData;
 
@@ -71,6 +73,7 @@ export type VenueData = {
   address: string;
   mapsLink?: string;
   arrivalNote?: string;
+  photoUrl?: string;
 };
 
 // secondary_event (Reception / Dinner / After-Party)
