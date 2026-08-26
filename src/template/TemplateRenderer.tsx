@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import type { EventTemplateData } from "@/platform/event-template-data";
 import { templateSectionRegistry } from "./section-registry";
 import { Navbar } from "./components/Navbar";
@@ -7,6 +8,8 @@ import { Footer } from "./components/Footer";
 import { FloatingControls } from "./components/FloatingControls";
 import { AudioProvider } from "./components/AudioPlayer";
 import { buildEventNavigation } from "./navigation/event-navigation";
+
+import { ElectricDivider } from "./components/ui/ElectricDivider";
 
 export type TemplateRendererProps = {
   data: EventTemplateData;
@@ -35,19 +38,32 @@ export function TemplateRenderer({
         <main className="flex-1 pt-16">
           {data.orderedSectionKeys
             .filter((key) => key !== "contact_socials")
-            .map((key) => {
+            .map((key, idx, arr) => {
               const renderSection = templateSectionRegistry[key];
               if (!renderSection) return null;
 
+              const isLast = idx === arr.length - 1;
+              const dividerColor = idx % 2 === 0 ? "#00f0ff" : "#f59e0b";
+
               return (
-                <div key={key}>
-                  {renderSection({
-                    data,
-                    apiBaseUrl,
-                    accessToken,
-                    isDemoMode,
-                  })}
-                </div>
+                <React.Fragment key={key}>
+                  <div>
+                    {renderSection({
+                      data,
+                      apiBaseUrl,
+                      accessToken,
+                      isDemoMode,
+                    })}
+                  </div>
+                  {!isLast && (
+                    <ElectricDivider
+                      color={dividerColor}
+                      chaos={0.16}
+                      thickness={2}
+                      className="-my-3 sm:-my-4 relative z-30 pointer-events-none"
+                    />
+                  )}
+                </React.Fragment>
               );
             })}
         </main>
