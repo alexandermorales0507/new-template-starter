@@ -39,14 +39,21 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
     !data.displayAs.toLowerCase().includes(displayName.toLowerCase())
   );
 
-  const subHeadline =
+  const rawSubHeadline =
     data.displayAs &&
     data.displayAs.trim().toLowerCase() !== displayName.trim().toLowerCase() &&
     !isStaleNameInDisplayAs
       ? data.displayAs
       : data.milestoneAge
-        ? `⚡ ${data.milestoneAge} ⚡`
-        : `⚡ TURNING ${milestoneNum}! ⚡`;
+        ? String(data.milestoneAge)
+        : `Turning ${milestoneNum}!`;
+
+  const hasEmoji =
+    rawSubHeadline.includes("⚡") ||
+    rawSubHeadline.includes("★") ||
+    rawSubHeadline.includes("🎉") ||
+    rawSubHeadline.includes("🦸");
+  const subHeadline = hasEmoji ? rawSubHeadline : `⚡ ${rawSubHeadline} ⚡`;
 
   return (
     <section
@@ -76,7 +83,7 @@ export function HeroHostSection({ data, storyEnabled = true }: HeroHostSectionPr
                   {displayName}
                 </h1>
                 <p className="text-role-heading-major text-amber-400 font-serif tracking-tight drop-shadow-[2px_2px_0px_#0f172a] flex items-center justify-center lg:justify-start gap-2">
-                  <span>⚡ {subHeadline} ⚡</span>
+                  <span>{subHeadline}</span>
                 </p>
               </div>
             </Reveal>

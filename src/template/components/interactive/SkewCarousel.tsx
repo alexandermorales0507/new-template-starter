@@ -228,6 +228,7 @@ export function SkewCarousel({
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
                     willChange: "transform",
+                    imageRendering: "-webkit-optimize-contrast",
                     transition:
                       "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease",
                   }}
@@ -264,10 +265,9 @@ export function SkewCarousel({
                         src={item.src}
                         alt={item.alt || `Card ${idx + 1}`}
                         fill
-                        priority={idx === 0 || idx === 1}
-                        quality={95}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 1000px"
-                        className="object-cover select-none pointer-events-none transition-transform duration-500 hover:scale-105 [transform:translateZ(0)]"
+                        priority={idx === 0 || idx === 1 || idx === 2}
+                        unoptimized={true}
+                        className="object-cover select-none pointer-events-none transition-transform duration-500 hover:scale-105"
                       />
                     ) : (
                       <div className="flex flex-col items-center justify-center text-slate-400 p-4 text-center">
