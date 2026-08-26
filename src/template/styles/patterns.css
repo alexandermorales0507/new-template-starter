@@ -1,5 +1,5 @@
 /* ==========================================================================
-   HEROIC ACTION BACKGROUND PATTERNS (MUTED WATERMARK OVERLAY ENGINE)
+   HEROIC ACTION BACKGROUNDS — SINGLE-IMAGE COVER & DYNAMIC STRETCH ENGINE
    ========================================================================== */
 
 .bg-pattern-heroic-01,
@@ -9,41 +9,34 @@
   isolation: isolate;
   overflow: hidden;
   min-height: 480px;
+  height: auto;
+  width: 100%;
 }
 
+/* Pattern 01: Single Stretchable Cover Background */
 .bg-pattern-heroic-01::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image: url("/template-assets/backgrounds/pattern-01-tech.webp");
-  background-repeat: repeat;
-  background-size: clamp(420px, 32vw, 560px);
-  opacity: 0.14;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.15;
   pointer-events: none;
   z-index: 0;
 }
 
+/* Pattern 02: Single Stretchable Cover Background */
 .bg-pattern-heroic-02::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image: url("/template-assets/backgrounds/pattern-02-strike.webp");
-  background-repeat: repeat;
-  background-size: clamp(420px, 32vw, 560px);
-  opacity: 0.14;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.15;
   pointer-events: none;
   z-index: 0;
-}
-
-.pattern-comic-dots {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);
-  background-size: 16px 16px;
-}
-
-.pattern-glazing,
-.pattern-glazing-grid,
-.pattern-ledger-rule,
-.pattern-lattice,
-.pattern-archival-dot {
-  background-image: none !important;
 }
